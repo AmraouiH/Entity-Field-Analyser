@@ -217,7 +217,9 @@ namespace EntityieldsAnalyser
                                 if ((bool)cell.Value != null && (bool)cell.Value == true)
                                 {
                                     isEntitySelected = true;
-                                    entityFields = EntityFieldAnalyserManager.getEntityFields(Service, row.Cells[1].Value.ToString());
+                                    string entityName = row.Cells[0].Value.ToString();
+                                    string entityTechnicalName = row.Cells[1].Value.ToString();
+                                    entityFields = EntityFieldAnalyserManager.getEntityFields(Service, entityTechnicalName, entityName);
                                 }
                             }
                         }
@@ -385,7 +387,7 @@ namespace EntityieldsAnalyser
                 MessageBox.Show("You Can't Create This Number of Fields", "Warning");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = EntityFieldAnalyserManager.CallExportFunction(entityFields);
             if (MessageBox.Show(this, "Would you like to open it?", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

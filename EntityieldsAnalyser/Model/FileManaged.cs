@@ -21,6 +21,8 @@ namespace EntityieldsAnalyser
             String[] columnsHeaderName = new string[] {
                 "DisplayName","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
             };
+            int headerIndex = 6;
+            int lineIndex = headerIndex + 1;
 
             if (fromatedList.Length > 0)
             {
@@ -54,45 +56,51 @@ namespace EntityieldsAnalyser
                             worksheet = workbook.ActiveSheet;
                             worksheet.Name = entityInfo.entityName+"_KPIsExport";
 
-                            if (entityInfo != null) {
-                                worksheet.Cells[1, 1] = "Entity Name";
-                                worksheet.Cells[1, 1].Font.Bold = true;
+                            if (entityInfo != null)
+                            {
+                                worksheet.Cells[1, 1]                = "Entity Display Name";
+                                worksheet.Cells[1, 1].Font.Bold      = true;
                                 worksheet.Cells[1, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[1, 1].Font.Size = 12;
-                                worksheet.Cells[1, 2] = entityInfo.entityName;
-                                worksheet.Cells[2, 1] = "Number Of Fields";
-                                worksheet.Cells[2, 1].Font.Bold = true;
+                                worksheet.Cells[1, 1].Font.Size      = 12;
+                                worksheet.Cells[1, 2]                = entityInfo.entityName;
+                                worksheet.Cells[2, 1]                = "Entity Technical Name";
+                                worksheet.Cells[2, 1].Font.Bold      = true;
                                 worksheet.Cells[2, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[2, 1].Font.Size = 12;
-                                worksheet.Cells[2, 2] = entityInfo.numberOfFields;
-                                worksheet.Cells[3, 1] = "Number Of Records";
-                                worksheet.Cells[3, 1].Font.Bold = true;
+                                worksheet.Cells[2, 1].Font.Size      = 12;
+                                worksheet.Cells[2, 2]                = entityInfo.entityTechnicalName;
+                                worksheet.Cells[3, 1]                = "Number Of Fields";
+                                worksheet.Cells[3, 1].Font.Bold      = true;
                                 worksheet.Cells[3, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[3, 1].Font.Size = 12;
-                                worksheet.Cells[3, 2] = entityInfo.numberOfRecords;
+                                worksheet.Cells[3, 1].Font.Size      = 12;
+                                worksheet.Cells[3, 2]                = entityInfo.numberOfFields;
+                                worksheet.Cells[4, 1]                = "Number Of Records";
+                                worksheet.Cells[4, 1].Font.Bold      = true;
+                                worksheet.Cells[4, 1].Interior.Color = Color.Wheat;
+                                worksheet.Cells[4, 1].Font.Size      = 12;
+                                worksheet.Cells[4, 2]                = entityInfo.numberOfRecords;
                             }
 
                             for (int i = 1; i < columnsHeaderName.Length + 1; i++)
                             {
-                                worksheet.Cells[5, i] = columnsHeaderName[i - 1];
-                                worksheet.Cells[5, i].Font.NAME = "Calibri";
-                                worksheet.Cells[5, i].Font.Bold = true;
-                                worksheet.Cells[5, i].Interior.Color = Color.Wheat;
-                                worksheet.Cells[5, i].Font.Size = 12;
+                                worksheet.Cells[headerIndex, i]                = columnsHeaderName[i - 1];
+                                worksheet.Cells[headerIndex, i].Font.NAME      = "Calibri";
+                                worksheet.Cells[headerIndex, i].Font.Bold      = true;
+                                worksheet.Cells[headerIndex, i].Interior.Color = Color.Wheat;
+                                worksheet.Cells[headerIndex, i].Font.Size      = 12;
                             }
 
                             for (int i = 0; i < fromatedList.Length; i++)
                             {
-                                worksheet.Cells[i + 6, 1] = fromatedList[i].fieldName;
-                                worksheet.Cells[i + 6, 2] = fromatedList[i].fieldType;
-                                worksheet.Cells[i + 6, 3] = fromatedList[i].target;
-                                worksheet.Cells[i + 6, 4] = fromatedList[i].isManaged;
-                                worksheet.Cells[i + 6, 5] = fromatedList[i].isAuditable;
-                                worksheet.Cells[i + 6, 6] = fromatedList[i].isSearchable; ;
-                                worksheet.Cells[i + 6, 7] = fromatedList[i].requiredLevel; ;
-                                worksheet.Cells[i + 6, 8] = fromatedList[i].introducedVersion;
-                                worksheet.Cells[i + 6, 9] = fromatedList[i].dateOfCreation.ToString();
-                                worksheet.Cells[i + 6, 10] = fromatedList[i].percentageOfUse.Replace(".", "");
+                                worksheet.Cells[i + lineIndex, 1]  = fromatedList[i].fieldName;
+                                worksheet.Cells[i + lineIndex, 2]  = fromatedList[i].fieldType;
+                                worksheet.Cells[i + lineIndex, 3]  = fromatedList[i].target;
+                                worksheet.Cells[i + lineIndex, 4]  = fromatedList[i].isManaged;
+                                worksheet.Cells[i + lineIndex, 5]  = fromatedList[i].isAuditable;
+                                worksheet.Cells[i + lineIndex, 6]  = fromatedList[i].isSearchable; ;
+                                worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].requiredLevel; ;
+                                worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].introducedVersion;
+                                worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].dateOfCreation.ToString();
+                                worksheet.Cells[i + lineIndex, 10] = fromatedList[i].percentageOfUse.Replace(".", "");
                                 if (fromatedList[i].target == String.Empty) {
                                     worksheet.Cells[i + 6, 3].Interior.Color = Color.Gainsboro;
                                 }
@@ -105,83 +113,85 @@ namespace EntityieldsAnalyser
                             xlNewSheet.Name = "Charts";
                             #region chartManagedUnmanaged
                             //add data 
-                            xlNewSheet.Cells[1, 1] = "Managed";
-                            xlNewSheet.Cells[1, 2] = managedUnmanaged[0];
+                            xlNewSheet.Cells[2, 2] = "Managed";
+                            xlNewSheet.Cells[2, 3] = managedUnmanaged[0];
 
-                            xlNewSheet.Cells[2, 1] = "Unmanaged";
-                            xlNewSheet.Cells[2, 2] = managedUnmanaged[1];
+                            xlNewSheet.Cells[3, 2] = "Unmanaged";
+                            xlNewSheet.Cells[3, 3] = managedUnmanaged[1];
 
                             Microsoft.Office.Interop.Excel.Range chartRange;
                             Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(0, 0, 300, 250);
+                            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(10, 10, 300, 250);
                             Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
 
                             chartPage.HasTitle = true;
                             chartPage.ChartTitle.Text = @"Managed\Unmanaged Fields";
-                            chartRange = xlNewSheet.get_Range("A1", "B2");
+                            chartRange = xlNewSheet.get_Range("B2", "C3");
                             chartPage.SetSourceData(chartRange, System.Reflection.Missing.Value);
                             chartPage.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
+                            #endregion
+                            #region EntityFieldsCreated
+                            //add data 
+                            xlNewSheet.Cells[2, 10] = "Available Fields To Create";
+                            xlNewSheet.Cells[2, 11] = entityTotalUse[1] - entityTotalUse[0];
+
+                            xlNewSheet.Cells[3, 10] = "Created Fields";
+                            xlNewSheet.Cells[3, 11] = entityTotalUse[0];
+
+                            Microsoft.Office.Interop.Excel.Range chartRangeTotaluse;
+                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
+                            Microsoft.Office.Interop.Excel.ChartObject totalUseChartChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsTotalUse.Add(510, 10, 300, 250);
+                            Microsoft.Office.Interop.Excel.Chart chartPageTotalUse = totalUseChartChart.Chart;
+
+                            chartPageTotalUse.HasTitle = true;
+                            chartPageTotalUse.ChartTitle.Text = @"Entity Fields Created";
+                            chartRangeTotaluse = xlNewSheet.get_Range("J2", "K3");
+                            chartPageTotalUse.SetSourceData(chartRangeTotaluse, System.Reflection.Missing.Value);
+                            chartPageTotalUse.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
+                            #endregion
+                            #region CustomStandar
+                            //add data 
+                            xlNewSheet.Cells[2, 20] = "Standard Fields";
+                            xlNewSheet.Cells[2, 21] = customStandard[1];
+
+                            xlNewSheet.Cells[3, 20] = "Custom Fields";
+                            xlNewSheet.Cells[3, 21] = customStandard[0];
+
+                            Microsoft.Office.Interop.Excel.Range chartRangeCustomStandard;
+                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsCustomStandard = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
+                            Microsoft.Office.Interop.Excel.ChartObject customStandardChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsCustomStandard.Add(1010, 10, 300, 250);
+                            Microsoft.Office.Interop.Excel.Chart chartPageCustomStandard = customStandardChart.Chart;
+
+                            chartPageCustomStandard.HasTitle = true;
+                            chartPageCustomStandard.ChartTitle.Text = @"Custom\Standard Fields";
+                            chartRangeCustomStandard = xlNewSheet.get_Range("T2", "U3");
+                            chartPageCustomStandard.SetSourceData(chartRangeCustomStandard, System.Reflection.Missing.Value);
+                            chartPageCustomStandard.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
                             #endregion
                             #region FieldsType
                             //add data 
                             int indicator = 0;
                             foreach (var item in entityParam)
                             {
-                                xlNewSheet.Cells[indicator + 25, 1] = item.Key.ToString();
-                                xlNewSheet.Cells[indicator + 25, 2] = item.Value.Count;
+                                xlNewSheet.Cells[indicator + 21, 10] = item.Key.ToString();
+                                xlNewSheet.Cells[indicator + 21, 11] = item.Value.Count;
                                 indicator++;
                             }
 
                             Microsoft.Office.Interop.Excel.Range chartRangeFieldType;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsFieldTypes = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject fieldTypes = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(0, 270, 400, 350);
+                            Microsoft.Office.Interop.Excel.ChartObject fieldTypes = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(485, 270, 350, 300);
                             Microsoft.Office.Interop.Excel.Chart chartPageFieldTypes = fieldTypes.Chart;
 
                             chartPageFieldTypes.HasTitle = true;
                             chartPageFieldTypes.ChartTitle.Text = @"Entity Fields Types";
-                            chartRangeFieldType = xlNewSheet.get_Range("A25", ("B"+(25+(indicator-1))).ToString());
+                            chartRangeFieldType = xlNewSheet.get_Range("J21", ("K"+(21+(indicator-1))).ToString());
                             chartPageFieldTypes.SetSourceData(chartRangeFieldType, System.Reflection.Missing.Value);
                             chartPageFieldTypes.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
 
                             #endregion
-                            #region CustomStandar
-                            //add data 
-                            xlNewSheet.Cells[1, 17] = "Standard Fields";
-                            xlNewSheet.Cells[1, 18] = customStandard[1];
-
-                            xlNewSheet.Cells[2, 17] = "Custom Fields";
-                            xlNewSheet.Cells[2, 18] = customStandard[0];
-
-                            Microsoft.Office.Interop.Excel.Range chartRangeCustomStandard;
-                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsCustomStandard = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject customStandardChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsCustomStandard.Add(900, 0, 300, 250);
-                            Microsoft.Office.Interop.Excel.Chart chartPageCustomStandard = customStandardChart.Chart;
-
-                            chartPageCustomStandard.HasTitle = true;
-                            chartPageCustomStandard.ChartTitle.Text = @"Custom\Standard Fields";
-                            chartRangeCustomStandard = xlNewSheet.get_Range("Q1", "R2");
-                            chartPageCustomStandard.SetSourceData(chartRangeCustomStandard, System.Reflection.Missing.Value);
-                            chartPageCustomStandard.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
-                            #endregion
-                            #region EntityFieldsCreated
-                            //add data 
-                            xlNewSheet.Cells[25, 17] = "Available Fields To Create";
-                            xlNewSheet.Cells[25, 18] = entityTotalUse[1] - entityTotalUse[0];
-
-                            xlNewSheet.Cells[26, 17] = "Created Fields";
-                            xlNewSheet.Cells[26, 18] = entityTotalUse[0];
-
-                            Microsoft.Office.Interop.Excel.Range chartRangeTotaluse;
-                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject totalUseChartChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsTotalUse.Add(900, 270, 300, 250);
-                            Microsoft.Office.Interop.Excel.Chart chartPageTotalUse = totalUseChartChart.Chart;
-
-                            chartPageTotalUse.HasTitle = true;
-                            chartPageTotalUse.ChartTitle.Text = @"Entity Fields Created";
-                            chartRangeTotaluse = xlNewSheet.get_Range("Q25", "R26");
-                            chartPageTotalUse.SetSourceData(chartRangeTotaluse, System.Reflection.Missing.Value);
-                            chartPageTotalUse.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
-                            #endregion
+                            
+                            
 
                             Microsoft.Office.Interop.Excel.Worksheet sheet = workbook.Worksheets[1];
                             sheet.Activate();

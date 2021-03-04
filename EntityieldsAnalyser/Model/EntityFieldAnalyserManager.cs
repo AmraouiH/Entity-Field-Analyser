@@ -35,20 +35,21 @@ namespace EntityieldsAnalyser
 
         #endregion
         #region Get EntityFields
-        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityName)
+        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName)
         {
             entityInfo = new EntityInfo();
             Dictionary<AttributeTypeCode, List<entityParam>> _data = new Dictionary<AttributeTypeCode, List<entityParam>>();
             RetrieveEntityRequest retrieveBankAccountEntityRequest = new RetrieveEntityRequest
             {
                 EntityFilters = EntityFilters.All,
-                LogicalName = entityName
+                LogicalName = entityTechnicalName
             };
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             _data = formatList(retrieveEntityResponse, _data);
-            EntityCollection _entityRecords = getEntityRecords(service, entityName);
+            EntityCollection _entityRecords = getEntityRecords(service, entityTechnicalName);
             _totalRecordsEntity = _entityRecords.Entities.Count;
             entityInfo.entityName = entityName;
+            entityInfo.entityTechnicalName = entityTechnicalName;
             entityInfo.numberOfFields = retrieveEntityResponse.EntityMetadata.Attributes.Count();
             entityInfo.numberOfRecords = _totalRecordsEntity;
             _unmanagedFieldsCount = _managedFieldsCount = _customField= _standardField= _currentUseOfColumns = 0;
@@ -213,7 +214,7 @@ namespace EntityieldsAnalyser
 
             //Disable formating when display the count
             if (displayValues)
-                ChartFieldTypes.Series["fieldsReport"].LabelFormat = "";
+                ChartFieldTypes.Series["fieldsReport"].LabelFormat = String.Empty;
             else//enable formating to percentage when check the checkbox
                 ChartFieldTypes.Series["fieldsReport"].LabelFormat = "0.#%";
 
@@ -240,7 +241,7 @@ namespace EntityieldsAnalyser
 
             if (!displayPercentage)
             {
-                ChartFieldAvailabe.Series["AvailableField"].LabelFormat = "";
+                ChartFieldAvailabe.Series["AvailableField"].LabelFormat = String.Empty;
                 ChartFieldAvailabe.Series["AvailableField"].IsValueShownAsLabel = false;
             }
             else//enable formating to percentage when check the checkbox
@@ -347,7 +348,7 @@ namespace EntityieldsAnalyser
 
             //Disable formating when display the count
             if (displayValues)
-                managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = "";
+                managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = String.Empty;
             else//enable formating to percentage when check the checkbox
                 managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = "0.#%";
 
@@ -420,6 +421,7 @@ namespace EntityieldsAnalyser
     public class EntityInfo
     {
         public string entityName;
+        public string entityTechnicalName;
         public int numberOfFields;
         public int numberOfRecords;
     }
