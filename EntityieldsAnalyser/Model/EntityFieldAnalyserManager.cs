@@ -24,14 +24,14 @@ namespace EntityieldsAnalyser
         #region Variables
         private IOrganizationService _service;
         private IEnumerable<EntityMetadata> _metadataList;
-        public static int _managedFieldsCount = 0;
-        public static int _unmanagedFieldsCount = 0;
-        public static int _customField = 0;
-        public static int _standardField = 0;
-        public static int _currentUseOfColumns = 0;
-        public static int _entityDefaultColumnSize = 1024;
-        public static int _totalRecordsEntity = 0;
-        public static EntityInfo entityInfo = null;
+        public static int _managedFieldsCount        = 0;
+        public static int _unmanagedFieldsCount      = 0;
+        public static int _customField               = 0;
+        public static int _standardField             = 0;
+        public static int _currentUseOfColumns       = 0;
+        public static int _entityDefaultColumnSize   = 1024;
+        public static int _totalRecordsEntity        = 0;
+        public static EntityInfo entityInfo          = null;
 
         #endregion
         #region Get EntityFields
@@ -46,12 +46,12 @@ namespace EntityieldsAnalyser
             };
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             _data = formatList(retrieveEntityResponse, _data);
-            EntityCollection _entityRecords = getEntityRecords(service, entityTechnicalName);
-            _totalRecordsEntity = _entityRecords.Entities.Count;
-            entityInfo.entityName = entityName;
-            entityInfo.entityTechnicalName = entityTechnicalName;
-            entityInfo.numberOfFields = retrieveEntityResponse.EntityMetadata.Attributes.Count();
-            entityInfo.numberOfRecords = _totalRecordsEntity;
+            EntityCollection _entityRecords               = getEntityRecords(service, entityTechnicalName);
+            _totalRecordsEntity                           = _entityRecords.Entities.Count;
+            entityInfo.entityName                         = entityName;
+            entityInfo.entityTechnicalName                = entityTechnicalName;
+            entityInfo.numberOfFields                     = retrieveEntityResponse.EntityMetadata.Attributes.Count();
+            entityInfo.numberOfRecords                    = _totalRecordsEntity;
             _unmanagedFieldsCount = _managedFieldsCount = _customField= _standardField= _currentUseOfColumns = 0;
 
             return setDictionaryCount(_entityRecords, _data); ;
@@ -81,15 +81,15 @@ namespace EntityieldsAnalyser
         {
             return new entityParam()
             {
-                fieldName = field.LogicalName,
-                isManaged = (bool)field.IsManaged,
-                target = field.AttributeType.Value == AttributeTypeCode.Lookup && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
-                dateOfCreation = field.CreatedOn.Value.Date,
+                fieldName         = field.LogicalName,
+                isManaged         = (bool)field.IsManaged,
+                target            = field.AttributeType.Value == AttributeTypeCode.Lookup && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
+                dateOfCreation    = field.CreatedOn.Value.Date,
                 introducedVersion = field.IntroducedVersion,
-                isAuditable = field.IsAuditEnabled.Value,
-                requiredLevel = ((AttributeRequiredLevel)field.RequiredLevel.Value).ToString(),
-                isSearchable = (bool)field.IsSearchable,
-                isCustom = (bool)field.IsCustomAttribute,
+                isAuditable       = field.IsAuditEnabled.Value,
+                requiredLevel     = ((AttributeRequiredLevel)field.RequiredLevel.Value).ToString(),
+                isSearchable      = (bool)field.IsSearchable,
+                isCustom          = (bool)field.IsCustomAttribute,
                 totalFiledRecords = 0
             };
         }
@@ -111,7 +111,7 @@ namespace EntityieldsAnalyser
 
                 if (PageNumber != 1)
                 {
-                    query.PageInfo.PageNumber = PageNumber;
+                    query.PageInfo.PageNumber   = PageNumber;
                     query.PageInfo.PagingCookie = PageCookie;
                 }
                 result = service.RetrieveMultiple(query);
@@ -241,12 +241,12 @@ namespace EntityieldsAnalyser
 
             if (!displayPercentage)
             {
-                ChartFieldAvailabe.Series["AvailableField"].LabelFormat = String.Empty;
+                ChartFieldAvailabe.Series["AvailableField"].LabelFormat         = String.Empty;
                 ChartFieldAvailabe.Series["AvailableField"].IsValueShownAsLabel = false;
             }
             else//enable formating to percentage when check the checkbox
             {
-                ChartFieldAvailabe.Series["AvailableField"].LabelFormat = "0.#%";
+                ChartFieldAvailabe.Series["AvailableField"].LabelFormat         = "0.#%";
                 ChartFieldAvailabe.Series["AvailableField"].IsValueShownAsLabel = true;
             }
 
@@ -268,27 +268,27 @@ namespace EntityieldsAnalyser
             fieldPropretiesView.DataSource = dt;
             fieldPropretiesView.Sort(fieldPropretiesView.Columns[1], ListSortDirection.Ascending);
             fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
-            fieldPropretiesView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[0].HeaderText = "DisplayName";
-            fieldPropretiesView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[1].HeaderText = "Managed/Unmanaged";
-            fieldPropretiesView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[2].HeaderText = "IsAuditable";
-            fieldPropretiesView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[3].HeaderText = "IsSearchable";
-            fieldPropretiesView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[4].HeaderText = "Required Level";
-            fieldPropretiesView.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[5].HeaderText = "Introduced Version";
-            fieldPropretiesView.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[6].HeaderText = "CreatedOn";
-            fieldPropretiesView.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[7].HeaderText = "Target";
-            fieldPropretiesView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[8].HeaderText = "Percentage Of Use";
+            fieldPropretiesView.Columns[0].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[0].HeaderText              = "DisplayName";
+            fieldPropretiesView.Columns[1].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[1].HeaderText              = "Managed/Unmanaged";
+            fieldPropretiesView.Columns[2].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[2].HeaderText              = "IsAuditable";
+            fieldPropretiesView.Columns[3].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[3].HeaderText              = "IsSearchable";
+            fieldPropretiesView.Columns[4].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[4].HeaderText              = "Required Level";
+            fieldPropretiesView.Columns[5].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[5].HeaderText              = "Introduced Version";
+            fieldPropretiesView.Columns[6].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[6].HeaderText              = "CreatedOn";
+            fieldPropretiesView.Columns[7].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[7].HeaderText              = "Target";
+            fieldPropretiesView.Columns[8].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[8].HeaderText              = "Percentage Of Use";
             fieldPropretiesView.Columns[8].DefaultCellStyle.Format = "0\\%";
-            fieldPropretiesView.ReadOnly = true;
-            fieldPropretiesView.Columns[7].Visible = false;
+            fieldPropretiesView.ReadOnly                           = true;
+            fieldPropretiesView.Columns[7].Visible                 = false;
         }
         #endregion
         #region SetEntitiesGridViewHeaders
@@ -296,11 +296,11 @@ namespace EntityieldsAnalyser
         {
             entityGridView.DataSource = dt;
             entityGridView.Sort(entityGridView.Columns[1], ListSortDirection.Ascending);
-            entityGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
-            entityGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            entityGridView.Columns[0].HeaderText = "Display Name";
-            entityGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            entityGridView.Columns[1].HeaderText = "Schema Name";
+            entityGridView.ColumnHeadersDefaultCellStyle.Font    = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
+            entityGridView.Columns[0].AutoSizeMode               = DataGridViewAutoSizeColumnMode.Fill;
+            entityGridView.Columns[0].HeaderText                 = "Display Name";
+            entityGridView.Columns[1].AutoSizeMode               = DataGridViewAutoSizeColumnMode.Fill;
+            entityGridView.Columns[1].HeaderText                 = "Schema Name";
             entityGridView.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             entityGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter;
         }
@@ -374,26 +374,25 @@ namespace EntityieldsAnalyser
             {
                 DataRow row = dtFields.NewRow();
 
-                row["DisplayName"] = item.fieldName;
-                row["Managed/Unmanaged"] = item.isManaged == true ? "Managed" : "Unmanaged";
-                row["IsAuditable"] = item.isAuditable;
-                row["IsSearchable"] = item.isSearchable;
-                row["Required Level"] = item.requiredLevel;
-                row["Introduced Version"] = item.introducedVersion;
-                row["CreatedOn"] = item.dateOfCreation;
-                row["Percentage Of Use"] = item.percentageOfUse;
-                row["Target"] = item.target;
+                row["DisplayName"]          = item.fieldName;
+                row["Managed/Unmanaged"]    = item.isManaged == true ? "Managed" : "Unmanaged";
+                row["IsAuditable"]          = item.isAuditable;
+                row["IsSearchable"]         = item.isSearchable;
+                row["Required Level"]       = item.requiredLevel;
+                row["Introduced Version"]   = item.introducedVersion;
+                row["CreatedOn"]            = item.dateOfCreation;
+                row["Percentage Of Use"]    = item.percentageOfUse;
+                row["Target"]               = item.target;
 
                 dtFields.Rows.Add(row);
             }
-
         }
 
         public static void setStatisticsFieldText(Label statisticsText) {
             if (_totalRecordsEntity > 0)
                 statisticsText.Text = "Statistics Based On " + _totalRecordsEntity + " Records";
             else
-                statisticsText.Text = "";
+                statisticsText.Text = String.Empty;
             _totalRecordsEntity = 0;
         }
 

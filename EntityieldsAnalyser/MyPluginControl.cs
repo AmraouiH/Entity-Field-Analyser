@@ -97,8 +97,6 @@ namespace EntityieldsAnalyser
                 Message = "Retrieving Entities...",
                 Work = (worker, args) =>
                 {
-                    #region ManageComponenetVisibility
-                    #endregion
                     #region Variables
                     dtEntities = new DataTable();
                     #endregion
@@ -115,10 +113,10 @@ namespace EntityieldsAnalyser
 
                     foreach (var item in _allEntitiesResp.EntityMetadata)
                     {
-                        DataRow row = dtEntities.NewRow();
+                        DataRow row        = dtEntities.NewRow();
                         row["DisplayName"] = item.DisplayName.LocalizedLabels.Count > 0 ? item.DisplayName.UserLocalizedLabel.Label.ToString() : null;
-                        row["SchemaName"] = item.LogicalName;
-                        row["Analyse"] = false;
+                        row["SchemaName"]  = item.LogicalName;
+                        row["Analyse"]     = false;
 
                         dtEntities.Rows.Add(row);
                     }
@@ -143,7 +141,7 @@ namespace EntityieldsAnalyser
                         EntityFieldAnalyserManager.SetEntitiesGridViewHeaders((DataTable)args.Result, EntityGridView);
                         #endregion
                         #region ManageComponenetVisibility
-                        searchEntity.Enabled = true;
+                        searchEntity.Enabled  = true;
                         analyseButton.Enabled = true;
                         #endregion
                     }
@@ -172,7 +170,6 @@ namespace EntityieldsAnalyser
                 catch (Exception)
                 {
                     MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
-                    //throw;
                 }
             }
         }
@@ -204,9 +201,9 @@ namespace EntityieldsAnalyser
                     try
                     {
                         #region Variables
-                        dtFields = new DataTable();
+                        dtFields                       = new DataTable();
                         DataGridViewRowCollection rows = EntityGridView.Rows;
-                        bool isEntitySelected = false;
+                        bool isEntitySelected          = false;
                         #endregion
                         #region Analyse The Selected Entity
                         foreach (DataGridViewRow row in rows)
@@ -216,10 +213,10 @@ namespace EntityieldsAnalyser
                             {
                                 if ((bool)cell.Value != null && (bool)cell.Value == true)
                                 {
-                                    isEntitySelected = true;
-                                    string entityName = row.Cells[0].Value.ToString();
-                                    string entityTechnicalName = row.Cells[1].Value.ToString();
-                                    entityFields = EntityFieldAnalyserManager.getEntityFields(Service, entityTechnicalName, entityName);
+                                    isEntitySelected            = true;
+                                    string entityName           = row.Cells[0].Value.ToString();
+                                    string entityTechnicalName  = row.Cells[1].Value.ToString();
+                                    entityFields                = EntityFieldAnalyserManager.getEntityFields(Service, entityTechnicalName, entityName);
                                 }
                             }
                         }
@@ -275,16 +272,16 @@ namespace EntityieldsAnalyser
                         EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields);
                         #endregion
                         #region Manage Componenet Visibilty
-                        searchEntity.Enabled = true;
-                        DisplayPercentageCheckbox.Visible = true;
-                        fieldTypeCombobox.Enabled = true;
-                        DisplayPercentageCheckbox.Checked = false;
-                        EntityFieldsCreatedGroupBox.Visible = true;
+                        searchEntity.Enabled                   = true;
+                        DisplayPercentageCheckbox.Visible      = true;
+                        fieldTypeCombobox.Enabled              = true;
+                        DisplayPercentageCheckbox.Checked      = false;
+                        EntityFieldsCreatedGroupBox.Visible    = true;
                         ManagedUnmanagedFieldsgroupBox.Visible = true;
-                        EntityFieldsTypesGroupBox.Visible = true;
-                        fieldCalculatorGroupBox.Visible = true;
+                        EntityFieldsTypesGroupBox.Visible      = true;
+                        fieldCalculatorGroupBox.Visible        = true;
                         #endregion
-                        fieldTypeCombobox.SelectedIndex = 0;
+                        fieldTypeCombobox.SelectedIndex        = 0;
                     }
                 }
             });
@@ -351,15 +348,15 @@ namespace EntityieldsAnalyser
             if (ChartFieldTypes.Series["fieldsReport"].Points.Count > 0)
                 ChartFieldTypes.Series["fieldsReport"].Points.Clear();
 
-            fieldTypeCombobox.Enabled = false;
-            EntityFieldsCreatedGroupBox.Visible = false;
-            ManagedUnmanagedFieldsgroupBox.Visible = false;
-            EntityFieldsTypesGroupBox.Visible = false;
-            DisplayPercentageCheckbox.Visible = false;
-            searchEntity.Enabled = false;
-            analyseButton.Enabled = false;
-            fieldTypeCombobox.Enabled = false;
-            fieldCalculatorGroupBox.Visible = false;
+            fieldTypeCombobox.Enabled                = false;
+            EntityFieldsCreatedGroupBox.Visible      = false;
+            ManagedUnmanagedFieldsgroupBox.Visible   = false;
+            EntityFieldsTypesGroupBox.Visible        = false;
+            DisplayPercentageCheckbox.Visible        = false;
+            searchEntity.Enabled                     = false;
+            analyseButton.Enabled                    = false;
+            fieldTypeCombobox.Enabled                = false;
+            fieldCalculatorGroupBox.Visible          = false;
         }
         #endregion
 
