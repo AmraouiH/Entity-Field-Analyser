@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Xrm.Sdk.Metadata;
 
@@ -14,7 +11,7 @@ namespace EntityieldsAnalyser
     public class FileManaged
     {
 
-        public static SaveFileDialog ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo, int[] managedUnmanaged, int[] customStandard, int[] entityTotalUse)
+        public static void ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo, int[] managedUnmanaged, int[] customStandard, int[] entityTotalUse)
         {
             SaveFileDialog sfd = null;
             DataColumns[] fromatedList = FormatDataForExport(entityParam);
@@ -102,7 +99,7 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].dateOfCreation.ToString();
                                 worksheet.Cells[i + lineIndex, 10] = fromatedList[i].percentageOfUse.Replace(".", "");
                                 if (fromatedList[i].target == String.Empty) {
-                                    worksheet.Cells[i + 6, 3].Interior.Color = Color.Gainsboro;
+                                    worksheet.Cells[i + lineIndex, 3].Interior.Color = Color.Gainsboro;
                                 }
                             }
 
@@ -121,8 +118,8 @@ namespace EntityieldsAnalyser
 
                             Microsoft.Office.Interop.Excel.Range chartRange;
                             Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(10, 10, 300, 250);
-                            Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
+                            Microsoft.Office.Interop.Excel.ChartObject myChart   = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(10, 10, 300, 250);
+                            Microsoft.Office.Interop.Excel.Chart chartPage       = myChart.Chart;
 
                             chartPage.HasTitle = true;
                             chartPage.ChartTitle.Text = @"Managed\Unmanaged Fields";
@@ -139,9 +136,9 @@ namespace EntityieldsAnalyser
                             xlNewSheet.Cells[3, 11] = entityTotalUse[0];
 
                             Microsoft.Office.Interop.Excel.Range chartRangeTotaluse;
-                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject totalUseChartChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsTotalUse.Add(510, 10, 300, 250);
-                            Microsoft.Office.Interop.Excel.Chart chartPageTotalUse = totalUseChartChart.Chart;
+                            Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse     = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
+                            Microsoft.Office.Interop.Excel.ChartObject totalUseChartChart    = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsTotalUse.Add(510, 10, 300, 250);
+                            Microsoft.Office.Interop.Excel.Chart chartPageTotalUse           = totalUseChartChart.Chart;
 
                             chartPageTotalUse.HasTitle = true;
                             chartPageTotalUse.ChartTitle.Text = @"Entity Fields Created";
@@ -159,14 +156,14 @@ namespace EntityieldsAnalyser
 
                             Microsoft.Office.Interop.Excel.Range chartRangeCustomStandard;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsCustomStandard = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject customStandardChart = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsCustomStandard.Add(1010, 10, 300, 250);
-                            Microsoft.Office.Interop.Excel.Chart chartPageCustomStandard = customStandardChart.Chart;
+                            Microsoft.Office.Interop.Excel.ChartObject customStandardChart     = (Microsoft.Office.Interop.Excel.ChartObject)xlChartsCustomStandard.Add(1010, 10, 300, 250);
+                            Microsoft.Office.Interop.Excel.Chart chartPageCustomStandard       = customStandardChart.Chart;
 
-                            chartPageCustomStandard.HasTitle = true;
+                            chartPageCustomStandard.HasTitle        = true;
                             chartPageCustomStandard.ChartTitle.Text = @"Custom\Standard Fields";
-                            chartRangeCustomStandard = xlNewSheet.get_Range("T2", "U3");
+                            chartRangeCustomStandard                = xlNewSheet.get_Range("T2", "U3");
                             chartPageCustomStandard.SetSourceData(chartRangeCustomStandard, System.Reflection.Missing.Value);
-                            chartPageCustomStandard.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
+                            chartPageCustomStandard.ChartType       = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
                             #endregion
                             #region FieldsType
                             //add data 
@@ -180,19 +177,15 @@ namespace EntityieldsAnalyser
 
                             Microsoft.Office.Interop.Excel.Range chartRangeFieldType;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsFieldTypes = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
-                            Microsoft.Office.Interop.Excel.ChartObject fieldTypes = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(485, 270, 350, 300);
-                            Microsoft.Office.Interop.Excel.Chart chartPageFieldTypes = fieldTypes.Chart;
+                            Microsoft.Office.Interop.Excel.ChartObject fieldTypes          = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(485, 270, 350, 300);
+                            Microsoft.Office.Interop.Excel.Chart chartPageFieldTypes       = fieldTypes.Chart;
 
-                            chartPageFieldTypes.HasTitle = true;
+                            chartPageFieldTypes.HasTitle        = true;
                             chartPageFieldTypes.ChartTitle.Text = @"Entity Fields Types";
-                            chartRangeFieldType = xlNewSheet.get_Range("J21", ("K"+(21+(indicator-1))).ToString());
+                            chartRangeFieldType                 = xlNewSheet.get_Range("J21", ("K"+(21+(indicator-1))).ToString());
                             chartPageFieldTypes.SetSourceData(chartRangeFieldType, System.Reflection.Missing.Value);
-                            chartPageFieldTypes.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
-
+                            chartPageFieldTypes.ChartType       = Microsoft.Office.Interop.Excel.XlChartType.xlDoughnut;
                             #endregion
-                            
-                            
-
                             Microsoft.Office.Interop.Excel.Worksheet sheet = workbook.Worksheets[1];
                             sheet.Activate();
 
@@ -203,6 +196,11 @@ namespace EntityieldsAnalyser
                             ReleaseObject(xlNewSheet);
                             ReleaseObject(workbook);
                             ReleaseObject(XcelApp);
+
+                            if (MessageBox.Show("Would you like to open it?", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                Process.Start(sfd.FileName);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -211,7 +209,6 @@ namespace EntityieldsAnalyser
                     }
                 }
             }
-            return sfd;
         }
 
         public static DataColumns[] FormatDataForExport(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
@@ -219,12 +216,21 @@ namespace EntityieldsAnalyser
             foreach (var entityPara in entityParams) {
                 foreach(var element in entityPara.Value)
                 {
-                    _dataToExport.Add(new DataColumns { fieldName = element.fieldName, fieldType = entityPara.Key.ToString(), dateOfCreation = element.dateOfCreation, introducedVersion = element.introducedVersion,
-                        isAuditable = element.isAuditable, isManaged = element.isManaged, isOnForm = element.isOnForm, isSearchable = element.isSearchable, requiredLevel = element.requiredLevel,
-                        target = element.target, percentageOfUse = element.percentageOfUse });
+                    _dataToExport.Add(new DataColumns {
+                        fieldName           = element.fieldName,
+                        fieldType           = entityPara.Key.ToString(),
+                        dateOfCreation      = element.dateOfCreation,
+                        introducedVersion   = element.introducedVersion,
+                        isAuditable         = element.isAuditable,
+                        isManaged           = element.isManaged,
+                        isOnForm            = element.isOnForm,
+                        isSearchable        = element.isSearchable,
+                        requiredLevel       = element.requiredLevel,
+                        target              = element.target,
+                        percentageOfUse     = element.percentageOfUse
+                    });
                 }
             }
-
             return _dataToExport.ToArray();
         }
 
@@ -245,20 +251,5 @@ namespace EntityieldsAnalyser
                 GC.Collect();
             }
         }
-    }
-
-    public class DataColumns
-    {
-        public string fieldName;
-        public string fieldType;
-        public DateTime dateOfCreation;
-        public string introducedVersion;
-        public bool isManaged;
-        public bool isAuditable;
-        public string requiredLevel;
-        public bool isSearchable;
-        public bool isOnForm;
-        public string target;
-        public string percentageOfUse;
     }
 }

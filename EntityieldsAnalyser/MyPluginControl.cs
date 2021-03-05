@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata.Query;
 using System.Diagnostics;
 
 namespace EntityieldsAnalyser
@@ -386,11 +380,7 @@ namespace EntityieldsAnalyser
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = EntityFieldAnalyserManager.CallExportFunction(entityFields);
-            if (MessageBox.Show(this, "Would you like to open it?", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Process.Start(sfd.FileName);
-            }
+            EntityFieldAnalyserManager.CallExportFunction(entityFields);
         }
     }
 }

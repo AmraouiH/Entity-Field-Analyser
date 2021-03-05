@@ -9,8 +9,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Label = System.Windows.Forms.Label;
@@ -396,32 +394,8 @@ namespace EntityieldsAnalyser
             _totalRecordsEntity = 0;
         }
 
-        public static SaveFileDialog  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
-            return FileManaged.ExportFile(entityParams, entityInfo, new int[] { _managedFieldsCount, _unmanagedFieldsCount }, new int[] { _customField, _standardField }, new int[] { _currentUseOfColumns , _entityDefaultColumnSize });
+        public static void  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
+            FileManaged.ExportFile(entityParams, entityInfo, new int[] { _managedFieldsCount, _unmanagedFieldsCount }, new int[] { _customField, _standardField }, new int[] { _currentUseOfColumns , _entityDefaultColumnSize });
         }
-    }
-    #region Class EntityParam
-    public class entityParam
-    {
-        public string fieldName;
-        public DateTime dateOfCreation;
-        public string introducedVersion;
-        public bool isManaged;
-        public bool isAuditable;
-        public string requiredLevel;
-        public bool isSearchable;
-        public bool isOnForm;
-        public bool isCustom;
-        public string target;
-        public int totalFiledRecords;
-        public string percentageOfUse;
-    }
-    #endregion
-    public class EntityInfo
-    {
-        public string entityName;
-        public string entityTechnicalName;
-        public int numberOfFields;
-        public int numberOfRecords;
     }
 }

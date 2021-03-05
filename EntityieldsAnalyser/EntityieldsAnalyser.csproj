@@ -187,6 +187,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Classes.cs" />
     <Compile Include="Model\EntityFieldAnalyserManager.cs" />
     <Compile Include="Model\FileManaged.cs" />
     <Compile Include="MyPlugin.cs" />
