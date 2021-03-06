@@ -391,5 +391,10 @@ namespace EntityieldsAnalyser
         {
             CloseTool();
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.crmsoftwareblog.com/2018/07/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields/");
+        }
     }
 }
