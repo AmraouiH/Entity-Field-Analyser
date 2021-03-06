@@ -16,9 +16,9 @@ namespace EntityieldsAnalyser
             SaveFileDialog sfd = null;
             DataColumns[] fromatedList = FormatDataForExport(entityParam);
             String[] columnsHeaderName = new string[] {
-                "DisplayName","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
+                "Display Name","Schema Name","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
             };
-            int headerIndex = 6;
+            int headerIndex = 7;
             int lineIndex = headerIndex + 1;
 
             if (fromatedList.Length > 0)
@@ -75,6 +75,12 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[4, 1].Interior.Color = Color.Wheat;
                                 worksheet.Cells[4, 1].Font.Size      = 12;
                                 worksheet.Cells[4, 2]                = entityInfo.numberOfRecords;
+                                worksheet.Cells[5, 1]                = "Entity Fields Volume Usage";
+                                worksheet.Cells[5, 1].Font.Bold      = true;
+                                worksheet.Cells[5, 1].Interior.Color = Color.Wheat;
+                                worksheet.Cells[5, 1].Font.Size      = 12;
+                                worksheet.Cells[5, 2]                = ((entityTotalUse[0] * 100) / entityTotalUse[1]).ToString("0.##\\%");
+
                             }
 
                             for (int i = 1; i < columnsHeaderName.Length + 1; i++)
@@ -88,18 +94,19 @@ namespace EntityieldsAnalyser
 
                             for (int i = 0; i < fromatedList.Length; i++)
                             {
-                                worksheet.Cells[i + lineIndex, 1]  = fromatedList[i].fieldName;
-                                worksheet.Cells[i + lineIndex, 2]  = fromatedList[i].fieldType;
-                                worksheet.Cells[i + lineIndex, 3]  = fromatedList[i].target;
-                                worksheet.Cells[i + lineIndex, 4]  = fromatedList[i].isManaged;
-                                worksheet.Cells[i + lineIndex, 5]  = fromatedList[i].isAuditable;
-                                worksheet.Cells[i + lineIndex, 6]  = fromatedList[i].isSearchable; ;
-                                worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].requiredLevel; ;
-                                worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].introducedVersion;
-                                worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].dateOfCreation.ToString();
-                                worksheet.Cells[i + lineIndex, 10] = fromatedList[i].percentageOfUse.Replace(".", "");
+                                worksheet.Cells[i + lineIndex, 1]  = fromatedList[i].displayName;
+                                worksheet.Cells[i + lineIndex, 2] = fromatedList[i].fieldName;
+                                worksheet.Cells[i + lineIndex, 3]  = fromatedList[i].fieldType;
+                                worksheet.Cells[i + lineIndex, 4]  = fromatedList[i].target;
+                                worksheet.Cells[i + lineIndex, 5]  = fromatedList[i].isManaged;
+                                worksheet.Cells[i + lineIndex, 6]  = fromatedList[i].isAuditable;
+                                worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].isSearchable; ;
+                                worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].requiredLevel; ;
+                                worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].introducedVersion;
+                                worksheet.Cells[i + lineIndex, 10]  = fromatedList[i].dateOfCreation.ToShortDateString();
+                                worksheet.Cells[i + lineIndex, 11] = fromatedList[i].percentageOfUse.Replace(",",".");
                                 if (fromatedList[i].target == String.Empty) {
-                                    worksheet.Cells[i + lineIndex, 3].Interior.Color = Color.Gainsboro;
+                                    worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;
                                 }
                             }
 
@@ -217,6 +224,7 @@ namespace EntityieldsAnalyser
                 foreach(var element in entityPara.Value)
                 {
                     _dataToExport.Add(new DataColumns {
+                        displayName         = element.displayName,
                         fieldName           = element.fieldName,
                         fieldType           = entityPara.Key.ToString(),
                         dateOfCreation      = element.dateOfCreation,

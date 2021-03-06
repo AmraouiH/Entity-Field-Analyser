@@ -45,11 +45,6 @@ namespace EntityieldsAnalyser
             }
         }
 
-        private void tsbClose_Click(object sender, EventArgs e)
-        {
-            CloseTool();
-        }
-
         /// <summary>
         /// This event occurs when the plugin is closed
         /// </summary>
@@ -223,7 +218,8 @@ namespace EntityieldsAnalyser
                         #endregion
 
                         #region Entity Fiels Metadata  Set
-                        dtFields.Columns.Add("DisplayName", typeof(string));
+                        dtFields.Columns.Add("Display Name", typeof(string));
+                        dtFields.Columns.Add("Schema Name", typeof(string));
                         dtFields.Columns.Add("Managed/Unmanaged", typeof(string));
                         dtFields.Columns.Add("IsAuditable", typeof(bool));
                         dtFields.Columns.Add("IsSearchable", typeof(bool));
@@ -274,8 +270,15 @@ namespace EntityieldsAnalyser
                         ManagedUnmanagedFieldsgroupBox.Visible = true;
                         EntityFieldsTypesGroupBox.Visible      = true;
                         fieldCalculatorGroupBox.Visible        = true;
+                        buttonExport.Enabled                   = true;
                         #endregion
-                        fieldTypeCombobox.SelectedIndex        = 0;
+                        fieldTypeCombobox.SelectedIndex        = 1;
+                        #region Chart ToolTip
+                        ToolTip toolTip = new ToolTip();
+                        toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of entity fields use");
+                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Managned/Unmanaged Fields in Your Entity");
+                        toolTip.SetToolTip(this.EntityFieldsTypesGroupBox, "This Chart Display The Count of Fields Per Type");
+                        #endregion
                     }
                 }
             });
@@ -295,7 +298,7 @@ namespace EntityieldsAnalyser
             //Display the Column Target Just in case of Lookup Type
             if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString())
             {
-                fieldPropretiesView.Columns[7].Visible = true;
+                fieldPropretiesView.Columns[8].Visible = true;
             }
             #endregion
         }
@@ -351,6 +354,7 @@ namespace EntityieldsAnalyser
             analyseButton.Enabled                    = false;
             fieldTypeCombobox.Enabled                = false;
             fieldCalculatorGroupBox.Visible          = false;
+            buttonExport.Enabled                     = false;
         }
         #endregion
 
@@ -381,6 +385,11 @@ namespace EntityieldsAnalyser
         private void buttonExport_Click(object sender, EventArgs e)
         {
             EntityFieldAnalyserManager.CallExportFunction(entityFields);
+        }
+
+        private void tsbClose_Click(object sender, EventArgs e)
+        {
+            CloseTool();
         }
     }
 }

@@ -8,11 +8,12 @@ namespace EntityieldsAnalyser
 {
     public class DataColumns
     {
+        public string displayName;
         public string fieldName;
         public string fieldType;
         public DateTime dateOfCreation;
         public string introducedVersion;
-        public bool isManaged;
+        public string isManaged;
         public bool isAuditable;
         public string requiredLevel;
         public bool isSearchable;
@@ -23,10 +24,11 @@ namespace EntityieldsAnalyser
 
     public class entityParam
     {
+        public string displayName;
         public string fieldName;
         public DateTime dateOfCreation;
         public string introducedVersion;
-        public bool isManaged;
+        public string isManaged;
         public bool isAuditable;
         public string requiredLevel;
         public bool isSearchable;

@@ -42,13 +42,11 @@ namespace EntityieldsAnalyser
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.getEntitiesButton = new System.Windows.Forms.Button();
             this.EntityGridView = new System.Windows.Forms.DataGridView();
             this.visualStudioToolStripExtender1 = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.entityTypeComboBox = new System.Windows.Forms.ComboBox();
             this.searchEntity = new System.Windows.Forms.TextBox();
-            this.analyseButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.fieldPropretiesView = new System.Windows.Forms.DataGridView();
@@ -73,6 +71,8 @@ namespace EntityieldsAnalyser
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonExport = new System.Windows.Forms.Button();
+            this.analyseButton = new System.Windows.Forms.Button();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -105,17 +105,9 @@ namespace EntityieldsAnalyser
             this.tssSeparator1.Name = "tssSeparator1";
             this.tssSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // tsbClose
-            // 
-            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(86, 22);
-            this.tsbClose.Text = "Close this tool";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
             // getEntitiesButton
             // 
-            this.getEntitiesButton.Location = new System.Drawing.Point(231, 2);
+            this.getEntitiesButton.Location = new System.Drawing.Point(224, 2);
             this.getEntitiesButton.Name = "getEntitiesButton";
             this.getEntitiesButton.Size = new System.Drawing.Size(75, 23);
             this.getEntitiesButton.TabIndex = 6;
@@ -149,30 +141,20 @@ namespace EntityieldsAnalyser
             "Custom Entities",
             "CRM Entities",
             "System Entities"});
-            this.entityTypeComboBox.Location = new System.Drawing.Point(104, 3);
+            this.entityTypeComboBox.Location = new System.Drawing.Point(61, 3);
             this.entityTypeComboBox.Name = "entityTypeComboBox";
-            this.entityTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.entityTypeComboBox.Size = new System.Drawing.Size(157, 21);
             this.entityTypeComboBox.TabIndex = 3;
             // 
             // searchEntity
             // 
             this.searchEntity.Location = new System.Drawing.Point(310, 3);
             this.searchEntity.Name = "searchEntity";
-            this.searchEntity.Size = new System.Drawing.Size(100, 20);
+            this.searchEntity.Size = new System.Drawing.Size(175, 20);
             this.searchEntity.TabIndex = 1;
             this.searchEntity.Text = "Search";
             this.searchEntity.Click += new System.EventHandler(this.textBox1_Click);
             this.searchEntity.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // analyseButton
-            // 
-            this.analyseButton.Location = new System.Drawing.Point(416, 2);
-            this.analyseButton.Name = "analyseButton";
-            this.analyseButton.Size = new System.Drawing.Size(75, 23);
-            this.analyseButton.TabIndex = 9;
-            this.analyseButton.Text = "Analyse";
-            this.analyseButton.UseVisualStyleBackColor = true;
-            this.analyseButton.Click += new System.EventHandler(this.analyseButton_Click);
             // 
             // groupBox1
             // 
@@ -451,13 +433,42 @@ namespace EntityieldsAnalyser
             // 
             // buttonExport
             // 
-            this.buttonExport.Location = new System.Drawing.Point(513, 2);
+            this.buttonExport.Image = global::EntityieldsAnalyser.Properties.Resources.Export;
+            this.buttonExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonExport.Location = new System.Drawing.Point(593, 3);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(75, 23);
             this.buttonExport.TabIndex = 14;
             this.buttonExport.Text = "Export";
+            this.buttonExport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
+            // analyseButton
+            // 
+            this.analyseButton.Image = global::EntityieldsAnalyser.Properties.Resources.Analyse;
+            this.analyseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.analyseButton.Location = new System.Drawing.Point(506, 2);
+            this.analyseButton.Name = "analyseButton";
+            this.analyseButton.Size = new System.Drawing.Size(75, 23);
+            this.analyseButton.TabIndex = 9;
+            this.analyseButton.Text = "Analyse";
+            this.analyseButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.analyseButton.UseVisualStyleBackColor = true;
+            this.analyseButton.Click += new System.EventHandler(this.analyseButton_Click);
+            // 
+            // tsbClose
+            // 
+            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbClose.Font = new System.Drawing.Font("Segoe UI", 2.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbClose.Image = global::EntityieldsAnalyser.Properties.Resources.Exit;
+            this.tsbClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsbClose.RightToLeftAutoMirrorImage = true;
+            this.tsbClose.Size = new System.Drawing.Size(23, 22);
+            this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
             // 
             // MyPluginControl
             // 

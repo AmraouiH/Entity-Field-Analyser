@@ -79,8 +79,9 @@ namespace EntityieldsAnalyser
         {
             return new entityParam()
             {
+                displayName       = field.DisplayName.UserLocalizedLabel != null ? field.DisplayName.UserLocalizedLabel.Label : String.Empty,
                 fieldName         = field.LogicalName,
-                isManaged         = (bool)field.IsManaged,
+                isManaged         = field.IsManaged == true ? "Managed" : "Unmanaged",
                 target            = field.AttributeType.Value == AttributeTypeCode.Lookup && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
                 dateOfCreation    = field.CreatedOn.Value.Date,
                 introducedVersion = field.IntroducedVersion,
@@ -143,7 +144,7 @@ namespace EntityieldsAnalyser
                         }
                     }
                     //for Managed/Unmanaged Chart
-                    if (entityParam.isManaged)
+                    if (entityParam.isManaged == "Managed")
                         _managedFieldsCount++;
                     else
                         _unmanagedFieldsCount++;
@@ -170,9 +171,9 @@ namespace EntityieldsAnalyser
                 foreach (var field in elem)
                 {
                     if (field.totalFiledRecords > 0)
-                        field.percentageOfUse = String.Format("{0:P2}.", ((double)(field.totalFiledRecords * 1.0 / recordsCount)));//String.Format("Value: {0:P2}.", 0.8526) 
+                        field.percentageOfUse = ((float)(field.totalFiledRecords * 100.0 / recordsCount)).ToString("0.##\\%");
                     else
-                        field.percentageOfUse = 0 + "%";
+                        field.percentageOfUse = 0.ToString("0.##\\%");
                 }
             }
             return _data;
@@ -264,29 +265,31 @@ namespace EntityieldsAnalyser
         public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView)
         {
             fieldPropretiesView.DataSource = dt;
-            fieldPropretiesView.Sort(fieldPropretiesView.Columns[1], ListSortDirection.Ascending);
+            fieldPropretiesView.Sort(fieldPropretiesView.Columns[2], ListSortDirection.Ascending);
             fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
             fieldPropretiesView.Columns[0].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[0].HeaderText              = "DisplayName";
+            fieldPropretiesView.Columns[0].HeaderText              = "Display Name";
             fieldPropretiesView.Columns[1].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[1].HeaderText              = "Managed/Unmanaged";
+            fieldPropretiesView.Columns[1].HeaderText              = "Schema Name";
             fieldPropretiesView.Columns[2].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[2].HeaderText              = "IsAuditable";
+            fieldPropretiesView.Columns[2].HeaderText              = "Managed/Unmanaged";
             fieldPropretiesView.Columns[3].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[3].HeaderText              = "IsSearchable";
+            fieldPropretiesView.Columns[3].HeaderText              = "IsAuditable";
             fieldPropretiesView.Columns[4].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[4].HeaderText              = "Required Level";
+            fieldPropretiesView.Columns[4].HeaderText              = "IsSearchable";
             fieldPropretiesView.Columns[5].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[5].HeaderText              = "Introduced Version";
+            fieldPropretiesView.Columns[5].HeaderText              = "Required Level";
             fieldPropretiesView.Columns[6].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[6].HeaderText              = "CreatedOn";
+            fieldPropretiesView.Columns[6].HeaderText              = "Introduced Version";
             fieldPropretiesView.Columns[7].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[7].HeaderText              = "Target";
+            fieldPropretiesView.Columns[7].HeaderText              = "CreatedOn";
             fieldPropretiesView.Columns[8].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[8].HeaderText              = "Percentage Of Use";
-            fieldPropretiesView.Columns[8].DefaultCellStyle.Format = "0\\%";
+            fieldPropretiesView.Columns[8].HeaderText              = "Target";
+            fieldPropretiesView.Columns[9].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
+            fieldPropretiesView.Columns[9].HeaderText              = "Percentage Of Use";
+
             fieldPropretiesView.ReadOnly                           = true;
-            fieldPropretiesView.Columns[7].Visible                 = false;
+            fieldPropretiesView.Columns[8].Visible                 = false;
         }
         #endregion
         #region SetEntitiesGridViewHeaders
@@ -372,8 +375,9 @@ namespace EntityieldsAnalyser
             {
                 DataRow row = dtFields.NewRow();
 
-                row["DisplayName"]          = item.fieldName;
-                row["Managed/Unmanaged"]    = item.isManaged == true ? "Managed" : "Unmanaged";
+                row["Display Name"]         = item.displayName;
+                row["Schema Name"]          = item.fieldName;
+                row["Managed/Unmanaged"]    = item.isManaged;
                 row["IsAuditable"]          = item.isAuditable;
                 row["IsSearchable"]         = item.isSearchable;
                 row["Required Level"]       = item.requiredLevel;
@@ -395,7 +399,12 @@ namespace EntityieldsAnalyser
         }
 
         public static void  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
-            FileManaged.ExportFile(entityParams, entityInfo, new int[] { _managedFieldsCount, _unmanagedFieldsCount }, new int[] { _customField, _standardField }, new int[] { _currentUseOfColumns , _entityDefaultColumnSize });
+            FileManaged.ExportFile(entityParams,
+                                   entityInfo,
+                                   new int[] { _managedFieldsCount, _unmanagedFieldsCount },
+                                   new int[] { _customField, _standardField },
+                                   new int[] { _currentUseOfColumns , _entityDefaultColumnSize
+                                             });
         }
     }
 }
