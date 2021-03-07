@@ -15,7 +15,7 @@ There's Also a field calculator to give you an idea if you can create such numbe
 
 https://amraouih.medium.com/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields-ab39c699336e
 
-------How to Use The Tool :
+------How to Use The Tool------
 1. Select an Entity Filter and click Load Entities
 2. Click the checkbox on any entity that you would like to Analyse
 3. Search is wildcard already so you only need to type in the text you want to search for
