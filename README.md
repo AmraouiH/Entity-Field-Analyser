@@ -1,5 +1,5 @@
 # Entity-Fields-Analyser
------------------------------------------------------------------XRMToolBox Plugin _ Entity Fields Analyser----------------------------------------------------------------
+--------------------XRMToolBox Plugin _ Entity Fields Analyser-----------------------------
 This Tool allow you to get an overview about your entity :
 - the Fields in your entity by Types.
 - the percentage of use of each field in your entity.
