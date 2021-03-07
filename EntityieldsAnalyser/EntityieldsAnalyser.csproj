@@ -189,7 +189,7 @@
   <ItemGroup>
     <Compile Include="Classes\Classes.cs" />
     <Compile Include="Model\EntityFieldAnalyserManager.cs" />
-    <Compile Include="Model\FileManaged.cs" />
+    <Compile Include="Model\ExportManager.cs" />
     <Compile Include="MyPlugin.cs" />
     <Compile Include="MyPluginControl.cs">
       <SubType>UserControl</SubType>
