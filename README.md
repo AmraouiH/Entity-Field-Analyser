@@ -12,6 +12,7 @@ This Tool allow you to get an overview about your entity :
 You can Also display the data chart by percentage.
 
 There's Also a field calculator to give you an idea if you can create such number of field of different types in your entity, because there's no a fixed number for entity max field. for more information visite :
+
 https://amraouih.medium.com/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields-ab39c699336e
 
 ------How to Use The Tool :
