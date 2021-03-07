@@ -11,7 +11,7 @@ namespace EntityieldsAnalyser
     public class FileManaged
     {
 
-        public static void ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo, int[] managedUnmanaged, int[] customStandard, int[] entityTotalUse)
+        public static void ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo)
         {
             SaveFileDialog sfd = null;
             DataColumns[] fromatedList = FormatDataForExport(entityParam);
@@ -69,17 +69,17 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[3, 1].Font.Bold      = true;
                                 worksheet.Cells[3, 1].Interior.Color = Color.Wheat;
                                 worksheet.Cells[3, 1].Font.Size      = 12;
-                                worksheet.Cells[3, 2]                = entityInfo.numberOfFields;
+                                worksheet.Cells[3, 2]                = entityInfo.entityFieldsCount;
                                 worksheet.Cells[4, 1]                = "Number Of Records";
                                 worksheet.Cells[4, 1].Font.Bold      = true;
                                 worksheet.Cells[4, 1].Interior.Color = Color.Wheat;
                                 worksheet.Cells[4, 1].Font.Size      = 12;
-                                worksheet.Cells[4, 2]                = entityInfo.numberOfRecords;
+                                worksheet.Cells[4, 2]                = entityInfo.entityRecordsCount;
                                 worksheet.Cells[5, 1]                = "Entity Fields Volume Usage";
                                 worksheet.Cells[5, 1].Font.Bold      = true;
                                 worksheet.Cells[5, 1].Interior.Color = Color.Wheat;
                                 worksheet.Cells[5, 1].Font.Size      = 12;
-                                worksheet.Cells[5, 2]                = ((entityTotalUse[0] * 100) / entityTotalUse[1]).ToString("0.##\\%");
+                                worksheet.Cells[5, 2]                = ((entityInfo.entityTotalUseOfColumns * 100) / entityInfo.entityDefaultColumnSize).ToString("0.##\\%");
 
                             }
 
@@ -118,10 +118,10 @@ namespace EntityieldsAnalyser
                             #region chartManagedUnmanaged
                             //add data 
                             xlNewSheet.Cells[2, 2] = "Managed";
-                            xlNewSheet.Cells[2, 3] = managedUnmanaged[0];
+                            xlNewSheet.Cells[2, 3] = entityInfo.managedFieldsCount;
 
                             xlNewSheet.Cells[3, 2] = "Unmanaged";
-                            xlNewSheet.Cells[3, 3] = managedUnmanaged[1];
+                            xlNewSheet.Cells[3, 3] = entityInfo.unmanagedFieldsCount;
 
                             Microsoft.Office.Interop.Excel.Range chartRange;
                             Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
@@ -137,10 +137,10 @@ namespace EntityieldsAnalyser
                             #region EntityFieldsCreated
                             //add data 
                             xlNewSheet.Cells[2, 10] = "Available Fields To Create";
-                            xlNewSheet.Cells[2, 11] = entityTotalUse[1] - entityTotalUse[0];
+                            xlNewSheet.Cells[2, 11] = entityInfo.entityDefaultColumnSize - entityInfo.entityTotalUseOfColumns;
 
                             xlNewSheet.Cells[3, 10] = "Created Fields";
-                            xlNewSheet.Cells[3, 11] = entityTotalUse[0];
+                            xlNewSheet.Cells[3, 11] = entityInfo.entityTotalUseOfColumns;
 
                             Microsoft.Office.Interop.Excel.Range chartRangeTotaluse;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse     = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
@@ -156,10 +156,10 @@ namespace EntityieldsAnalyser
                             #region CustomStandar
                             //add data 
                             xlNewSheet.Cells[2, 20] = "Standard Fields";
-                            xlNewSheet.Cells[2, 21] = customStandard[1];
+                            xlNewSheet.Cells[2, 21] = entityInfo.entityStandardFieldsCount;
 
                             xlNewSheet.Cells[3, 20] = "Custom Fields";
-                            xlNewSheet.Cells[3, 21] = customStandard[0];
+                            xlNewSheet.Cells[3, 21] = entityInfo.entityCustomFieldsCount;
 
                             Microsoft.Office.Interop.Excel.Range chartRangeCustomStandard;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsCustomStandard = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);

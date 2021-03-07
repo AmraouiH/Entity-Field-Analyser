@@ -22,13 +22,6 @@ namespace EntityieldsAnalyser
         #region Variables
         private IOrganizationService _service;
         private IEnumerable<EntityMetadata> _metadataList;
-        public static int _managedFieldsCount        = 0;
-        public static int _unmanagedFieldsCount      = 0;
-        public static int _customField               = 0;
-        public static int _standardField             = 0;
-        public static int _currentUseOfColumns       = 0;
-        public static int _entityDefaultColumnSize   = 1024;
-        public static int _totalRecordsEntity        = 0;
         public static EntityInfo entityInfo          = null;
 
         #endregion
@@ -45,12 +38,10 @@ namespace EntityieldsAnalyser
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             _data = formatList(retrieveEntityResponse, _data);
             EntityCollection _entityRecords               = getEntityRecords(service, entityTechnicalName);
-            _totalRecordsEntity                           = _entityRecords.Entities.Count;
+            entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
-            entityInfo.numberOfFields                     = retrieveEntityResponse.EntityMetadata.Attributes.Count();
-            entityInfo.numberOfRecords                    = _totalRecordsEntity;
-            _unmanagedFieldsCount = _managedFieldsCount = _customField= _standardField= _currentUseOfColumns = 0;
+            entityInfo.entityFieldsCount                     = retrieveEntityResponse.EntityMetadata.Attributes.Count();
 
             return setDictionaryCount(_entityRecords, _data); ;
         }
@@ -145,15 +136,15 @@ namespace EntityieldsAnalyser
                     }
                     //for Managed/Unmanaged Chart
                     if (entityParam.isManaged == "Managed")
-                        _managedFieldsCount++;
+                        entityInfo.managedFieldsCount++;
                     else
-                        _unmanagedFieldsCount++;
+                        entityInfo.unmanagedFieldsCount++;
 
                    //For Custom Standard Chart
                     if (entityParam.isCustom)
-                        _customField++;
+                        entityInfo.entityCustomFieldsCount++;
                     else
-                        _standardField++;
+                        entityInfo.entityStandardFieldsCount++;
 
                 }
             }
@@ -235,8 +226,8 @@ namespace EntityieldsAnalyser
         #region ChartFieldAvailable
         public static void SetChartFieldAvailable( Dictionary<AttributeTypeCode, List<entityParam>> dict, Chart ChartFieldAvailabe, bool displayPercentage = false)
         {
-            _currentUseOfColumns = DbUsedColumns(dict);
-            var availableFieldToCreate = _entityDefaultColumnSize - _currentUseOfColumns;
+            entityInfo.entityTotalUseOfColumns = DbUsedColumns(dict);
+            var availableFieldToCreate = entityInfo.entityDefaultColumnSize - entityInfo.entityTotalUseOfColumns;
 
             if (!displayPercentage)
             {
@@ -255,8 +246,8 @@ namespace EntityieldsAnalyser
             }
             #endregion
             #region set chart Data
-            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Aailable Fields To Create ", displayPercentage ? availableFieldToCreate * 1.0 / _entityDefaultColumnSize : availableFieldToCreate);
-            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Created Fields", displayPercentage ? _currentUseOfColumns * 1.0 / _entityDefaultColumnSize : _currentUseOfColumns);
+            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Aailable Fields To Create ", displayPercentage ? availableFieldToCreate * 1.0 / entityInfo.entityDefaultColumnSize : availableFieldToCreate);
+            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Created Fields", displayPercentage ? entityInfo.entityTotalUseOfColumns * 1.0 / entityInfo.entityDefaultColumnSize : entityInfo.entityTotalUseOfColumns);
             ChartFieldAvailabe.Dock = DockStyle.Fill;
             #endregion
         }
@@ -353,8 +344,8 @@ namespace EntityieldsAnalyser
             else//enable formating to percentage when check the checkbox
                 managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = "0.#%";
 
-            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Managed Fields", displayValues ? _managedFieldsCount : (_managedFieldsCount * 1.0 / (_managedFieldsCount+_unmanagedFieldsCount)));
-            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Unmanaged Fields", displayValues ? _unmanagedFieldsCount : (_unmanagedFieldsCount * 1.0 / (_managedFieldsCount + _unmanagedFieldsCount)));
+            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Managed Fields", displayValues ? entityInfo.managedFieldsCount : (entityInfo.managedFieldsCount * 1.0 / (entityInfo.managedFieldsCount + entityInfo.unmanagedFieldsCount)));
+            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Unmanaged Fields", displayValues ? entityInfo.unmanagedFieldsCount : (entityInfo.unmanagedFieldsCount * 1.0 / (entityInfo.managedFieldsCount + entityInfo.unmanagedFieldsCount)));
             managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].IsValueShownAsLabel = true;
             managedUnmanagedFieldsChart.Dock = DockStyle.Fill;
         }
@@ -362,7 +353,7 @@ namespace EntityieldsAnalyser
         public static bool CanICreateThisNumberOfFields(String lookupsType, String pickListTypes, String othersTypes)
         {
             int askedCreatedFieldsColumnsSize = (int.Parse(lookupsType) * 3) + (int.Parse(pickListTypes) * 2) + (int.Parse(othersTypes) * 1);
-            int availableFieldsToCreate = _entityDefaultColumnSize - _currentUseOfColumns;
+            int availableFieldsToCreate = entityInfo.entityDefaultColumnSize - entityInfo.entityTotalUseOfColumns;
             if (availableFieldsToCreate > askedCreatedFieldsColumnsSize)
                 return true;
             else
@@ -391,20 +382,14 @@ namespace EntityieldsAnalyser
         }
 
         public static void setStatisticsFieldText(Label statisticsText) {
-            if (_totalRecordsEntity > 0)
-                statisticsText.Text = "Statistics Based On " + _totalRecordsEntity + " Records";
+            if (entityInfo.entityRecordsCount > 0)
+                statisticsText.Text = "Statistics Based On " + entityInfo.entityRecordsCount + " Records";
             else
                 statisticsText.Text = String.Empty;
-            _totalRecordsEntity = 0;
         }
 
         public static void  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
-            FileManaged.ExportFile(entityParams,
-                                   entityInfo,
-                                   new int[] { _managedFieldsCount, _unmanagedFieldsCount },
-                                   new int[] { _customField, _standardField },
-                                   new int[] { _currentUseOfColumns , _entityDefaultColumnSize
-                                             });
+            FileManaged.ExportFile(entityParams, entityInfo);
         }
     }
 }

@@ -31,18 +31,18 @@ namespace EntityieldsAnalyser
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyPluginControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.getEntitiesButton = new System.Windows.Forms.Button();
             this.EntityGridView = new System.Windows.Forms.DataGridView();
             this.visualStudioToolStripExtender1 = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
@@ -74,6 +74,9 @@ namespace EntityieldsAnalyser
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonExport = new System.Windows.Forms.Button();
             this.analyseButton = new System.Windows.Forms.Button();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
+            this.helpButton = new System.Windows.Forms.ToolStripButton();
+            this.byButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -94,34 +97,24 @@ namespace EntityieldsAnalyser
             this.toolStripMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssSeparator1,
-            this.tsbClose});
+            this.tsbClose,
+            this.byButton,
+            this.helpButton});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(1913, 25);
+            this.toolStripMenu.Size = new System.Drawing.Size(1913, 26);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
+            this.toolStripMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripMenu_ItemClicked);
             // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
-            this.tssSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tsbClose
-            // 
-            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbClose.Font = new System.Drawing.Font("Segoe UI", 2.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbClose.Image = global::EntityieldsAnalyser.Properties.Resources.Exit;
-            this.tsbClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsbClose.RightToLeftAutoMirrorImage = true;
-            this.tsbClose.Size = new System.Drawing.Size(23, 22);
-            this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            this.tssSeparator1.Size = new System.Drawing.Size(6, 26);
             // 
             // getEntitiesButton
             // 
-            this.getEntitiesButton.Location = new System.Drawing.Point(221, 2);
+            this.getEntitiesButton.Location = new System.Drawing.Point(221, 4);
             this.getEntitiesButton.Name = "getEntitiesButton";
             this.getEntitiesButton.Size = new System.Drawing.Size(75, 23);
             this.getEntitiesButton.TabIndex = 6;
@@ -139,7 +132,7 @@ namespace EntityieldsAnalyser
             this.EntityGridView.MultiSelect = false;
             this.EntityGridView.Name = "EntityGridView";
             this.EntityGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.EntityGridView.Size = new System.Drawing.Size(482, 990);
+            this.EntityGridView.Size = new System.Drawing.Size(482, 989);
             this.EntityGridView.TabIndex = 3;
             this.EntityGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EntityGridView_CellContentClick_1);
             // 
@@ -155,14 +148,14 @@ namespace EntityieldsAnalyser
             "Custom Entities",
             "CRM Entities",
             "System Entities"});
-            this.entityTypeComboBox.Location = new System.Drawing.Point(51, 3);
+            this.entityTypeComboBox.Location = new System.Drawing.Point(51, 4);
             this.entityTypeComboBox.Name = "entityTypeComboBox";
             this.entityTypeComboBox.Size = new System.Drawing.Size(157, 21);
             this.entityTypeComboBox.TabIndex = 3;
             // 
             // searchEntity
             // 
-            this.searchEntity.Location = new System.Drawing.Point(310, 3);
+            this.searchEntity.Location = new System.Drawing.Point(310, 4);
             this.searchEntity.Name = "searchEntity";
             this.searchEntity.Size = new System.Drawing.Size(188, 20);
             this.searchEntity.TabIndex = 1;
@@ -174,9 +167,9 @@ namespace EntityieldsAnalyser
             // 
             this.groupBox1.Controls.Add(this.EntityGridView);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox1.Location = new System.Drawing.Point(0, 25);
+            this.groupBox1.Location = new System.Drawing.Point(0, 26);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(498, 1009);
+            this.groupBox1.Size = new System.Drawing.Size(498, 1008);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Entities";
@@ -249,23 +242,23 @@ namespace EntityieldsAnalyser
             this.ManagedUnmanagedFieldsgroupBox.Size = new System.Drawing.Size(450, 375);
             this.ManagedUnmanagedFieldsgroupBox.TabIndex = 6;
             this.ManagedUnmanagedFieldsgroupBox.TabStop = false;
-            this.ManagedUnmanagedFieldsgroupBox.Text = "Managed/UnmanagedFields";
+            this.ManagedUnmanagedFieldsgroupBox.Text = "Managed/Unmanaged Fields";
             this.ManagedUnmanagedFieldsgroupBox.Visible = false;
             // 
             // chartManagedUnmanagedFields
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea1);
+            chartArea7.Name = "ChartArea1";
+            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea7);
             this.chartManagedUnmanagedFields.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartManagedUnmanagedFields.Legends.Add(legend1);
+            legend7.Name = "Legend1";
+            this.chartManagedUnmanagedFields.Legends.Add(legend7);
             this.chartManagedUnmanagedFields.Location = new System.Drawing.Point(3, 16);
             this.chartManagedUnmanagedFields.Name = "chartManagedUnmanagedFields";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series1.Legend = "Legend1";
-            series1.Name = "managedUnmanagedFields";
-            this.chartManagedUnmanagedFields.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series7.Legend = "Legend1";
+            series7.Name = "managedUnmanagedFields";
+            this.chartManagedUnmanagedFields.Series.Add(series7);
             this.chartManagedUnmanagedFields.Size = new System.Drawing.Size(444, 356);
             this.chartManagedUnmanagedFields.TabIndex = 3;
             // 
@@ -277,23 +270,23 @@ namespace EntityieldsAnalyser
             this.EntityFieldsCreatedGroupBox.Size = new System.Drawing.Size(450, 375);
             this.EntityFieldsCreatedGroupBox.TabIndex = 5;
             this.EntityFieldsCreatedGroupBox.TabStop = false;
-            this.EntityFieldsCreatedGroupBox.Text = "Entity Fields Created";
+            this.EntityFieldsCreatedGroupBox.Text = "Entity Fields Usage Volume";
             this.EntityFieldsCreatedGroupBox.Visible = false;
             // 
             // ChartFieldAvailable
             // 
-            chartArea2.Name = "ChartArea1";
-            this.ChartFieldAvailable.ChartAreas.Add(chartArea2);
+            chartArea8.Name = "ChartArea1";
+            this.ChartFieldAvailable.ChartAreas.Add(chartArea8);
             this.ChartFieldAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.ChartFieldAvailable.Legends.Add(legend2);
+            legend8.Name = "Legend1";
+            this.ChartFieldAvailable.Legends.Add(legend8);
             this.ChartFieldAvailable.Location = new System.Drawing.Point(3, 16);
             this.ChartFieldAvailable.Name = "ChartFieldAvailable";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series2.Legend = "Legend1";
-            series2.Name = "AvailableField";
-            this.ChartFieldAvailable.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series8.Legend = "Legend1";
+            series8.Name = "AvailableField";
+            this.ChartFieldAvailable.Series.Add(series8);
             this.ChartFieldAvailable.Size = new System.Drawing.Size(444, 356);
             this.ChartFieldAvailable.TabIndex = 1;
             // 
@@ -310,20 +303,20 @@ namespace EntityieldsAnalyser
             // 
             // ChartFieldTypes
             // 
-            chartArea3.Name = "ChartArea1";
-            this.ChartFieldTypes.ChartAreas.Add(chartArea3);
+            chartArea9.Name = "ChartArea1";
+            this.ChartFieldTypes.ChartAreas.Add(chartArea9);
             this.ChartFieldTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.ItemColumnSpacing = 0;
-            legend3.Name = "Legend1";
-            this.ChartFieldTypes.Legends.Add(legend3);
+            legend9.ItemColumnSpacing = 0;
+            legend9.Name = "Legend1";
+            this.ChartFieldTypes.Legends.Add(legend9);
             this.ChartFieldTypes.Location = new System.Drawing.Point(3, 16);
             this.ChartFieldTypes.Name = "ChartFieldTypes";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series3.Legend = "Legend1";
-            series3.Name = "fieldsReport";
-            series3.SmartLabelStyle.MaxMovingDistance = 0D;
-            this.ChartFieldTypes.Series.Add(series3);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series9.Legend = "Legend1";
+            series9.Name = "fieldsReport";
+            series9.SmartLabelStyle.MaxMovingDistance = 0D;
+            this.ChartFieldTypes.Series.Add(series9);
             this.ChartFieldTypes.Size = new System.Drawing.Size(444, 356);
             this.ChartFieldTypes.TabIndex = 0;
             // 
@@ -359,7 +352,7 @@ namespace EntityieldsAnalyser
             this.fieldCalculatorGroupBox.Size = new System.Drawing.Size(1385, 106);
             this.fieldCalculatorGroupBox.TabIndex = 13;
             this.fieldCalculatorGroupBox.TabStop = false;
-            this.fieldCalculatorGroupBox.Text = "Field I Can Create";
+            this.fieldCalculatorGroupBox.Text = "Fields Calculator";
             // 
             // label6
             // 
@@ -396,9 +389,9 @@ namespace EntityieldsAnalyser
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(17, 16);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(243, 13);
+            this.label5.Size = new System.Drawing.Size(306, 13);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Enter The Number of Fields You Want To Create :";
+            this.label5.Text = "Enter The Number of Fields You Want To Create In Your Entity:";
             // 
             // label4
             // 
@@ -475,7 +468,7 @@ namespace EntityieldsAnalyser
             // 
             this.analyseButton.Image = global::EntityieldsAnalyser.Properties.Resources.Analyse;
             this.analyseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.analyseButton.Location = new System.Drawing.Point(506, 2);
+            this.analyseButton.Location = new System.Drawing.Point(506, 3);
             this.analyseButton.Name = "analyseButton";
             this.analyseButton.Size = new System.Drawing.Size(75, 23);
             this.analyseButton.TabIndex = 9;
@@ -483,6 +476,45 @@ namespace EntityieldsAnalyser
             this.analyseButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.analyseButton.UseVisualStyleBackColor = true;
             this.analyseButton.Click += new System.EventHandler(this.analyseButton_Click);
+            // 
+            // tsbClose
+            // 
+            this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbClose.Font = new System.Drawing.Font("Segoe UI", 2.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbClose.Image = global::EntityieldsAnalyser.Properties.Resources.Exit;
+            this.tsbClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsbClose.RightToLeftAutoMirrorImage = true;
+            this.tsbClose.Size = new System.Drawing.Size(23, 23);
+            this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            // 
+            // helpButton
+            // 
+            this.helpButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.helpButton.Image = global::EntityieldsAnalyser.Properties.Resources.help;
+            this.helpButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.helpButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpButton.Margin = new System.Windows.Forms.Padding(0, 4, 10, 2);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(52, 20);
+            this.helpButton.Text = "Help";
+            this.helpButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.helpButton.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // byButton
+            // 
+            this.byButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.byButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.byButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.byButton.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.byButton.Image = ((System.Drawing.Image)(resources.GetObject("byButton.Image")));
+            this.byButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.byButton.Name = "byButton";
+            this.byButton.Size = new System.Drawing.Size(95, 23);
+            this.byButton.Text = "// By AmraouiH";
+            this.byButton.Click += new System.EventHandler(this.byButton_Click);
             // 
             // MyPluginControl
             // 
@@ -558,5 +590,7 @@ namespace EntityieldsAnalyser
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripButton helpButton;
+        private System.Windows.Forms.ToolStripButton byButton;
     }
 }

@@ -43,7 +43,13 @@ namespace EntityieldsAnalyser
     {
         public string entityName;
         public string entityTechnicalName;
-        public int numberOfFields;
-        public int numberOfRecords;
+        public int entityFieldsCount = 0;
+        public int entityRecordsCount = 0;
+        public int managedFieldsCount = 0;
+        public int unmanagedFieldsCount = 0;
+        public int entityCustomFieldsCount = 0;
+        public int entityStandardFieldsCount = 0;
+        public int entityTotalUseOfColumns = 0;
+        public int entityDefaultColumnSize = 1024;
     }
 }

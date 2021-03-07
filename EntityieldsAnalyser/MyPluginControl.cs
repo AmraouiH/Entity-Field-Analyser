@@ -272,11 +272,11 @@ namespace EntityieldsAnalyser
                         fieldCalculatorGroupBox.Visible        = true;
                         buttonExport.Enabled                   = true;
                         #endregion
-                        fieldTypeCombobox.SelectedIndex        = 1;
+                        fieldTypeCombobox.SelectedIndex        = 1;//Select the second type in the fields type combobox
                         #region Chart ToolTip
                         ToolTip toolTip = new ToolTip();
-                        toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of entity fields use");
-                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Managned/Unmanaged Fields in Your Entity");
+                        toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of Use of the Entity Total Fields Volume");
+                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Count Managned/Unmanaged Fields in Your Entity");
                         toolTip.SetToolTip(this.EntityFieldsTypesGroupBox, "This Chart Display The Count of Fields Per Type");
                         #endregion
                     }
@@ -395,6 +395,36 @@ namespace EntityieldsAnalyser
         private void label6_Click(object sender, EventArgs e)
         {
             Process.Start("https://hamzaamraoui.medium.com/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields-ab39c699336e");
+        }
+
+        private void toolStripMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            string message = "";
+
+            message += "1. Select an Entity Filter and click Load Entities";
+            message += Environment.NewLine;
+            message += "2. Click the checkbox on any entity that you would like to Analyse";
+            message += Environment.NewLine;
+            message += "3. Search is wildcard already so you only need to type in the text you want to search for";
+            message += Environment.NewLine;
+            message += "4. Click Analyse when Ready";
+            message += Environment.NewLine;
+            message += "5. Click on Export to Save the Results in Excel File";
+            message += Environment.NewLine;
+            message += Environment.NewLine;
+            message += "If you have any issues please log them via GitHub and/or contact me at hamzamraoui11@gmail.com";
+
+            MessageBox.Show(message);
+        }
+
+        private void byButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.linkedin.com/in/hamza-amraoui/");
         }
     }
 }
