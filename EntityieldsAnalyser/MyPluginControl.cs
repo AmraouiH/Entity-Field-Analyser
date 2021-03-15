@@ -19,6 +19,8 @@ namespace EntityieldsAnalyser
         DataTable dtEntities;
         DataTable dtFields;
         Dictionary<AttributeTypeCode, List<entityParam>> entityFields = null;
+        String entitySelectedName = String.Empty;
+        String entitySelectedSchemaName = String.Empty;
         #endregion
 
         public MyPluginControl()
@@ -176,7 +178,17 @@ namespace EntityieldsAnalyser
         #region Analyse Button
         private void analyseButton_Click(object sender, EventArgs e)
         {
-            ExecuteMethod(AnalyseEntity);
+            String[] entitySelected = EntityFieldAnalyserManager.SelectedEntity(EntityGridView.Rows);
+            if (entitySelected.Length > 0) {
+                entitySelectedName = entitySelected[0];
+                entitySelectedSchemaName = entitySelected[1];
+                ExecuteMethod(AnalyseEntity);
+            }
+            else
+            {
+                MessageBox.Show("No Entity Was Selected! Please Select an Entity", "Warning");
+                return;
+            }
         }
         #endregion
         #region Analyse Entity Function
@@ -189,33 +201,8 @@ namespace EntityieldsAnalyser
                 {
                     try
                     {
-                        #region Variables
-                        dtFields                       = new DataTable();
-                        DataGridViewRowCollection rows = EntityGridView.Rows;
-                        bool isEntitySelected          = false;
-                        #endregion
-                        #region Analyse The Selected Entity
-                        foreach (DataGridViewRow row in rows)
-                        {
-                            var cell = row.Cells[2];
-                            if (cell != null)
-                            {
-                                if ((bool)cell.Value != null && (bool)cell.Value == true)
-                                {
-                                    isEntitySelected            = true;
-                                    string entityName           = row.Cells[0].Value.ToString();
-                                    string entityTechnicalName  = row.Cells[1].Value.ToString();
-                                    entityFields                = EntityFieldAnalyserManager.getEntityFields(Service, entityTechnicalName, entityName);
-                                }
-                            }
-                        }
-
-                        if (!isEntitySelected)
-                        {
-                            MessageBox.Show("No Entity selected! Please Select an Entity", "Warning");
-                            return;
-                        }
-                        #endregion
+                        dtFields      = new DataTable();
+                        entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName);
 
                         #region Entity Fiels Metadata  Set
                         dtFields.Columns.Add("Display Name", typeof(string));
@@ -296,7 +283,7 @@ namespace EntityieldsAnalyser
             EntityFieldAnalyserManager.SetFieldDataGridViewContent(entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem], dtFields);
             EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView);
             //Display the Column Target Just in case of Lookup Type
-            if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString())
+            if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString() || fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Owner.ToString())
             {
                 fieldPropretiesView.Columns[8].Visible = true;
             }
@@ -310,9 +297,13 @@ namespace EntityieldsAnalyser
             if (e.RowIndex >= 0)
             {
                 foreach (DataGridViewRow row in this.EntityGridView.Rows)
+                {
+                    if ((bool)EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value)
+                        continue;
                     row.Cells["Analyse"].Value = false;
+                }
 
-                this.EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value = true;
+                this.EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value = !(bool)EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value;
             }
         }
         #endregion
@@ -375,6 +366,12 @@ namespace EntityieldsAnalyser
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(textBox1.Text) || String.IsNullOrEmpty(textBox2.Text) || String.IsNullOrEmpty(textBox3.Text))
+            {
+                MessageBox.Show("Please Fill All The Types", "Warning");
+                return;
+            }
+
             bool isItPossibleToCreateThisFields = EntityFieldAnalyserManager.CanICreateThisNumberOfFields(textBox1.Text, textBox2.Text, textBox3.Text);
             if (isItPossibleToCreateThisFields)
                 MessageBox.Show("You Can Create This Fields", "Success");
@@ -395,11 +392,6 @@ namespace EntityieldsAnalyser
         private void label6_Click(object sender, EventArgs e)
         {
             Process.Start("https://hamzaamraoui.medium.com/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields-ab39c699336e");
-        }
-
-        private void toolStripMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -424,7 +416,31 @@ namespace EntityieldsAnalyser
 
         private void byButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.linkedin.com/in/hamza-amraoui/");
+            Process.Start("https://www.linkedin.com/in/hamza-amraoui/");
+        }
+
+        private void searchEntity_TextChaneged(object sender, EventArgs e)
+        {
+            if (searchEntity.Text == "" && dtEntities.Rows.Count > 0 && EntityGridView.Rows.Count != dtEntities.Rows.Count)
+            {
+                EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(dtEntities, EntityGridView);
+            }
+            else if (searchEntity.Text != "Search" && searchEntity.Text != "" && dtEntities.Rows.Count > 0)
+            {
+                string searchValue = searchEntity.Text.ToLower();
+                try
+                {
+                    DataRow[] filtered = dtEntities.Select("DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%'");
+                    if (filtered.Count() > 0)
+                    {
+                        EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(filtered.CopyToDataTable(), EntityGridView);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
+                }
+            }
         }
     }
 }

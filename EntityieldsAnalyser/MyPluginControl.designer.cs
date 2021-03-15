@@ -31,66 +31,82 @@ namespace EntityieldsAnalyser
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyPluginControl));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.visualStudioToolStripExtender1 = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.getEntitiesButton = new System.Windows.Forms.Button();
-            this.EntityGridView = new System.Windows.Forms.DataGridView();
-            this.visualStudioToolStripExtender1 = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
-            this.entityTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.searchEntity = new System.Windows.Forms.TextBox();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
+            this.byButton = new System.Windows.Forms.ToolStripButton();
+            this.helpButton = new System.Windows.Forms.ToolStripButton();
+            this.entityTypeComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.searchEntity = new System.Windows.Forms.ToolStripTextBox();
+            this.analyseButton = new System.Windows.Forms.ToolStripButton();
+            this.buttonExport = new System.Windows.Forms.ToolStripButton();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.fieldPropretiesView = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.fieldTypeCombobox = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.ManagedUnmanagedFieldsgroupBox = new System.Windows.Forms.GroupBox();
-            this.chartManagedUnmanagedFields = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.EntityGridView = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.DisplayPercentageCheckbox = new System.Windows.Forms.CheckBox();
             this.EntityFieldsCreatedGroupBox = new System.Windows.Forms.GroupBox();
             this.ChartFieldAvailable = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ManagedUnmanagedFieldsgroupBox = new System.Windows.Forms.GroupBox();
+            this.chartManagedUnmanagedFields = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.EntityFieldsTypesGroupBox = new System.Windows.Forms.GroupBox();
             this.ChartFieldTypes = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.DisplayPercentageCheckbox = new System.Windows.Forms.CheckBox();
+            this.fieldsGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.fieldPropretiesView = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.fieldTypeCombobox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.fieldCalculatorGroupBox = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.buttonExport = new System.Windows.Forms.Button();
-            this.analyseButton = new System.Windows.Forms.Button();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.helpButton = new System.Windows.Forms.ToolStripButton();
-            this.byButton = new System.Windows.Forms.ToolStripButton();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.MoreDetailsLink = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.toolStripMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldPropretiesView)).BeginInit();
-            this.groupBox3.SuspendLayout();
-            this.ManagedUnmanagedFieldsgroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartManagedUnmanagedFields)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.EntityFieldsCreatedGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartFieldAvailable)).BeginInit();
+            this.ManagedUnmanagedFieldsgroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartManagedUnmanagedFields)).BeginInit();
             this.EntityFieldsTypesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartFieldTypes)).BeginInit();
+            this.fieldsGroupBox.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fieldPropretiesView)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.fieldCalculatorGroupBox.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // visualStudioToolStripExtender1
+            // 
+            this.visualStudioToolStripExtender1.DefaultRenderer = null;
             // 
             // toolStripMenu
             // 
@@ -99,389 +115,28 @@ namespace EntityieldsAnalyser
             this.tssSeparator1,
             this.tsbClose,
             this.byButton,
-            this.helpButton});
+            this.helpButton,
+            this.entityTypeComboBox,
+            this.toolStripButton,
+            this.searchEntity,
+            this.analyseButton,
+            this.buttonExport});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1913, 26);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
-            this.toolStripMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripMenu_ItemClicked);
             // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
             this.tssSeparator1.Size = new System.Drawing.Size(6, 26);
             // 
-            // getEntitiesButton
-            // 
-            this.getEntitiesButton.Location = new System.Drawing.Point(221, 4);
-            this.getEntitiesButton.Name = "getEntitiesButton";
-            this.getEntitiesButton.Size = new System.Drawing.Size(75, 23);
-            this.getEntitiesButton.TabIndex = 6;
-            this.getEntitiesButton.Text = "Get Entities";
-            this.getEntitiesButton.UseVisualStyleBackColor = true;
-            this.getEntitiesButton.Click += new System.EventHandler(this.getEntitiesButton_Click);
-            // 
-            // EntityGridView
-            // 
-            this.EntityGridView.AllowUserToAddRows = false;
-            this.EntityGridView.AllowUserToDeleteRows = false;
-            this.EntityGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.EntityGridView.Dock = System.Windows.Forms.DockStyle.Left;
-            this.EntityGridView.Location = new System.Drawing.Point(3, 16);
-            this.EntityGridView.MultiSelect = false;
-            this.EntityGridView.Name = "EntityGridView";
-            this.EntityGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.EntityGridView.Size = new System.Drawing.Size(482, 989);
-            this.EntityGridView.TabIndex = 3;
-            this.EntityGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EntityGridView_CellContentClick_1);
-            // 
-            // visualStudioToolStripExtender1
-            // 
-            this.visualStudioToolStripExtender1.DefaultRenderer = null;
-            // 
-            // entityTypeComboBox
-            // 
-            this.entityTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.entityTypeComboBox.Items.AddRange(new object[] {
-            "All Entities",
-            "Custom Entities",
-            "CRM Entities",
-            "System Entities"});
-            this.entityTypeComboBox.Location = new System.Drawing.Point(51, 4);
-            this.entityTypeComboBox.Name = "entityTypeComboBox";
-            this.entityTypeComboBox.Size = new System.Drawing.Size(157, 21);
-            this.entityTypeComboBox.TabIndex = 3;
-            // 
-            // searchEntity
-            // 
-            this.searchEntity.Location = new System.Drawing.Point(310, 4);
-            this.searchEntity.Name = "searchEntity";
-            this.searchEntity.Size = new System.Drawing.Size(188, 20);
-            this.searchEntity.TabIndex = 1;
-            this.searchEntity.Text = "Search";
-            this.searchEntity.Click += new System.EventHandler(this.textBox1_Click);
-            this.searchEntity.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.EntityGridView);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox1.Location = new System.Drawing.Point(0, 26);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(498, 1008);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Entities";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.fieldPropretiesView);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.fieldTypeCombobox);
-            this.groupBox2.Location = new System.Drawing.Point(504, 25);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1409, 344);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Entity Analysis";
-            // 
-            // fieldPropretiesView
-            // 
-            this.fieldPropretiesView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.fieldPropretiesView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.fieldPropretiesView.Location = new System.Drawing.Point(6, 46);
-            this.fieldPropretiesView.Name = "fieldPropretiesView";
-            this.fieldPropretiesView.Size = new System.Drawing.Size(1385, 295);
-            this.fieldPropretiesView.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Fields Type";
-            // 
-            // fieldTypeCombobox
-            // 
-            this.fieldTypeCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.fieldTypeCombobox.FormattingEnabled = true;
-            this.fieldTypeCombobox.Location = new System.Drawing.Point(73, 19);
-            this.fieldTypeCombobox.Name = "fieldTypeCombobox";
-            this.fieldTypeCombobox.Size = new System.Drawing.Size(319, 21);
-            this.fieldTypeCombobox.TabIndex = 0;
-            this.fieldTypeCombobox.SelectedIndexChanged += new System.EventHandler(this.fieldTypeCombobox_SelectedIndexChanged);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.BackColor = System.Drawing.SystemColors.Window;
-            this.groupBox3.Controls.Add(this.ManagedUnmanagedFieldsgroupBox);
-            this.groupBox3.Controls.Add(this.EntityFieldsCreatedGroupBox);
-            this.groupBox3.Controls.Add(this.EntityFieldsTypesGroupBox);
-            this.groupBox3.Controls.Add(this.DisplayPercentageCheckbox);
-            this.groupBox3.Location = new System.Drawing.Point(507, 372);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1391, 527);
-            this.groupBox3.TabIndex = 12;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Reports";
-            // 
-            // ManagedUnmanagedFieldsgroupBox
-            // 
-            this.ManagedUnmanagedFieldsgroupBox.Controls.Add(this.chartManagedUnmanagedFields);
-            this.ManagedUnmanagedFieldsgroupBox.Location = new System.Drawing.Point(465, 41);
-            this.ManagedUnmanagedFieldsgroupBox.Name = "ManagedUnmanagedFieldsgroupBox";
-            this.ManagedUnmanagedFieldsgroupBox.Size = new System.Drawing.Size(450, 375);
-            this.ManagedUnmanagedFieldsgroupBox.TabIndex = 6;
-            this.ManagedUnmanagedFieldsgroupBox.TabStop = false;
-            this.ManagedUnmanagedFieldsgroupBox.Text = "Managed/Unmanaged Fields";
-            this.ManagedUnmanagedFieldsgroupBox.Visible = false;
-            // 
-            // chartManagedUnmanagedFields
-            // 
-            chartArea7.Name = "ChartArea1";
-            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea7);
-            this.chartManagedUnmanagedFields.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend7.Name = "Legend1";
-            this.chartManagedUnmanagedFields.Legends.Add(legend7);
-            this.chartManagedUnmanagedFields.Location = new System.Drawing.Point(3, 16);
-            this.chartManagedUnmanagedFields.Name = "chartManagedUnmanagedFields";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series7.Legend = "Legend1";
-            series7.Name = "managedUnmanagedFields";
-            this.chartManagedUnmanagedFields.Series.Add(series7);
-            this.chartManagedUnmanagedFields.Size = new System.Drawing.Size(444, 356);
-            this.chartManagedUnmanagedFields.TabIndex = 3;
-            // 
-            // EntityFieldsCreatedGroupBox
-            // 
-            this.EntityFieldsCreatedGroupBox.Controls.Add(this.ChartFieldAvailable);
-            this.EntityFieldsCreatedGroupBox.Location = new System.Drawing.Point(5, 41);
-            this.EntityFieldsCreatedGroupBox.Name = "EntityFieldsCreatedGroupBox";
-            this.EntityFieldsCreatedGroupBox.Size = new System.Drawing.Size(450, 375);
-            this.EntityFieldsCreatedGroupBox.TabIndex = 5;
-            this.EntityFieldsCreatedGroupBox.TabStop = false;
-            this.EntityFieldsCreatedGroupBox.Text = "Entity Fields Usage Volume";
-            this.EntityFieldsCreatedGroupBox.Visible = false;
-            // 
-            // ChartFieldAvailable
-            // 
-            chartArea8.Name = "ChartArea1";
-            this.ChartFieldAvailable.ChartAreas.Add(chartArea8);
-            this.ChartFieldAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend8.Name = "Legend1";
-            this.ChartFieldAvailable.Legends.Add(legend8);
-            this.ChartFieldAvailable.Location = new System.Drawing.Point(3, 16);
-            this.ChartFieldAvailable.Name = "ChartFieldAvailable";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series8.Legend = "Legend1";
-            series8.Name = "AvailableField";
-            this.ChartFieldAvailable.Series.Add(series8);
-            this.ChartFieldAvailable.Size = new System.Drawing.Size(444, 356);
-            this.ChartFieldAvailable.TabIndex = 1;
-            // 
-            // EntityFieldsTypesGroupBox
-            // 
-            this.EntityFieldsTypesGroupBox.Controls.Add(this.ChartFieldTypes);
-            this.EntityFieldsTypesGroupBox.Location = new System.Drawing.Point(925, 41);
-            this.EntityFieldsTypesGroupBox.Name = "EntityFieldsTypesGroupBox";
-            this.EntityFieldsTypesGroupBox.Size = new System.Drawing.Size(450, 375);
-            this.EntityFieldsTypesGroupBox.TabIndex = 4;
-            this.EntityFieldsTypesGroupBox.TabStop = false;
-            this.EntityFieldsTypesGroupBox.Text = "Entity Fields Types";
-            this.EntityFieldsTypesGroupBox.Visible = false;
-            // 
-            // ChartFieldTypes
-            // 
-            chartArea9.Name = "ChartArea1";
-            this.ChartFieldTypes.ChartAreas.Add(chartArea9);
-            this.ChartFieldTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend9.ItemColumnSpacing = 0;
-            legend9.Name = "Legend1";
-            this.ChartFieldTypes.Legends.Add(legend9);
-            this.ChartFieldTypes.Location = new System.Drawing.Point(3, 16);
-            this.ChartFieldTypes.Name = "ChartFieldTypes";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series9.Legend = "Legend1";
-            series9.Name = "fieldsReport";
-            series9.SmartLabelStyle.MaxMovingDistance = 0D;
-            this.ChartFieldTypes.Series.Add(series9);
-            this.ChartFieldTypes.Size = new System.Drawing.Size(444, 356);
-            this.ChartFieldTypes.TabIndex = 0;
-            // 
-            // DisplayPercentageCheckbox
-            // 
-            this.DisplayPercentageCheckbox.AutoSize = true;
-            this.DisplayPercentageCheckbox.Location = new System.Drawing.Point(7, 19);
-            this.DisplayPercentageCheckbox.Name = "DisplayPercentageCheckbox";
-            this.DisplayPercentageCheckbox.Size = new System.Drawing.Size(118, 17);
-            this.DisplayPercentageCheckbox.TabIndex = 2;
-            this.DisplayPercentageCheckbox.Text = "Display Percentage";
-            this.DisplayPercentageCheckbox.UseVisualStyleBackColor = true;
-            this.DisplayPercentageCheckbox.Visible = false;
-            this.DisplayPercentageCheckbox.CheckedChanged += new System.EventHandler(this.DisplayPercentageCheckbox_CheckedChanged);
-            // 
-            // fieldCalculatorGroupBox
-            // 
-            this.fieldCalculatorGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.fieldCalculatorGroupBox.BackColor = System.Drawing.SystemColors.Window;
-            this.fieldCalculatorGroupBox.Controls.Add(this.label6);
-            this.fieldCalculatorGroupBox.Controls.Add(this.label7);
-            this.fieldCalculatorGroupBox.Controls.Add(this.button1);
-            this.fieldCalculatorGroupBox.Controls.Add(this.label5);
-            this.fieldCalculatorGroupBox.Controls.Add(this.label4);
-            this.fieldCalculatorGroupBox.Controls.Add(this.label3);
-            this.fieldCalculatorGroupBox.Controls.Add(this.label2);
-            this.fieldCalculatorGroupBox.Controls.Add(this.textBox3);
-            this.fieldCalculatorGroupBox.Controls.Add(this.textBox2);
-            this.fieldCalculatorGroupBox.Controls.Add(this.textBox1);
-            this.fieldCalculatorGroupBox.Location = new System.Drawing.Point(510, 917);
-            this.fieldCalculatorGroupBox.Name = "fieldCalculatorGroupBox";
-            this.fieldCalculatorGroupBox.Size = new System.Drawing.Size(1385, 106);
-            this.fieldCalculatorGroupBox.TabIndex = 13;
-            this.fieldCalculatorGroupBox.TabStop = false;
-            this.fieldCalculatorGroupBox.Text = "Fields Calculator";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label6.Location = new System.Drawing.Point(372, 84);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Click For Details";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1208, 84);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(0, 13);
-            this.label7.TabIndex = 14;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(374, 55);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Verify";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(306, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Enter The Number of Fields You Want To Create In Your Entity:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 84);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Other Types";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(163, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "PickList, Money, Boolean, Status";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Lookups";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(199, 81);
-            this.textBox3.MaxLength = 3;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(107, 20);
-            this.textBox3.TabIndex = 2;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(199, 57);
-            this.textBox2.MaxLength = 3;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(107, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(199, 32);
-            this.textBox1.MaxLength = 3;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(107, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
-            // 
-            // buttonExport
-            // 
-            this.buttonExport.Image = global::EntityieldsAnalyser.Properties.Resources.Export;
-            this.buttonExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonExport.Location = new System.Drawing.Point(593, 3);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(75, 23);
-            this.buttonExport.TabIndex = 14;
-            this.buttonExport.Text = "Export ";
-            this.buttonExport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
-            // 
-            // analyseButton
-            // 
-            this.analyseButton.Image = global::EntityieldsAnalyser.Properties.Resources.Analyse;
-            this.analyseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.analyseButton.Location = new System.Drawing.Point(506, 3);
-            this.analyseButton.Name = "analyseButton";
-            this.analyseButton.Size = new System.Drawing.Size(75, 23);
-            this.analyseButton.TabIndex = 9;
-            this.analyseButton.Text = "Analyse";
-            this.analyseButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.analyseButton.UseVisualStyleBackColor = true;
-            this.analyseButton.Click += new System.EventHandler(this.analyseButton_Click);
-            // 
             // tsbClose
             // 
             this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbClose.Font = new System.Drawing.Font("Segoe UI", 2.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbClose.Image = global::EntityieldsAnalyser.Properties.Resources.Exit;
+            this.tsbClose.Image = global::EntityFieldsAnalyser.Properties.Resources.Exit;
             this.tsbClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbClose.Name = "tsbClose";
             this.tsbClose.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
@@ -489,19 +144,6 @@ namespace EntityieldsAnalyser
             this.tsbClose.Size = new System.Drawing.Size(23, 23);
             this.tsbClose.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
-            // helpButton
-            // 
-            this.helpButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.helpButton.Image = global::EntityieldsAnalyser.Properties.Resources.help;
-            this.helpButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.helpButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.helpButton.Margin = new System.Windows.Forms.Padding(0, 4, 10, 2);
-            this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(52, 20);
-            this.helpButton.Text = "Help";
-            this.helpButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.helpButton.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // byButton
             // 
@@ -516,81 +158,585 @@ namespace EntityieldsAnalyser
             this.byButton.Text = "// By AmraouiH";
             this.byButton.Click += new System.EventHandler(this.byButton_Click);
             // 
+            // helpButton
+            // 
+            this.helpButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.helpButton.Image = global::EntityFieldsAnalyser.Properties.Resources.help;
+            this.helpButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.helpButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpButton.Margin = new System.Windows.Forms.Padding(0, 4, 10, 2);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(52, 20);
+            this.helpButton.Text = "Help";
+            this.helpButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.helpButton.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // entityTypeComboBox
+            // 
+            this.entityTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.entityTypeComboBox.Items.AddRange(new object[] {
+            "All Entities",
+            "Custom Entities",
+            "CRM Entities",
+            "System Entities"});
+            this.entityTypeComboBox.Margin = new System.Windows.Forms.Padding(15, 0, 1, 0);
+            this.entityTypeComboBox.Name = "entityTypeComboBox";
+            this.entityTypeComboBox.Size = new System.Drawing.Size(121, 26);
+            // 
+            // toolStripButton
+            // 
+            this.toolStripButton.Image = global::EntityFieldsAnalyser.Properties.Resources.Analyse;
+            this.toolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton.Margin = new System.Windows.Forms.Padding(15, 1, 0, 2);
+            this.toolStripButton.Name = "toolStripButton";
+            this.toolStripButton.Size = new System.Drawing.Size(86, 23);
+            this.toolStripButton.Text = "Get Entities";
+            this.toolStripButton.Click += new System.EventHandler(this.getEntitiesButton_Click);
+            // 
+            // searchEntity
+            // 
+            this.searchEntity.Margin = new System.Windows.Forms.Padding(15, 3, 1, 0);
+            this.searchEntity.Name = "searchEntity";
+            this.searchEntity.Size = new System.Drawing.Size(100, 23);
+            this.searchEntity.Text = "Search";
+            this.searchEntity.Click += new System.EventHandler(this.textBox1_Click);
+            this.searchEntity.TextChanged += new System.EventHandler(this.searchEntity_TextChaneged);
+            // 
+            // analyseButton
+            // 
+            this.analyseButton.Image = ((System.Drawing.Image)(resources.GetObject("analyseButton.Image")));
+            this.analyseButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.analyseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.analyseButton.Margin = new System.Windows.Forms.Padding(20, 1, 0, 2);
+            this.analyseButton.Name = "analyseButton";
+            this.analyseButton.Size = new System.Drawing.Size(68, 23);
+            this.analyseButton.Text = "Analyse";
+            this.analyseButton.ToolTipText = "analyseButton";
+            this.analyseButton.Click += new System.EventHandler(this.analyseButton_Click);
+
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Image = global::EntityFieldsAnalyser.Properties.Resources.Export;
+            this.buttonExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonExport.Margin = new System.Windows.Forms.Padding(15, 1, 0, 2);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(96, 23);
+            this.buttonExport.Text = "Export Result";
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 26);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1913, 1008);
+            this.tableLayoutPanel1.TabIndex = 15;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.EntityGridView);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(376, 1002);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Entities";
+            // 
+            // EntityGridView
+            // 
+            this.EntityGridView.AllowUserToAddRows = false;
+            this.EntityGridView.AllowUserToDeleteRows = false;
+            this.EntityGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EntityGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EntityGridView.Location = new System.Drawing.Point(3, 16);
+            this.EntityGridView.MultiSelect = false;
+            this.EntityGridView.Name = "EntityGridView";
+            this.EntityGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.EntityGridView.Size = new System.Drawing.Size(370, 983);
+            this.EntityGridView.TabIndex = 3;
+            this.EntityGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EntityGridView_CellContentClick_1);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.fieldsGroupBox, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.fieldCalculatorGroupBox, 0, 2);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(385, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1525, 1002);
+            this.tableLayoutPanel2.TabIndex = 22;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel3.Controls.Add(this.DisplayPercentageCheckbox, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.EntityFieldsCreatedGroupBox, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.ManagedUnmanagedFieldsgroupBox, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.EntityFieldsTypesGroupBox, 2, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 353);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1519, 495);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // DisplayPercentageCheckbox
+            // 
+            this.DisplayPercentageCheckbox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.DisplayPercentageCheckbox.AutoSize = true;
+            this.DisplayPercentageCheckbox.Location = new System.Drawing.Point(3, 8);
+            this.DisplayPercentageCheckbox.Name = "DisplayPercentageCheckbox";
+            this.DisplayPercentageCheckbox.Size = new System.Drawing.Size(118, 17);
+            this.DisplayPercentageCheckbox.TabIndex = 9;
+            this.DisplayPercentageCheckbox.Text = "Display Percentage";
+            this.DisplayPercentageCheckbox.UseVisualStyleBackColor = true;
+            this.DisplayPercentageCheckbox.Visible = false;
+            this.DisplayPercentageCheckbox.CheckedChanged += new System.EventHandler(this.DisplayPercentageCheckbox_CheckedChanged);
+            // 
+            // EntityFieldsCreatedGroupBox
+            // 
+            this.EntityFieldsCreatedGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EntityFieldsCreatedGroupBox.Controls.Add(this.ChartFieldAvailable);
+            this.EntityFieldsCreatedGroupBox.Location = new System.Drawing.Point(3, 37);
+            this.EntityFieldsCreatedGroupBox.Name = "EntityFieldsCreatedGroupBox";
+            this.EntityFieldsCreatedGroupBox.Size = new System.Drawing.Size(500, 455);
+            this.EntityFieldsCreatedGroupBox.TabIndex = 6;
+            this.EntityFieldsCreatedGroupBox.TabStop = false;
+            this.EntityFieldsCreatedGroupBox.Text = "Entity Fields Usage Volume";
+            this.EntityFieldsCreatedGroupBox.Visible = false;
+            // 
+            // ChartFieldAvailable
+            // 
+            this.ChartFieldAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.ChartFieldAvailable.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ChartFieldAvailable.Legends.Add(legend1);
+            this.ChartFieldAvailable.Location = new System.Drawing.Point(0, 13);
+            this.ChartFieldAvailable.Name = "ChartFieldAvailable";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "AvailableField";
+            this.ChartFieldAvailable.Series.Add(series1);
+            this.ChartFieldAvailable.Size = new System.Drawing.Size(494, 436);
+            this.ChartFieldAvailable.TabIndex = 1;
+            // 
+            // ManagedUnmanagedFieldsgroupBox
+            // 
+            this.ManagedUnmanagedFieldsgroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ManagedUnmanagedFieldsgroupBox.Controls.Add(this.chartManagedUnmanagedFields);
+            this.ManagedUnmanagedFieldsgroupBox.Location = new System.Drawing.Point(509, 37);
+            this.ManagedUnmanagedFieldsgroupBox.Name = "ManagedUnmanagedFieldsgroupBox";
+            this.ManagedUnmanagedFieldsgroupBox.Size = new System.Drawing.Size(500, 455);
+            this.ManagedUnmanagedFieldsgroupBox.TabIndex = 7;
+            this.ManagedUnmanagedFieldsgroupBox.TabStop = false;
+            this.ManagedUnmanagedFieldsgroupBox.Text = "Managed/Unmanaged Fields";
+            this.ManagedUnmanagedFieldsgroupBox.Visible = false;
+            // 
+            // chartManagedUnmanagedFields
+            // 
+            this.chartManagedUnmanagedFields.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartManagedUnmanagedFields.Legends.Add(legend2);
+            this.chartManagedUnmanagedFields.Location = new System.Drawing.Point(3, 16);
+            this.chartManagedUnmanagedFields.Name = "chartManagedUnmanagedFields";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series2.Legend = "Legend1";
+            series2.Name = "managedUnmanagedFields";
+            this.chartManagedUnmanagedFields.Series.Add(series2);
+            this.chartManagedUnmanagedFields.Size = new System.Drawing.Size(494, 436);
+            this.chartManagedUnmanagedFields.TabIndex = 3;
+            // 
+            // EntityFieldsTypesGroupBox
+            // 
+            this.EntityFieldsTypesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EntityFieldsTypesGroupBox.Controls.Add(this.ChartFieldTypes);
+            this.EntityFieldsTypesGroupBox.Location = new System.Drawing.Point(1015, 37);
+            this.EntityFieldsTypesGroupBox.Name = "EntityFieldsTypesGroupBox";
+            this.EntityFieldsTypesGroupBox.Size = new System.Drawing.Size(501, 455);
+            this.EntityFieldsTypesGroupBox.TabIndex = 10;
+            this.EntityFieldsTypesGroupBox.TabStop = false;
+            this.EntityFieldsTypesGroupBox.Text = "Entity Fields Types";
+            this.EntityFieldsTypesGroupBox.Visible = false;
+            // 
+            // ChartFieldTypes
+            // 
+            this.ChartFieldTypes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea3.Name = "ChartArea1";
+            this.ChartFieldTypes.ChartAreas.Add(chartArea3);
+            legend3.ItemColumnSpacing = 0;
+            legend3.Name = "Legend1";
+            this.ChartFieldTypes.Legends.Add(legend3);
+            this.ChartFieldTypes.Location = new System.Drawing.Point(3, 16);
+            this.ChartFieldTypes.Name = "ChartFieldTypes";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series3.Legend = "Legend1";
+            series3.Name = "fieldsReport";
+            series3.SmartLabelStyle.MaxMovingDistance = 0D;
+            this.ChartFieldTypes.Series.Add(series3);
+            this.ChartFieldTypes.Size = new System.Drawing.Size(495, 436);
+            this.ChartFieldTypes.TabIndex = 0;
+            // 
+            // fieldsGroupBox
+            // 
+            this.fieldsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fieldsGroupBox.Controls.Add(this.tableLayoutPanel4);
+            this.fieldsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.fieldsGroupBox.Name = "fieldsGroupBox";
+            this.fieldsGroupBox.Size = new System.Drawing.Size(1519, 344);
+            this.fieldsGroupBox.TabIndex = 25;
+            this.fieldsGroupBox.TabStop = false;
+            this.fieldsGroupBox.Text = "Entity Fields";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.fieldPropretiesView, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1513, 325);
+            this.tableLayoutPanel4.TabIndex = 27;
+            // 
+            // fieldPropretiesView
+            // 
+            this.fieldPropretiesView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fieldPropretiesView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.fieldPropretiesView.Location = new System.Drawing.Point(3, 42);
+            this.fieldPropretiesView.Name = "fieldPropretiesView";
+            this.fieldPropretiesView.Size = new System.Drawing.Size(1507, 280);
+            this.fieldPropretiesView.TabIndex = 3;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel5.Controls.Add(this.fieldTypeCombobox, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.label8, 0, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(722, 26);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // fieldTypeCombobox
+            // 
+            this.fieldTypeCombobox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fieldTypeCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldTypeCombobox.FormattingEnabled = true;
+            this.fieldTypeCombobox.Location = new System.Drawing.Point(147, 3);
+            this.fieldTypeCombobox.Name = "fieldTypeCombobox";
+            this.fieldTypeCombobox.Size = new System.Drawing.Size(572, 21);
+            this.fieldTypeCombobox.TabIndex = 5;
+            this.fieldTypeCombobox.SelectedIndexChanged += new System.EventHandler(this.fieldTypeCombobox_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Margin = new System.Windows.Forms.Padding(0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(144, 26);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Fields Types";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fieldCalculatorGroupBox
+            // 
+            this.fieldCalculatorGroupBox.Controls.Add(this.tableLayoutPanel7);
+            this.fieldCalculatorGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fieldCalculatorGroupBox.Location = new System.Drawing.Point(3, 854);
+            this.fieldCalculatorGroupBox.Name = "fieldCalculatorGroupBox";
+            this.fieldCalculatorGroupBox.Size = new System.Drawing.Size(1519, 145);
+            this.fieldCalculatorGroupBox.TabIndex = 26;
+            this.fieldCalculatorGroupBox.TabStop = false;
+            this.fieldCalculatorGroupBox.Text = "Entity Fields Calculator";
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 1;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.tableLayoutPanel6, 0, 1);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 2;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1513, 126);
+            this.tableLayoutPanel7.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(1507, 18);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Enter The Number of Fields You Want To Create In Your Entity:";
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 4;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel6.Controls.Add(this.label4, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.textBox2, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.textBox3, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.MoreDetailsLink, 2, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label7, 3, 2);
+            this.tableLayoutPanel6.Controls.Add(this.button1, 2, 1);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 21);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 3;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1507, 102);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(3, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(220, 33);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Other Types";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(3, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(220, 33);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "PickList, Money, Boolean, Status";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox1.Location = new System.Drawing.Point(229, 6);
+            this.textBox1.MaxLength = 3;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(220, 20);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.Text = "0";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.Location = new System.Drawing.Point(229, 39);
+            this.textBox2.MaxLength = 3;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(220, 20);
+            this.textBox2.TabIndex = 8;
+            this.textBox2.Text = "0";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3.Location = new System.Drawing.Point(229, 74);
+            this.textBox3.MaxLength = 3;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(220, 20);
+            this.textBox3.TabIndex = 9;
+            this.textBox3.Text = "0";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(220, 23);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Lookups";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // MoreDetailsLink
+            // 
+            this.MoreDetailsLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MoreDetailsLink.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.MoreDetailsLink.Location = new System.Drawing.Point(472, 68);
+            this.MoreDetailsLink.Margin = new System.Windows.Forms.Padding(20, 2, 0, 0);
+            this.MoreDetailsLink.Name = "MoreDetailsLink";
+            this.MoreDetailsLink.Size = new System.Drawing.Size(83, 13);
+            this.MoreDetailsLink.TabIndex = 16;
+            this.MoreDetailsLink.Text = "Click For Details";
+            this.MoreDetailsLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MoreDetailsLink.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1469, 89);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "label7";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(462, 36);
+            this.button1.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(104, 27);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Verify";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MyPluginControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.buttonExport);
-            this.Controls.Add(this.fieldCalculatorGroupBox);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.searchEntity);
-            this.Controls.Add(this.analyseButton);
-            this.Controls.Add(this.entityTypeComboBox);
-            this.Controls.Add(this.getEntitiesButton);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "MyPluginControl";
             this.Size = new System.Drawing.Size(1913, 1034);
             this.Load += new System.EventHandler(this.MyPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);
             this.toolStripMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldPropretiesView)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.ManagedUnmanagedFieldsgroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartManagedUnmanagedFields)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EntityGridView)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.EntityFieldsCreatedGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChartFieldAvailable)).EndInit();
+            this.ManagedUnmanagedFieldsgroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartManagedUnmanagedFields)).EndInit();
             this.EntityFieldsTypesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChartFieldTypes)).EndInit();
+            this.fieldsGroupBox.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fieldPropretiesView)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.fieldCalculatorGroupBox.ResumeLayout(false);
-            this.fieldCalculatorGroupBox.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
+
+        private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender visualStudioToolStripExtender1;
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripSeparator tssSeparator1;
         private System.Windows.Forms.ToolStripButton tsbClose;
-        private System.Windows.Forms.Button getEntitiesButton;
-        private System.Windows.Forms.DataGridView EntityGridView;
-        private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender visualStudioToolStripExtender1;
-        private System.Windows.Forms.ComboBox entityTypeComboBox;
-        private System.Windows.Forms.TextBox searchEntity;
-        private System.Windows.Forms.Button analyseButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox fieldTypeCombobox;
-        private System.Windows.Forms.DataGridView fieldPropretiesView;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox fieldCalculatorGroupBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartFieldAvailable;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartFieldTypes;
-        private System.Windows.Forms.CheckBox DisplayPercentageCheckbox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartManagedUnmanagedFields;
-        private System.Windows.Forms.GroupBox ManagedUnmanagedFieldsgroupBox;
-        private System.Windows.Forms.GroupBox EntityFieldsCreatedGroupBox;
-        private System.Windows.Forms.GroupBox EntityFieldsTypesGroupBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonExport;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ToolStripButton helpButton;
         private System.Windows.Forms.ToolStripButton byButton;
+        private System.Windows.Forms.ToolStripButton helpButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView EntityGridView;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.CheckBox DisplayPercentageCheckbox;
+        private System.Windows.Forms.GroupBox ManagedUnmanagedFieldsgroupBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartManagedUnmanagedFields;
+        private System.Windows.Forms.GroupBox EntityFieldsCreatedGroupBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ChartFieldAvailable;
+        private System.Windows.Forms.GroupBox fieldsGroupBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.DataGridView fieldPropretiesView;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.ComboBox fieldTypeCombobox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox fieldCalculatorGroupBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label MoreDetailsLink;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox EntityFieldsTypesGroupBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ChartFieldTypes;
+        private System.Windows.Forms.ToolStripComboBox entityTypeComboBox;
+        private System.Windows.Forms.ToolStripButton toolStripButton;
+        private System.Windows.Forms.ToolStripTextBox searchEntity;
+        private System.Windows.Forms.ToolStripButton analyseButton;
+        private System.Windows.Forms.ToolStripButton buttonExport;
     }
 }

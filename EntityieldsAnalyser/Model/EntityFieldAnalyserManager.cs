@@ -73,7 +73,7 @@ namespace EntityieldsAnalyser
                 displayName       = field.DisplayName.UserLocalizedLabel != null ? field.DisplayName.UserLocalizedLabel.Label : String.Empty,
                 fieldName         = field.LogicalName,
                 isManaged         = field.IsManaged == true ? "Managed" : "Unmanaged",
-                target            = field.AttributeType.Value == AttributeTypeCode.Lookup && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
+                target            = (field.AttributeType.Value == AttributeTypeCode.Lookup || field.AttributeType.Value == AttributeTypeCode.Owner) && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
                 dateOfCreation    = field.CreatedOn.Value.Date,
                 introducedVersion = field.IntroducedVersion,
                 isAuditable       = field.IsAuditEnabled.Value,
@@ -246,7 +246,7 @@ namespace EntityieldsAnalyser
             }
             #endregion
             #region set chart Data
-            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Aailable Fields To Create ", displayPercentage ? availableFieldToCreate * 1.0 / entityInfo.entityDefaultColumnSize : availableFieldToCreate);
+            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Available Fields To Create ", displayPercentage ? availableFieldToCreate * 1.0 / entityInfo.entityDefaultColumnSize : availableFieldToCreate);
             ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Created Fields", displayPercentage ? entityInfo.entityTotalUseOfColumns * 1.0 / entityInfo.entityDefaultColumnSize : entityInfo.entityTotalUseOfColumns);
             ChartFieldAvailabe.Dock = DockStyle.Fill;
             #endregion
@@ -390,6 +390,24 @@ namespace EntityieldsAnalyser
 
         public static void  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams) {
             FileManaged.ExportFile(entityParams, entityInfo);
+        }
+
+        public static string[] SelectedEntity(DataGridViewRowCollection rows)
+        {
+            List<String> selectedEntity = new List<string>();
+            foreach (DataGridViewRow row in rows)
+            {
+                var cell = row.Cells[2];
+                if (cell != null)
+                {
+                    if ((bool)cell.Value != null && (bool)cell.Value == true)
+                    {
+                        selectedEntity.Add(row.Cells[0].Value.ToString());
+                        selectedEntity.Add(row.Cells[1].Value.ToString());
+                    }
+                }
+            }
+            return selectedEntity.ToArray();
         }
     }
 }

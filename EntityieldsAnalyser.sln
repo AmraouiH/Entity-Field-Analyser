@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1340
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityieldsAnalyser", "EntityieldsAnalyser\EntityieldsAnalyser.csproj", "{A9293AC1-BC82-41B3-9BD2-8BACB5DCCD37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFieldsAnalyser", "EntityieldsAnalyser\EntityFieldsAnalyser.csproj", "{A9293AC1-BC82-41B3-9BD2-8BACB5DCCD37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
