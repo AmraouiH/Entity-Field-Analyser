@@ -271,6 +271,9 @@
   <ItemGroup>
     <None Include="Ressources\help.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Ressources\RunAnalyse.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

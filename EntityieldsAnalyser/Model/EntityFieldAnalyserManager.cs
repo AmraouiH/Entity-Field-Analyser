@@ -33,7 +33,8 @@ namespace EntityieldsAnalyser
             RetrieveEntityRequest retrieveBankAccountEntityRequest = new RetrieveEntityRequest
             {
                 EntityFilters = EntityFilters.All,
-                LogicalName = entityTechnicalName
+                LogicalName = entityTechnicalName,
+                RetrieveAsIfPublished = true
             };
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             _data = formatList(retrieveEntityResponse, _data);
@@ -41,7 +42,7 @@ namespace EntityieldsAnalyser
             entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
-            entityInfo.entityFieldsCount                     = retrieveEntityResponse.EntityMetadata.Attributes.Count();
+            entityInfo.entityFieldsCount                  = retrieveEntityResponse.EntityMetadata.Attributes.Count();
 
             return setDictionaryCount(_entityRecords, _data); ;
         }
@@ -50,16 +51,16 @@ namespace EntityieldsAnalyser
         // ordering result data to a dictionary
         private static Dictionary<AttributeTypeCode, List<entityParam>> formatList(RetrieveEntityResponse _metadata, Dictionary<AttributeTypeCode, List<entityParam>> _data)
         {
-            foreach (var field in _metadata.EntityMetadata.Attributes)
+            foreach (var field in FilterAttributes(_metadata.EntityMetadata.Attributes))
             {
-                if (!_data.ContainsKey(field.AttributeType.Value))
-                {
-                    _data.Add(field.AttributeType.Value, new List<entityParam>() { setObject(field)});
-                }
-                else
-                {
-                    _data[field.AttributeType.Value].Add(setObject(field));
-                }
+                    if (!_data.ContainsKey(field.AttributeType.Value))
+                    {
+                        _data.Add(field.AttributeType.Value, new List<entityParam>() { setObject(field) });
+                    }
+                    else
+                    {
+                        _data[field.AttributeType.Value].Add(setObject(field));
+                    }
             }
 
             return _data;
@@ -70,11 +71,11 @@ namespace EntityieldsAnalyser
         {
             return new entityParam()
             {
-                displayName       = field.DisplayName.UserLocalizedLabel != null ? field.DisplayName.UserLocalizedLabel.Label : String.Empty,
+                displayName       = field.DisplayName.UserLocalizedLabel != null ? field.DisplayName.UserLocalizedLabel.Label : @"N/A",
                 fieldName         = field.LogicalName,
                 isManaged         = field.IsManaged == true ? "Managed" : "Unmanaged",
                 target            = (field.AttributeType.Value == AttributeTypeCode.Lookup || field.AttributeType.Value == AttributeTypeCode.Owner) && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty,
-                dateOfCreation    = field.CreatedOn.Value.Date,
+                dateOfCreation    = field.CreatedOn != null ? field.CreatedOn.Value.Date : DateTime.MinValue,
                 introducedVersion = field.IntroducedVersion,
                 isAuditable       = field.IsAuditEnabled.Value,
                 requiredLevel     = ((AttributeRequiredLevel)field.RequiredLevel.Value).ToString(),
@@ -408,6 +409,17 @@ namespace EntityieldsAnalyser
                 }
             }
             return selectedEntity.ToArray();
+        }
+
+        public static IEnumerable<AttributeMetadata> FilterAttributes(AttributeMetadata[] attributes)
+        {
+            return attributes.Where(a =>
+                            a.AttributeOf == null
+                            && a.AttributeType.Value != AttributeTypeCode.Virtual
+                            && a.AttributeType.Value != AttributeTypeCode.PartyList
+                            && a.IsValidForRead.Value
+                            && a.LogicalName.IndexOf("composite") < 0
+                            ).OrderBy(a => a.LogicalName);
         }
     }
 }

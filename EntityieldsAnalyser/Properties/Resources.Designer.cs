@@ -99,5 +99,15 @@ namespace EntityFieldsAnalyser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RunAnalyse {
+            get {
+                object obj = ResourceManager.GetObject("RunAnalyse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
