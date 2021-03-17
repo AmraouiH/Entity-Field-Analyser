@@ -105,7 +105,7 @@ namespace EntityieldsAnalyser
                     foreach (var item in _allEntitiesResp.EntityMetadata)
                     {
                         DataRow row        = dtEntities.NewRow();
-                        row["DisplayName"] = item.DisplayName.LocalizedLabels.Count > 0 ? item.DisplayName.UserLocalizedLabel.Label.ToString() : null;
+                        row["DisplayName"] = item.DisplayName.LocalizedLabels.Count > 0 ? item.DisplayName.UserLocalizedLabel.Label.ToString() : "N/A";
                         row["SchemaName"]  = item.LogicalName;
                         row["Analyse"]     = false;
 
@@ -259,11 +259,11 @@ namespace EntityieldsAnalyser
                         fieldCalculatorGroupBox.Visible        = true;
                         buttonExport.Enabled                   = true;
                         #endregion
-                        fieldTypeCombobox.SelectedIndex        = 1;//Select the second type in the fields type combobox
+                        fieldTypeCombobox.SelectedIndex        = 0;//Select the second type in the fields type combobox
                         #region Chart ToolTip
                         ToolTip toolTip = new ToolTip();
                         toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of Use of the Entity Total Fields Volume");
-                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Count Managned/Unmanaged Fields in Your Entity");
+                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Count Managed/Unmanaged Fields in Your Entity");
                         toolTip.SetToolTip(this.EntityFieldsTypesGroupBox, "This Chart Display The Count of Fields Per Type");
                         #endregion
                     }
@@ -302,7 +302,7 @@ namespace EntityieldsAnalyser
                         continue;
                     row.Cells["Analyse"].Value = false;
                 }
-
+                
                 this.EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value = !(bool)EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value;
             }
         }
@@ -323,7 +323,8 @@ namespace EntityieldsAnalyser
                 EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields, true);
             }
         }
-
+        #endregion
+        #region InitComponents
         private void InitComponents() {
             if(fieldPropretiesView.DataSource != null)
                 fieldPropretiesView.DataSource = null;
@@ -348,22 +349,21 @@ namespace EntityieldsAnalyser
             buttonExport.Enabled                     = false;
         }
         #endregion
-
+        #region allow of Number For Calculator
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
-
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
-
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
-
+        #endregion
+        #region CheckButton
         private void button1_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(textBox1.Text) || String.IsNullOrEmpty(textBox2.Text) || String.IsNullOrEmpty(textBox3.Text))
@@ -372,28 +372,33 @@ namespace EntityieldsAnalyser
                 return;
             }
 
+            volumedescription.Visible = true;
             bool isItPossibleToCreateThisFields = EntityFieldAnalyserManager.CanICreateThisNumberOfFields(textBox1.Text, textBox2.Text, textBox3.Text);
             if (isItPossibleToCreateThisFields)
-                MessageBox.Show("You Can Create This Fields", "Success");
+                MessageBox.Show("You Can Create This Number of Fields!!", "Success");
             else
-                MessageBox.Show("You Can't Create This Number of Fields", "Warning");
+                MessageBox.Show("You Can't Create This Number of Fields!!", "Warning");
         }
-
+        #endregion
+        #region Export
         private void buttonExport_Click(object sender, EventArgs e)
         {
             EntityFieldAnalyserManager.CallExportFunction(entityFields);
         }
-
+        #endregion
+        #region CloseTool
         private void tsbClose_Click(object sender, EventArgs e)
         {
             CloseTool();
         }
-
+        #endregion
+        #region MoreDetails
         private void label6_Click(object sender, EventArgs e)
         {
             Process.Start("https://hamzaamraoui.medium.com/field-limits-in-dynamics-365-how-many-fields-is-too-many-fields-ab39c699336e");
         }
-
+        #endregion
+        #region Help
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             string message = "";
@@ -413,12 +418,14 @@ namespace EntityieldsAnalyser
 
             MessageBox.Show(message);
         }
-
+        #endregion
+        #region DevelopedBy
         private void byButton_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.linkedin.com/in/hamza-amraoui/");
         }
-
+        #endregion
+        #region SearchForEntity
         private void searchEntity_TextChaneged(object sender, EventArgs e)
         {
             if (searchEntity.Text == "" && dtEntities.Rows.Count > 0 && EntityGridView.Rows.Count != dtEntities.Rows.Count)
@@ -442,5 +449,6 @@ namespace EntityieldsAnalyser
                 }
             }
         }
+        #endregion
     }
 }

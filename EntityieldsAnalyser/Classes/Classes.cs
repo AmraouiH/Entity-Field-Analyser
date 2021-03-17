@@ -43,6 +43,7 @@ namespace EntityieldsAnalyser
     {
         public string entityName;
         public string entityTechnicalName;
+        public DateTime entityDateOfCreation;
         public int entityFieldsCount = 0;
         public int entityRecordsCount = 0;
         public int managedFieldsCount = 0;

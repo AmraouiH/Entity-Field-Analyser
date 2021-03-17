@@ -42,7 +42,7 @@ namespace EntityieldsAnalyser
             entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
-            entityInfo.entityFieldsCount                  = retrieveEntityResponse.EntityMetadata.Attributes.Count();
+            entityInfo.entityDateOfCreation               = (DateTime)retrieveEntityResponse.EntityMetadata.CreatedOn;
 
             return setDictionaryCount(_entityRecords, _data); ;
         }
@@ -51,7 +51,9 @@ namespace EntityieldsAnalyser
         // ordering result data to a dictionary
         private static Dictionary<AttributeTypeCode, List<entityParam>> formatList(RetrieveEntityResponse _metadata, Dictionary<AttributeTypeCode, List<entityParam>> _data)
         {
-            foreach (var field in FilterAttributes(_metadata.EntityMetadata.Attributes))
+            var attributes = FilterAttributes(_metadata.EntityMetadata.Attributes);
+            entityInfo.entityFieldsCount = attributes.Count();
+            foreach (var field in attributes)
             {
                     if (!_data.ContainsKey(field.AttributeType.Value))
                     {
@@ -93,7 +95,7 @@ namespace EntityieldsAnalyser
             query.ColumnSet = new ColumnSet(true);
             var PageCookie = String.Empty;
             var PageNumber = 1;
-            var PageSize = 5000;
+            var PageSize = 2000;
 
             EntityCollection result;
             do

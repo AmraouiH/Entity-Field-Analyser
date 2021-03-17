@@ -18,7 +18,7 @@ namespace EntityieldsAnalyser
             String[] columnsHeaderName = new string[] {
                 "Display Name","Schema Name","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
             };
-            int headerIndex = 7;
+            int headerIndex = 8;
             int lineIndex = headerIndex + 1;
 
             if (fromatedList.Length > 0)
@@ -51,35 +51,29 @@ namespace EntityieldsAnalyser
                             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
                             #region DataGrid
                             worksheet = workbook.ActiveSheet;
-                            worksheet.Name = entityInfo.entityName+"_KPIsExport";
+                            worksheet.Name = entityInfo.entityName+"_MetaData";
 
                             if (entityInfo != null)
                             {
+                                for (int i = 1; i <= 6; i++)
+                                {
+                                    worksheet.Cells[i, 1].Font.Bold = true;
+                                    worksheet.Cells[i, 1].Interior.Color = Color.Wheat;
+                                    worksheet.Cells[i, 1].Font.Size = 12;
+                                }
+
                                 worksheet.Cells[1, 1]                = "Entity Display Name";
-                                worksheet.Cells[1, 1].Font.Bold      = true;
-                                worksheet.Cells[1, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[1, 1].Font.Size      = 12;
                                 worksheet.Cells[1, 2]                = entityInfo.entityName;
                                 worksheet.Cells[2, 1]                = "Entity Technical Name";
-                                worksheet.Cells[2, 1].Font.Bold      = true;
-                                worksheet.Cells[2, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[2, 1].Font.Size      = 12;
                                 worksheet.Cells[2, 2]                = entityInfo.entityTechnicalName;
-                                worksheet.Cells[3, 1]                = "Number Of Fields";
-                                worksheet.Cells[3, 1].Font.Bold      = true;
-                                worksheet.Cells[3, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[3, 1].Font.Size      = 12;
-                                worksheet.Cells[3, 2]                = entityInfo.entityFieldsCount;
-                                worksheet.Cells[4, 1]                = "Number Of Records";
-                                worksheet.Cells[4, 1].Font.Bold      = true;
-                                worksheet.Cells[4, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[4, 1].Font.Size      = 12;
-                                worksheet.Cells[4, 2]                = entityInfo.entityRecordsCount;
-                                worksheet.Cells[5, 1]                = "Entity Fields Volume Usage";
-                                worksheet.Cells[5, 1].Font.Bold      = true;
-                                worksheet.Cells[5, 1].Interior.Color = Color.Wheat;
-                                worksheet.Cells[5, 1].Font.Size      = 12;
-                                worksheet.Cells[5, 2]                = ((entityInfo.entityTotalUseOfColumns * 100) / entityInfo.entityDefaultColumnSize).ToString("0.##\\%");
+                                worksheet.Cells[3, 1]                = "CreatedOn";
+                                worksheet.Cells[3, 2]                = entityInfo.entityDateOfCreation;
+                                worksheet.Cells[4, 1]                = "Number Of Fields";
+                                worksheet.Cells[4, 2]                = entityInfo.entityFieldsCount;
+                                worksheet.Cells[5, 1]                = "Number Of Records";
+                                worksheet.Cells[5, 2]                = entityInfo.entityRecordsCount;
+                                worksheet.Cells[6, 1]                = "Entity Fields Volume Usage";
+                                worksheet.Cells[6, 2]                = ((entityInfo.entityTotalUseOfColumns * 100) / entityInfo.entityDefaultColumnSize).ToString("0.##\\%");
 
                             }
 
