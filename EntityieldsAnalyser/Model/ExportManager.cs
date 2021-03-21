@@ -112,10 +112,16 @@ namespace EntityieldsAnalyser
                             #region chartManagedUnmanaged
                             //add data 
                             xlNewSheet.Cells[2, 2] = "Managed";
+                            xlNewSheet.Cells[2, 2].Font.Color = Color.White;
                             xlNewSheet.Cells[2, 3] = entityInfo.managedFieldsCount;
+                            xlNewSheet.Cells[2, 3].Font.Color = Color.White;
+
 
                             xlNewSheet.Cells[3, 2] = "Unmanaged";
+                            xlNewSheet.Cells[3, 2].Font.Color = Color.White;
                             xlNewSheet.Cells[3, 3] = entityInfo.unmanagedFieldsCount;
+                            xlNewSheet.Cells[3, 3].Font.Color = Color.White;
+
 
                             Microsoft.Office.Interop.Excel.Range chartRange;
                             Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
@@ -131,10 +137,16 @@ namespace EntityieldsAnalyser
                             #region EntityFieldsCreated
                             //add data 
                             xlNewSheet.Cells[2, 10] = "Available Fields To Create";
+                            xlNewSheet.Cells[2, 10].Font.Color = Color.White;
                             xlNewSheet.Cells[2, 11] = entityInfo.entityDefaultColumnSize - entityInfo.entityTotalUseOfColumns;
+                            xlNewSheet.Cells[2, 11].Font.Color = Color.White;
+
 
                             xlNewSheet.Cells[3, 10] = "Created Fields";
+                            xlNewSheet.Cells[3, 10].Font.Color = Color.White;
                             xlNewSheet.Cells[3, 11] = entityInfo.entityTotalUseOfColumns;
+                            xlNewSheet.Cells[3, 11].Font.Color = Color.White;
+
 
                             Microsoft.Office.Interop.Excel.Range chartRangeTotaluse;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsTotalUse     = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
@@ -150,10 +162,15 @@ namespace EntityieldsAnalyser
                             #region CustomStandar
                             //add data 
                             xlNewSheet.Cells[2, 20] = "Standard Fields";
+                            xlNewSheet.Cells[2, 20].Font.Color = Color.White;
                             xlNewSheet.Cells[2, 21] = entityInfo.entityStandardFieldsCount;
+                            xlNewSheet.Cells[2, 21].Font.Color = Color.White;
+
 
                             xlNewSheet.Cells[3, 20] = "Custom Fields";
+                            xlNewSheet.Cells[3, 20].Font.Color = Color.White;
                             xlNewSheet.Cells[3, 21] = entityInfo.entityCustomFieldsCount;
+                            xlNewSheet.Cells[3, 21].Font.Color = Color.White;
 
                             Microsoft.Office.Interop.Excel.Range chartRangeCustomStandard;
                             Microsoft.Office.Interop.Excel.ChartObjects xlChartsCustomStandard = (Microsoft.Office.Interop.Excel.ChartObjects)xlNewSheet.ChartObjects(Type.Missing);
@@ -172,7 +189,9 @@ namespace EntityieldsAnalyser
                             foreach (var item in entityParam)
                             {
                                 xlNewSheet.Cells[indicator + 21, 10] = item.Key.ToString();
+                                xlNewSheet.Cells[indicator + 21, 10].Font.Color = Color.White;
                                 xlNewSheet.Cells[indicator + 21, 11] = item.Value.Count;
+                                xlNewSheet.Cells[indicator + 21, 11].Font.Color = Color.White;
                                 indicator++;
                             }
 

@@ -32,15 +32,15 @@ namespace EntityieldsAnalyser
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyPluginControl));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.visualStudioToolStripExtender1 = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -351,17 +351,17 @@ namespace EntityieldsAnalyser
             this.ChartFieldAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.ChartFieldAvailable.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.ChartFieldAvailable.Legends.Add(legend4);
+            chartArea1.Name = "ChartArea1";
+            this.ChartFieldAvailable.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ChartFieldAvailable.Legends.Add(legend1);
             this.ChartFieldAvailable.Location = new System.Drawing.Point(0, 13);
             this.ChartFieldAvailable.Name = "ChartFieldAvailable";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series4.Legend = "Legend1";
-            series4.Name = "AvailableField";
-            this.ChartFieldAvailable.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "AvailableField";
+            this.ChartFieldAvailable.Series.Add(series1);
             this.ChartFieldAvailable.Size = new System.Drawing.Size(494, 436);
             this.ChartFieldAvailable.TabIndex = 1;
             // 
@@ -384,17 +384,17 @@ namespace EntityieldsAnalyser
             this.chartManagedUnmanagedFields.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea5.Name = "ChartArea1";
-            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chartManagedUnmanagedFields.Legends.Add(legend5);
+            chartArea2.Name = "ChartArea1";
+            this.chartManagedUnmanagedFields.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartManagedUnmanagedFields.Legends.Add(legend2);
             this.chartManagedUnmanagedFields.Location = new System.Drawing.Point(3, 16);
             this.chartManagedUnmanagedFields.Name = "chartManagedUnmanagedFields";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series5.Legend = "Legend1";
-            series5.Name = "managedUnmanagedFields";
-            this.chartManagedUnmanagedFields.Series.Add(series5);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series2.Legend = "Legend1";
+            series2.Name = "managedUnmanagedFields";
+            this.chartManagedUnmanagedFields.Series.Add(series2);
             this.chartManagedUnmanagedFields.Size = new System.Drawing.Size(494, 436);
             this.chartManagedUnmanagedFields.TabIndex = 3;
             // 
@@ -417,19 +417,19 @@ namespace EntityieldsAnalyser
             this.ChartFieldTypes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea6.Name = "ChartArea1";
-            this.ChartFieldTypes.ChartAreas.Add(chartArea6);
-            legend6.ItemColumnSpacing = 0;
-            legend6.Name = "Legend1";
-            this.ChartFieldTypes.Legends.Add(legend6);
+            chartArea3.Name = "ChartArea1";
+            this.ChartFieldTypes.ChartAreas.Add(chartArea3);
+            legend3.ItemColumnSpacing = 0;
+            legend3.Name = "Legend1";
+            this.ChartFieldTypes.Legends.Add(legend3);
             this.ChartFieldTypes.Location = new System.Drawing.Point(3, 16);
             this.ChartFieldTypes.Name = "ChartFieldTypes";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series6.Legend = "Legend1";
-            series6.Name = "fieldsReport";
-            series6.SmartLabelStyle.MaxMovingDistance = 0D;
-            this.ChartFieldTypes.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series3.Legend = "Legend1";
+            series3.Name = "fieldsReport";
+            series3.SmartLabelStyle.MaxMovingDistance = 0D;
+            this.ChartFieldTypes.Series.Add(series3);
             this.ChartFieldTypes.Size = new System.Drawing.Size(495, 436);
             this.ChartFieldTypes.TabIndex = 0;
             // 
@@ -456,8 +456,8 @@ namespace EntityieldsAnalyser
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1513, 325);
             this.tableLayoutPanel4.TabIndex = 27;
             // 
@@ -467,9 +467,9 @@ namespace EntityieldsAnalyser
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fieldPropretiesView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.fieldPropretiesView.Location = new System.Drawing.Point(3, 42);
+            this.fieldPropretiesView.Location = new System.Drawing.Point(3, 51);
             this.fieldPropretiesView.Name = "fieldPropretiesView";
-            this.fieldPropretiesView.Size = new System.Drawing.Size(1507, 280);
+            this.fieldPropretiesView.Size = new System.Drawing.Size(1507, 271);
             this.fieldPropretiesView.TabIndex = 3;
             // 
             // tableLayoutPanel5
@@ -494,6 +494,7 @@ namespace EntityieldsAnalyser
             this.fieldTypeCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.fieldTypeCombobox.FormattingEnabled = true;
             this.fieldTypeCombobox.Location = new System.Drawing.Point(147, 3);
+            this.fieldTypeCombobox.MaxDropDownItems = 15;
             this.fieldTypeCombobox.Name = "fieldTypeCombobox";
             this.fieldTypeCombobox.Size = new System.Drawing.Size(572, 21);
             this.fieldTypeCombobox.TabIndex = 5;
