@@ -67,7 +67,7 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[2, 1]                = "Entity Technical Name";
                                 worksheet.Cells[2, 2]                = entityInfo.entityTechnicalName;
                                 worksheet.Cells[3, 1]                = "CreatedOn";
-                                worksheet.Cells[3, 2]                = entityInfo.entityDateOfCreation;
+                                worksheet.Cells[3, 2]                = entityInfo.entityDateOfCreation != DateTime.MinValue ? entityInfo.entityDateOfCreation.ToShortDateString() : String.Empty;
                                 worksheet.Cells[4, 1]                = "Number Of Fields";
                                 worksheet.Cells[4, 2]                = entityInfo.entityFieldsCount;
                                 worksheet.Cells[5, 1]                = "Number Of Records";
@@ -97,7 +97,7 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].isSearchable; ;
                                 worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].requiredLevel; ;
                                 worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].introducedVersion;
-                                worksheet.Cells[i + lineIndex, 10]  = fromatedList[i].dateOfCreation.ToShortDateString();
+                                worksheet.Cells[i + lineIndex, 10]  = fromatedList[i].dateOfCreation != DateTime.MinValue ? fromatedList[i].dateOfCreation.ToShortDateString() : String.Empty;
                                 worksheet.Cells[i + lineIndex, 11] = fromatedList[i].percentageOfUse.Replace(",",".");
                                 if (fromatedList[i].target == String.Empty) {
                                     worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;

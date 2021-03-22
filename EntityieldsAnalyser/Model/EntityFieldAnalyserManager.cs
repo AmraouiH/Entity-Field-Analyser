@@ -42,7 +42,7 @@ namespace EntityieldsAnalyser
             entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
-            entityInfo.entityDateOfCreation               = (DateTime)retrieveEntityResponse.EntityMetadata.CreatedOn;
+            entityInfo.entityDateOfCreation               = retrieveEntityResponse.EntityMetadata.CreatedOn != null ? (DateTime)retrieveEntityResponse.EntityMetadata.CreatedOn.Value.Date : DateTime.MinValue.Date;
 
             return setDictionaryCount(_entityRecords, _data); ;
         }
