@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using XrmToolBox.Extensibility;
 using Label = System.Windows.Forms.Label;
 
 namespace EntityieldsAnalyser
@@ -93,6 +94,7 @@ namespace EntityieldsAnalyser
             EntityCollection entities = new EntityCollection();
             QueryExpression query = new QueryExpression(entityName);
             query.ColumnSet = new ColumnSet(true);
+            query.NoLock = true;
             var PageCookie = String.Empty;
             var PageNumber = 1;
             var PageSize = 2000;
@@ -143,7 +145,7 @@ namespace EntityieldsAnalyser
                     else
                         entityInfo.unmanagedFieldsCount++;
 
-                   //For Custom Standard Chart
+                    //For Custom Standard Chart
                     if (entityParam.isCustom)
                         entityInfo.entityCustomFieldsCount++;
                     else
@@ -151,7 +153,6 @@ namespace EntityieldsAnalyser
 
                 }
             }
-
             return CalculatePercentageOfUse(_totalRecords, _data);
         }
 
@@ -325,7 +326,8 @@ namespace EntityieldsAnalyser
 
             EntityQueryExpression entityQueryExpression = new EntityQueryExpression()
             {
-                Criteria = entityFilter
+                Criteria = entityFilter,
+                Properties = new MetadataPropertiesExpression("LogicalName", "DisplayName")
             };
             RetrieveMetadataChangesRequest retrieveMetadataChangesRequest = new RetrieveMetadataChangesRequest()
             {
