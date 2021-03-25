@@ -196,13 +196,13 @@ namespace EntityieldsAnalyser
         {
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Analyse Entity ...",
+                Message = "Analysing ...",
                 Work = (worker, args) =>
                 {
                     try
                     {
                         dtFields      = new DataTable();
-                        entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName);
+                        entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName, worker);
 
                         #region Entity Fiels Metadata  Set
                         dtFields.Columns.Add("Display Name", typeof(string));

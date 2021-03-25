@@ -27,7 +27,7 @@ namespace EntityieldsAnalyser
 
         #endregion
         #region Get EntityFields
-        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName)
+        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName, BackgroundWorker worker)
         {
             entityInfo = new EntityInfo();
             Dictionary<AttributeTypeCode, List<entityParam>> _data = new Dictionary<AttributeTypeCode, List<entityParam>>();
@@ -37,9 +37,12 @@ namespace EntityieldsAnalyser
                 LogicalName = entityTechnicalName,
                 RetrieveAsIfPublished = true
             };
+
+            worker.ReportProgress(0,"Retrieving Entity MetaData...");
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             _data = formatList(retrieveEntityResponse, _data);
-            EntityCollection _entityRecords               = getEntityRecords(service, entityTechnicalName);
+            EntityCollection _entityRecords               = getEntityRecords(service, worker, entityTechnicalName);
+            worker.ReportProgress(0, "Analysing ...");
             entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
@@ -89,7 +92,7 @@ namespace EntityieldsAnalyser
         }
         #endregion
         #region Get Entity Records
-        private static EntityCollection getEntityRecords(IOrganizationService service, String entityName)
+        private static EntityCollection getEntityRecords(IOrganizationService service, BackgroundWorker worker, String entityName)
         {
             EntityCollection entities = new EntityCollection();
             QueryExpression query = new QueryExpression(entityName);
@@ -97,7 +100,7 @@ namespace EntityieldsAnalyser
             query.NoLock = true;
             var PageCookie = String.Empty;
             var PageNumber = 1;
-            var PageSize = 2000;
+            var PageSize = 5000;
 
             EntityCollection result;
             do
@@ -117,6 +120,7 @@ namespace EntityieldsAnalyser
                     PageNumber++;
                     PageCookie = result.PagingCookie;
                 }
+                worker.ReportProgress(0, $"Retrieving Entity Records ...{Environment.NewLine}"+ entities.Entities.Count+" Records");
             }
             while (result.MoreRecords);
             entities.Entities.AddRange(result.Entities);
