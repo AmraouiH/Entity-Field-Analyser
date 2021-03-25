@@ -24,13 +24,14 @@ namespace EntityieldsAnalyser
         private IOrganizationService _service;
         private IEnumerable<EntityMetadata> _metadataList;
         public static EntityInfo entityInfo          = null;
+        public static Dictionary<AttributeTypeCode, List<entityParam>> _data = null;
 
         #endregion
         #region Get EntityFields
         public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName, BackgroundWorker worker)
         {
             entityInfo = new EntityInfo();
-            Dictionary<AttributeTypeCode, List<entityParam>> _data = new Dictionary<AttributeTypeCode, List<entityParam>>();
+            _data = new Dictionary<AttributeTypeCode, List<entityParam>>();
             RetrieveEntityRequest retrieveBankAccountEntityRequest = new RetrieveEntityRequest
             {
                 EntityFilters = EntityFilters.All,
@@ -40,20 +41,21 @@ namespace EntityieldsAnalyser
 
             worker.ReportProgress(0,"Retrieving Entity MetaData...");
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
-            _data = formatList(retrieveEntityResponse, _data);
-            EntityCollection _entityRecords               = getEntityRecords(service, worker, entityTechnicalName);
+            formatList(retrieveEntityResponse, _data);
+
+            getEntityRecords(service, worker, _data, entityTechnicalName, entityInfo);
+
             worker.ReportProgress(0, "Analysing ...");
-            entityInfo.entityRecordsCount                 = _entityRecords.Entities.Count;
             entityInfo.entityName                         = entityName;
             entityInfo.entityTechnicalName                = entityTechnicalName;
             entityInfo.entityDateOfCreation               = retrieveEntityResponse.EntityMetadata.CreatedOn != null ? (DateTime)retrieveEntityResponse.EntityMetadata.CreatedOn.Value.Date : DateTime.MinValue.Date;
 
-            return setDictionaryCount(_entityRecords, _data); ;
+            return CalculatePercentageOfUse(entityInfo.entityRecordsCount, _data);
         }
         #endregion
         #region formatList function
         // ordering result data to a dictionary
-        private static Dictionary<AttributeTypeCode, List<entityParam>> formatList(RetrieveEntityResponse _metadata, Dictionary<AttributeTypeCode, List<entityParam>> _data)
+        private static void formatList(RetrieveEntityResponse _metadata, Dictionary<AttributeTypeCode, List<entityParam>> _data)
         {
             var attributes = FilterAttributes(_metadata.EntityMetadata.Attributes);
             entityInfo.entityFieldsCount = attributes.Count();
@@ -68,8 +70,6 @@ namespace EntityieldsAnalyser
                         _data[field.AttributeType.Value].Add(setObject(field));
                     }
             }
-
-            return _data;
         }
         #endregion
         #region setObject Function for Data Dictionary
@@ -92,7 +92,7 @@ namespace EntityieldsAnalyser
         }
         #endregion
         #region Get Entity Records
-        private static EntityCollection getEntityRecords(IOrganizationService service, BackgroundWorker worker, String entityName)
+        private static void getEntityRecords(IOrganizationService service, BackgroundWorker worker, Dictionary<AttributeTypeCode, List<entityParam>> _data, String entityName, EntityInfo entityInfo)
         {
             EntityCollection entities = new EntityCollection();
             QueryExpression query = new QueryExpression(entityName);
@@ -101,6 +101,7 @@ namespace EntityieldsAnalyser
             var PageCookie = String.Empty;
             var PageNumber = 1;
             var PageSize = 5000;
+            var totalrecords = 0;
 
             EntityCollection result;
             do
@@ -120,18 +121,20 @@ namespace EntityieldsAnalyser
                     PageNumber++;
                     PageCookie = result.PagingCookie;
                 }
-                worker.ReportProgress(0, $"Retrieving Entity Records ...{Environment.NewLine}"+ entities.Entities.Count+" Records");
+                totalrecords += result.Entities.Count();
+                worker.ReportProgress(0, $"Retrieving Entity Records ...{Environment.NewLine}"+ totalrecords + " Records");
+                setDictionaryCount(entities, _data, (PageNumber > 2 ? false : true));
             }
             while (result.MoreRecords);
             entities.Entities.AddRange(result.Entities);
+            setDictionaryCount(entities, _data, (PageNumber > 2 ? false : true));
 
-            return entities;
+            entityInfo.entityRecordsCount = totalrecords;
         }
         #endregion
         #region Calculate how much record is containing the field
-        private static Dictionary<AttributeTypeCode, List<entityParam>> setDictionaryCount(EntityCollection entityCollection, Dictionary<AttributeTypeCode, List<entityParam>> _data)
+        private static void setDictionaryCount(EntityCollection entityCollection, Dictionary<AttributeTypeCode, List<entityParam>> _data, bool shouldCalculateForReporting)
         {
-            var _totalRecords = entityCollection.Entities.Count;
             foreach (var entityParams in _data.Values)
             {
                 foreach (var entityParam in entityParams)
@@ -143,23 +146,25 @@ namespace EntityieldsAnalyser
                             entityParam.totalFiledRecords++;
                         }
                     }
-                    //for Managed/Unmanaged Chart
-                    if (entityParam.isManaged == "Managed")
-                        entityInfo.managedFieldsCount++;
-                    else
-                        entityInfo.unmanagedFieldsCount++;
 
-                    //For Custom Standard Chart
-                    if (entityParam.isCustom)
-                        entityInfo.entityCustomFieldsCount++;
-                    else
-                        entityInfo.entityStandardFieldsCount++;
+                    if (shouldCalculateForReporting)
+                    {
+                        //for Managed/Unmanaged Chart
+                        if (entityParam.isManaged == "Managed")
+                            entityInfo.managedFieldsCount++;
+                        else
+                            entityInfo.unmanagedFieldsCount++;
 
+                        //For Custom Standard Chart
+                        if (entityParam.isCustom)
+                            entityInfo.entityCustomFieldsCount++;
+                        else
+                            entityInfo.entityStandardFieldsCount++;
+                    }
                 }
             }
-            return CalculatePercentageOfUse(_totalRecords, _data);
+            entityCollection.Entities.Clear();
         }
-
 
         #endregion
         #region calculate The Percentage of use of each field

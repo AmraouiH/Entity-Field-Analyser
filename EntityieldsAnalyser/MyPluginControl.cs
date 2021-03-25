@@ -194,6 +194,10 @@ namespace EntityieldsAnalyser
         #region Analyse Entity Function
         private void AnalyseEntity()
         {
+            fieldTypeCombobox.Enabled = false;
+            buttonExport.Enabled = false;
+            analyseButton.Enabled = false;
+            DisplayPercentageCheckbox.Enabled = false;
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Analysing ...",
@@ -250,6 +254,7 @@ namespace EntityieldsAnalyser
                         #endregion
                         #region Manage Componenet Visibilty
                         searchEntity.Enabled                   = true;
+                        DisplayPercentageCheckbox.Enabled      = true;
                         DisplayPercentageCheckbox.Visible      = true;
                         fieldTypeCombobox.Enabled              = true;
                         DisplayPercentageCheckbox.Checked      = false;
@@ -258,6 +263,7 @@ namespace EntityieldsAnalyser
                         EntityFieldsTypesGroupBox.Visible      = true;
                         fieldCalculatorGroupBox.Visible        = true;
                         buttonExport.Enabled                   = true;
+                        analyseButton.Enabled                  = true;
                         #endregion
                         fieldTypeCombobox.SelectedIndex        = 0;//Select the second type in the fields type combobox
                         #region Chart ToolTip
