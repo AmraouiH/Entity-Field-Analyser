@@ -84,7 +84,8 @@ namespace EntityieldsAnalyser
             this.MoreDetailsLink = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.volumedescription = new System.Windows.Forms.Label();
+            this.volumedescription1 = new System.Windows.Forms.Label();
+            this.volumedescription2 = new System.Windows.Forms.Label();
             this.toolStripMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -564,7 +565,8 @@ namespace EntityieldsAnalyser
             this.tableLayoutPanel6.Controls.Add(this.MoreDetailsLink, 2, 2);
             this.tableLayoutPanel6.Controls.Add(this.label7, 3, 2);
             this.tableLayoutPanel6.Controls.Add(this.button1, 2, 1);
-            this.tableLayoutPanel6.Controls.Add(this.volumedescription, 3, 1);
+            this.tableLayoutPanel6.Controls.Add(this.volumedescription1, 3, 0);
+            this.tableLayoutPanel6.Controls.Add(this.volumedescription2, 3, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 21);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -572,6 +574,7 @@ namespace EntityieldsAnalyser
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(1507, 102);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
@@ -673,19 +676,30 @@ namespace EntityieldsAnalyser
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // volumedescription
+            // volumedescription1
             // 
-            this.volumedescription.AutoSize = true;
-            this.volumedescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.volumedescription.ForeColor = System.Drawing.Color.DarkRed;
-            this.volumedescription.Location = new System.Drawing.Point(681, 33);
-            this.volumedescription.Name = "volumedescription";
-            this.volumedescription.Size = new System.Drawing.Size(823, 33);
-            this.volumedescription.TabIndex = 18;
-            this.volumedescription.Text = "Each Lookup fields represent 0.292% of entity total volume. Each Picklist, Money," +
-    " Boolean, Status Fields represent 0.195% of entity volume.\r\nOther fields types r" +
-    "epresent 0.097% of entity volume.";
-            this.volumedescription.Visible = false;
+            this.volumedescription1.AutoSize = true;
+            this.volumedescription1.ForeColor = System.Drawing.Color.DarkRed;
+            this.volumedescription1.Location = new System.Drawing.Point(681, 0);
+            this.volumedescription1.Name = "volumedescription1";
+            this.volumedescription1.Size = new System.Drawing.Size(382, 13);
+            this.volumedescription1.TabIndex = 18;
+            this.volumedescription1.Text = "Each Picklist, Money, Boolean, Status Fields represent 0.195% of entity volume.\r\n" +
+    "";
+            this.volumedescription1.Visible = false;
+            // 
+            // volumedescription2
+            // 
+            this.volumedescription2.AutoSize = true;
+            this.volumedescription2.ForeColor = System.Drawing.Color.DarkRed;
+            this.volumedescription2.Location = new System.Drawing.Point(681, 33);
+            this.volumedescription2.Name = "volumedescription2";
+            this.volumedescription2.Size = new System.Drawing.Size(535, 13);
+            this.volumedescription2.TabIndex = 20;
+            this.volumedescription2.Text = "Each Lookup fields represent 0.292% of entity total volume. Other fields types re" +
+    "present 0.097% of entity volume.";
+            this.volumedescription2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.volumedescription2.Visible = false;
             // 
             // MyPluginControl
             // 
@@ -770,6 +784,7 @@ namespace EntityieldsAnalyser
         private System.Windows.Forms.ToolStripButton analyseButton;
         private System.Windows.Forms.ToolStripButton buttonExport;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.Label volumedescription;
+        private System.Windows.Forms.Label volumedescription1;
+        private System.Windows.Forms.Label volumedescription2;
     }
 }

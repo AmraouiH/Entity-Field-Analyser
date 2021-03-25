@@ -18,7 +18,7 @@ namespace EntityieldsAnalyser
             String[] columnsHeaderName = new string[] {
                 "Display Name","Schema Name","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
             };
-            int headerIndex = 8;
+            int headerIndex = 9;
             int lineIndex = headerIndex + 1;
 
             if (fromatedList.Length > 0)
@@ -74,7 +74,6 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[5, 2]                = entityInfo.entityRecordsCount;
                                 worksheet.Cells[6, 1]                = "Entity Fields Volume Usage";
                                 worksheet.Cells[6, 2]                = ((entityInfo.entityTotalUseOfColumns * 100) / entityInfo.entityDefaultColumnSize).ToString("0.##\\%");
-
                             }
 
                             for (int i = 1; i < columnsHeaderName.Length + 1; i++)
@@ -103,6 +102,8 @@ namespace EntityieldsAnalyser
                                     worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;
                                 }
                             }
+
+
 
                             worksheet.Columns.AutoFit();
                             #endregion

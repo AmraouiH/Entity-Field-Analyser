@@ -127,7 +127,7 @@ namespace EntityieldsAnalyser
             }
             while (result.MoreRecords);
             entities.Entities.AddRange(result.Entities);
-            setDictionaryCount(entities, _data, (PageNumber > 2 ? false : true));
+            setDictionaryCount(entities, _data, false);
 
             entityInfo.entityRecordsCount = totalrecords;
         }

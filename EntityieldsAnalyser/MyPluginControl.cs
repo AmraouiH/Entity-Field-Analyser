@@ -378,7 +378,8 @@ namespace EntityieldsAnalyser
                 return;
             }
 
-            volumedescription.Visible = true;
+            volumedescription1.Visible = true;
+            volumedescription2.Visible = true;
             bool isItPossibleToCreateThisFields = EntityFieldAnalyserManager.CanICreateThisNumberOfFields(textBox1.Text, textBox2.Text, textBox3.Text);
             if (isItPossibleToCreateThisFields)
                 MessageBox.Show("You Can Create This Number of Fields!!", "Success");
