@@ -51,7 +51,10 @@ namespace EntityieldsAnalyser
                             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
                             #region DataGrid
                             worksheet = workbook.ActiveSheet;
-                            worksheet.Name = entityInfo.entityName+"_MetaData";
+                            if (entityInfo.entityName.Length > 21)
+                                worksheet.Name = entityInfo.entityName.Substring(0, 21) + "_MetaData";
+                            else
+                                worksheet.Name = entityInfo.entityName+"_MetaData";
 
                             if (entityInfo != null)
                             {
@@ -74,6 +77,7 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[5, 2]                = entityInfo.entityRecordsCount;
                                 worksheet.Cells[6, 1]                = "Entity Fields Volume Usage";
                                 worksheet.Cells[6, 2]                = ((entityInfo.entityTotalUseOfColumns * 100) / entityInfo.entityDefaultColumnSize).ToString("0.##\\%");
+
                             }
 
                             for (int i = 1; i < columnsHeaderName.Length + 1; i++)
@@ -102,8 +106,6 @@ namespace EntityieldsAnalyser
                                     worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;
                                 }
                             }
-
-
 
                             worksheet.Columns.AutoFit();
                             #endregion
