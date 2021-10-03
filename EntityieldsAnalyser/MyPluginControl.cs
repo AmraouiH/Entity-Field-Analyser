@@ -93,6 +93,7 @@ namespace EntityieldsAnalyser
                     #endregion
                     #region getEntitiesMetadata
                     RetrieveMetadataChangesResponse _allEntitiesResp = EntityFieldAnalyserManager.GetEntitiesMetadat(Service, selectedTypeOfEntities);
+                    groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
                     #endregion
 
                     worker.ReportProgress(0, string.Format("Metadata has been retrieved!"));
@@ -457,5 +458,6 @@ namespace EntityieldsAnalyser
             }
         }
         #endregion
+
     }
 }

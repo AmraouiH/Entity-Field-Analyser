@@ -85,7 +85,7 @@ namespace EntityieldsAnalyser
                 introducedVersion = field.IntroducedVersion,
                 isAuditable       = field.IsAuditEnabled.Value,
                 requiredLevel     = ((AttributeRequiredLevel)field.RequiredLevel.Value).ToString(),
-                isSearchable      = (bool)field.IsSearchable,
+                isSearchable      = (bool)field.IsValidForAdvancedFind?.Value,
                 isCustom          = (bool)field.IsCustomAttribute,
                 totalFiledRecords = 0
             };
@@ -269,6 +269,7 @@ namespace EntityieldsAnalyser
         public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView)
         {
             fieldPropretiesView.DataSource = dt;
+            fieldPropretiesView.RowHeadersVisible = false;
             fieldPropretiesView.Sort(fieldPropretiesView.Columns[2], ListSortDirection.Ascending);
             fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
             fieldPropretiesView.Columns[0].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
@@ -300,6 +301,7 @@ namespace EntityieldsAnalyser
         public static void SetEntitiesGridViewHeaders(DataTable dt, DataGridView entityGridView)
         {
             entityGridView.DataSource = dt;
+            entityGridView.RowHeadersVisible = false;
             entityGridView.Sort(entityGridView.Columns[1], ListSortDirection.Ascending);
             entityGridView.ColumnHeadersDefaultCellStyle.Font    = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
             entityGridView.Columns[0].AutoSizeMode               = DataGridViewAutoSizeColumnMode.Fill;
