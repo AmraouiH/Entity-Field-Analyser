@@ -51,6 +51,7 @@ namespace EntityieldsAnalyser
             this.toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.searchEntity = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.AnalyseType = new System.Windows.Forms.ToolStripComboBox();
             this.analyseButton = new System.Windows.Forms.ToolStripButton();
             this.buttonExport = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -123,6 +124,7 @@ namespace EntityieldsAnalyser
             this.toolStripButton,
             this.searchEntity,
             this.toolStripSeparator1,
+            this.AnalyseType,
             this.analyseButton,
             this.buttonExport});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
@@ -216,6 +218,17 @@ namespace EntityieldsAnalyser
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 26);
+            // 
+            // AnalyseType
+            // 
+            this.AnalyseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AnalyseType.DropDownWidth = 106;
+            this.AnalyseType.Items.AddRange(new object[] {
+            "OnlyMetadata",
+            "Metadata + Data"});
+            this.AnalyseType.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
+            this.AnalyseType.Name = "AnalyseType";
+            this.AnalyseType.Size = new System.Drawing.Size(130, 26);
             // 
             // analyseButton
             // 
@@ -786,5 +799,6 @@ namespace EntityieldsAnalyser
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Label volumedescription1;
         private System.Windows.Forms.Label volumedescription2;
+        private System.Windows.Forms.ToolStripComboBox AnalyseType;
     }
 }

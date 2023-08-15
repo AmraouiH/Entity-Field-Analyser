@@ -28,7 +28,7 @@ namespace EntityieldsAnalyser
 
         #endregion
         #region Get EntityFields
-        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName, BackgroundWorker worker)
+        public static Dictionary<AttributeTypeCode, List<entityParam>> getEntityFields(IOrganizationService service, String entityTechnicalName, String entityName, BackgroundWorker worker, String analyseType)
         {
             entityInfo = new EntityInfo();
             _data = new Dictionary<AttributeTypeCode, List<entityParam>>();
@@ -43,7 +43,10 @@ namespace EntityieldsAnalyser
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             formatList(retrieveEntityResponse, _data);
 
-            getEntityRecords(service, worker, _data, entityTechnicalName, entityInfo);
+            if(analyseType == "Metadata + Data")
+                getEntityRecords(service, worker, _data, entityTechnicalName, entityInfo);
+
+            CalculateDataFroChartManagedUnmanaged(_data);
 
             worker.ReportProgress(0, "Analysing ...");
             entityInfo.entityName                         = entityName;
@@ -91,6 +94,30 @@ namespace EntityieldsAnalyser
             };
         }
         #endregion
+        #region Data For Chat Managed/Unmanaged
+        private static void CalculateDataFroChartManagedUnmanaged(Dictionary<AttributeTypeCode, List<entityParam>> _data) {
+            foreach (var entityParams in _data.Values)
+            {
+                foreach (var entityParam in entityParams)
+                {
+                    //for Managed/Unmanaged Chart
+                    if (entityParam.isManaged == "Managed")
+                        entityInfo.managedFieldsCount++;
+                    else
+                        entityInfo.unmanagedFieldsCount++;
+
+                    //For Custom Standard Chart
+                    if (entityParam.isCustom)
+                        entityInfo.entityCustomFieldsCount++;
+                    else
+                        entityInfo.entityStandardFieldsCount++;     
+                }
+            }
+        }
+
+        #endregion
+
+
         #region Get Entity Records
         private static void getEntityRecords(IOrganizationService service, BackgroundWorker worker, Dictionary<AttributeTypeCode, List<entityParam>> _data, String entityName, EntityInfo entityInfo)
         {
@@ -145,21 +172,6 @@ namespace EntityieldsAnalyser
                         {
                             entityParam.totalFiledRecords++;
                         }
-                    }
-
-                    if (shouldCalculateForReporting)
-                    {
-                        //for Managed/Unmanaged Chart
-                        if (entityParam.isManaged == "Managed")
-                            entityInfo.managedFieldsCount++;
-                        else
-                            entityInfo.unmanagedFieldsCount++;
-
-                        //For Custom Standard Chart
-                        if (entityParam.isCustom)
-                            entityInfo.entityCustomFieldsCount++;
-                        else
-                            entityInfo.entityStandardFieldsCount++;
                     }
                 }
             }
@@ -266,7 +278,7 @@ namespace EntityieldsAnalyser
         }
         #endregion
         #region SetFieldDataGridViewHeaders
-        public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView)
+        public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView, String analyseType)
         {
             fieldPropretiesView.DataSource = dt;
             fieldPropretiesView.RowHeadersVisible = false;
@@ -290,12 +302,26 @@ namespace EntityieldsAnalyser
             fieldPropretiesView.Columns[7].HeaderText              = "CreatedOn";
             fieldPropretiesView.Columns[8].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
             fieldPropretiesView.Columns[8].HeaderText              = "Target";
-            fieldPropretiesView.Columns[9].AutoSizeMode            = DataGridViewAutoSizeColumnMode.Fill;
-            fieldPropretiesView.Columns[9].HeaderText              = "Percentage Of Use";
+            if (analyseType == "Metadata + Data")
+            {
+                fieldPropretiesView.Columns[9].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                fieldPropretiesView.Columns[9].HeaderText = "Percentage Of Use";
+                foreach (DataGridViewRow item in fieldPropretiesView.Rows)
+                {
+                        if (item.Cells[9].Value != null && item.Cells[9].Value.ToString() == "0%") {
+                            foreach (DataGridViewCell t in item.Cells)
+                            {
+                                t.Style.BackColor = Color.LightGray;
+                            }
+                        }
+
+                }
+            }
 
             fieldPropretiesView.ReadOnly                           = true;
             fieldPropretiesView.Columns[8].Visible                 = false;
         }
+
         #endregion
         #region SetEntitiesGridViewHeaders
         public static void SetEntitiesGridViewHeaders(DataTable dt, DataGridView entityGridView)
@@ -376,7 +402,7 @@ namespace EntityieldsAnalyser
                 return false;
         }
 
-        public static void SetFieldDataGridViewContent(List<entityParam> entities, DataTable dtFields) {
+        public static void SetFieldDataGridViewContent(List<entityParam> entities, DataTable dtFields, String analyseType) {
 
             foreach (var item in entities)
             {
@@ -390,7 +416,10 @@ namespace EntityieldsAnalyser
                 row["Required Level"]       = item.requiredLevel;
                 row["Introduced Version"]   = item.introducedVersion;
                 row["CreatedOn"]            = item.dateOfCreation;
-                row["Percentage Of Use"]    = item.percentageOfUse;
+
+                if (analyseType == "Metadata + Data")
+                    row["Percentage Of Use"]    = item.percentageOfUse;
+
                 row["Target"]               = item.target;
 
                 dtFields.Rows.Add(row);

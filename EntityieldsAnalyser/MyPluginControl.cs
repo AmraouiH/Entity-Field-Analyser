@@ -33,6 +33,8 @@ namespace EntityieldsAnalyser
             #region ManageComponenetVisibility
             InitComponents();
             entityTypeComboBox.SelectedIndex = 0;
+            AnalyseType.SelectedIndex = 0;
+
             #endregion
             //Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -93,7 +95,7 @@ namespace EntityieldsAnalyser
                     #endregion
                     #region getEntitiesMetadata
                     RetrieveMetadataChangesResponse _allEntitiesResp = EntityFieldAnalyserManager.GetEntitiesMetadat(Service, selectedTypeOfEntities);
-                    groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
+                    //groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
                     #endregion
 
                     worker.ReportProgress(0, string.Format("Metadata has been retrieved!"));
@@ -135,6 +137,7 @@ namespace EntityieldsAnalyser
                         #region ManageComponenetVisibility
                         searchEntity.Enabled  = true;
                         analyseButton.Enabled = true;
+                        AnalyseType.Enabled   = true;
                         #endregion
                     }
                 }
@@ -181,6 +184,12 @@ namespace EntityieldsAnalyser
         {
             String[] entitySelected = EntityFieldAnalyserManager.SelectedEntity(EntityGridView.Rows);
             if (entitySelected.Length > 0) {
+                searchEntity.Enabled          = false;
+                analyseButton.Enabled         = false;
+                AnalyseType.Enabled           = false;
+                buttonExport.Enabled          = false;
+                entityTypeComboBox.Enabled    = false;
+                toolStripButton.Enabled       = false;
                 entitySelectedName = entitySelected[0];
                 entitySelectedSchemaName = entitySelected[1];
                 ExecuteMethod(AnalyseEntity);
@@ -199,6 +208,8 @@ namespace EntityieldsAnalyser
             buttonExport.Enabled = false;
             analyseButton.Enabled = false;
             DisplayPercentageCheckbox.Enabled = false;
+            label7.Text = String.Empty;
+            var analyseType = AnalyseType.SelectedItem.ToString();
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Analysing ...",
@@ -207,7 +218,7 @@ namespace EntityieldsAnalyser
                     try
                     {
                         dtFields      = new DataTable();
-                        entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName, worker);
+                        entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName, worker, analyseType);
 
                         #region Entity Fiels Metadata  Set
                         dtFields.Columns.Add("Display Name", typeof(string));
@@ -219,7 +230,8 @@ namespace EntityieldsAnalyser
                         dtFields.Columns.Add("Introduced Version", typeof(String));
                         dtFields.Columns.Add("CreatedOn", typeof(DateTime));
                         dtFields.Columns.Add("Target", typeof(string));
-                        dtFields.Columns.Add("Percentage Of Use", typeof(string));
+                        if(analyseType == "Metadata + Data")
+                            dtFields.Columns.Add("Percentage Of Use", typeof(string));
                         #endregion
 
                         args.Result = entityFields;
@@ -248,7 +260,9 @@ namespace EntityieldsAnalyser
                             fieldTypeCombobox.Items.Add(type);
                         }
                         #region Set Charts Data
-                        EntityFieldAnalyserManager.setStatisticsFieldText(label7);
+                        if (analyseType == "Metadata + Data")
+                            EntityFieldAnalyserManager.setStatisticsFieldText(label7);
+
                         EntityFieldAnalyserManager.SetChartFieldsType(result, ChartFieldTypes);
                         EntityFieldAnalyserManager.SetChartFieldAvailable(result, ChartFieldAvailable);
                         EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields);
@@ -265,6 +279,10 @@ namespace EntityieldsAnalyser
                         fieldCalculatorGroupBox.Visible        = true;
                         buttonExport.Enabled                   = true;
                         analyseButton.Enabled                  = true;
+                        AnalyseType.Enabled                    = true;
+                        buttonExport.Enabled                   = true;
+                        entityTypeComboBox.Enabled             = true;
+                        toolStripButton.Enabled                = true;
                         #endregion
                         fieldTypeCombobox.SelectedIndex        = 0;//Select the second type in the fields type combobox
                         #region Chart ToolTip
@@ -281,14 +299,15 @@ namespace EntityieldsAnalyser
         #region Display Field based On Selected Type
         private void fieldTypeCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var analyseType = AnalyseType.SelectedItem.ToString();
             #region clear grid view
             DataTable DT = (DataTable)fieldPropretiesView.DataSource;
             if (DT != null)
                 DT.Clear();
             #endregion
             #region Set Fields DataGridView Data After Change The Type
-            EntityFieldAnalyserManager.SetFieldDataGridViewContent(entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem], dtFields);
-            EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView);
+            EntityFieldAnalyserManager.SetFieldDataGridViewContent(entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem], dtFields, analyseType);
+            EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, analyseType);
             //Display the Column Target Just in case of Lookup Type
             if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString() || fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Owner.ToString())
             {
@@ -354,6 +373,7 @@ namespace EntityieldsAnalyser
             fieldTypeCombobox.Enabled                = false;
             fieldCalculatorGroupBox.Visible          = false;
             buttonExport.Enabled                     = false;
+            AnalyseType.Enabled                      = false;
         }
         #endregion
         #region allow of Number For Calculator
