@@ -224,7 +224,7 @@ namespace EntityieldsAnalyser
             this.AnalyseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AnalyseType.DropDownWidth = 106;
             this.AnalyseType.Items.AddRange(new object[] {
-            "OnlyMetadata",
+            "Metadata Only",
             "Metadata + Data"});
             this.AnalyseType.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.AnalyseType.Name = "AnalyseType";

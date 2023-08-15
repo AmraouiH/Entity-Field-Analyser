@@ -46,7 +46,7 @@ namespace EntityieldsAnalyser
             if(analyseType == "Metadata + Data")
                 getEntityRecords(service, worker, _data, entityTechnicalName, entityInfo);
 
-            CalculateDataFroChartManagedUnmanaged(_data);
+            CalculateDataForChartManagedUnmanaged(_data);
 
             worker.ReportProgress(0, "Analysing ...");
             entityInfo.entityName                         = entityName;
@@ -95,7 +95,7 @@ namespace EntityieldsAnalyser
         }
         #endregion
         #region Data For Chat Managed/Unmanaged
-        private static void CalculateDataFroChartManagedUnmanaged(Dictionary<AttributeTypeCode, List<entityParam>> _data) {
+        private static void CalculateDataForChartManagedUnmanaged(Dictionary<AttributeTypeCode, List<entityParam>> _data) {
             foreach (var entityParams in _data.Values)
             {
                 foreach (var entityParam in entityParams)
