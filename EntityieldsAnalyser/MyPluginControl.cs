@@ -95,7 +95,7 @@ namespace EntityieldsAnalyser
                     #endregion
                     #region getEntitiesMetadata
                     RetrieveMetadataChangesResponse _allEntitiesResp = EntityFieldAnalyserManager.GetEntitiesMetadat(Service, selectedTypeOfEntities);
-                    //groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
+                    groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
                     #endregion
 
                     worker.ReportProgress(0, string.Format("Metadata has been retrieved!"));
@@ -208,6 +208,7 @@ namespace EntityieldsAnalyser
             buttonExport.Enabled = false;
             analyseButton.Enabled = false;
             DisplayPercentageCheckbox.Enabled = false;
+            displayAllColumns.Enabled = false;
             label7.Text = String.Empty;
             var analyseType = AnalyseType.SelectedItem.ToString();
             WorkAsync(new WorkAsyncInfo
@@ -223,15 +224,51 @@ namespace EntityieldsAnalyser
                         #region Entity Fiels Metadata  Set
                         dtFields.Columns.Add("Display Name", typeof(string));
                         dtFields.Columns.Add("Schema Name", typeof(string));
+                        dtFields.Columns.Add("Description", typeof(string));
+                        dtFields.Columns.Add("Target", typeof(string));
                         dtFields.Columns.Add("Managed/Unmanaged", typeof(string));
+                        dtFields.Columns.Add("IsCustom", typeof(bool));
                         dtFields.Columns.Add("IsAuditable", typeof(bool));
                         dtFields.Columns.Add("IsSearchable", typeof(bool));
                         dtFields.Columns.Add("Required Level", typeof(string));
                         dtFields.Columns.Add("Introduced Version", typeof(String));
                         dtFields.Columns.Add("CreatedOn", typeof(DateTime));
-                        dtFields.Columns.Add("Target", typeof(string));
-                        if(analyseType == "Metadata + Data")
+                        dtFields.Columns.Add("ModifiedOn", typeof(DateTime));
+                        dtFields.Columns.Add("AttributeOf", typeof(string));
+                        dtFields.Columns.Add("AutoNumberFormat", typeof(string));
+                        dtFields.Columns.Add("CanBeSecuredForCreate", typeof(bool));
+                        dtFields.Columns.Add("CanBeSecuredForRead", typeof(bool));
+                        dtFields.Columns.Add("CanBeSecuredForUpdate", typeof(bool));
+                        dtFields.Columns.Add("CanModifyAdditionalSettings", typeof(bool));
+                        dtFields.Columns.Add("ColumnNumber", typeof(int));
+                        dtFields.Columns.Add("DeprecatedVersion", typeof(string));
+                        dtFields.Columns.Add("ExternalName", typeof(string));
+                        dtFields.Columns.Add("InheritsFrom", typeof(string));
+                        dtFields.Columns.Add("IsCustomizable", typeof(bool));
+                        dtFields.Columns.Add("IsDataSourceSecret", typeof(bool));
+                        dtFields.Columns.Add("IsFilterable", typeof(bool));
+                        dtFields.Columns.Add("IsGlobalFilterEnabled", typeof(bool));
+                        dtFields.Columns.Add("IsLogical", typeof(bool));
+                        dtFields.Columns.Add("IsPrimaryId", typeof(bool));
+                        dtFields.Columns.Add("IsPrimaryName", typeof(bool));
+                        dtFields.Columns.Add("IsRenameable", typeof(bool));
+                        dtFields.Columns.Add("IsRequiredForForm", typeof(bool));
+                        dtFields.Columns.Add("IsRetrievable", typeof(bool));
+                        dtFields.Columns.Add("IsSecured", typeof(bool));
+                        dtFields.Columns.Add("IsSortableEnabled", typeof(bool));
+                        dtFields.Columns.Add("IsValidForAdvancedFind", typeof(bool));
+                        dtFields.Columns.Add("IsValidForCreate", typeof(bool));
+                        dtFields.Columns.Add("IsValidForForm", typeof(bool));
+                        dtFields.Columns.Add("IsValidForGrid", typeof(bool));
+                        dtFields.Columns.Add("IsValidForRead", typeof(bool));
+                        dtFields.Columns.Add("IsValidForUpdate", typeof(bool));
+                        dtFields.Columns.Add("IsValidODataAttribute", typeof(bool));
+                        dtFields.Columns.Add("LinkedAttributeId", typeof(string));
+                        dtFields.Columns.Add("EntityLogicalName", typeof(string));
+                        dtFields.Columns.Add("SourceType", typeof(string));
+                        if (analyseType == "Metadata + Data")
                             dtFields.Columns.Add("Percentage Of Use", typeof(string));
+
                         #endregion
 
                         args.Result = entityFields;
@@ -273,6 +310,9 @@ namespace EntityieldsAnalyser
                         DisplayPercentageCheckbox.Visible      = true;
                         fieldTypeCombobox.Enabled              = true;
                         DisplayPercentageCheckbox.Checked      = false;
+                        displayAllColumns.Enabled              = true;
+                        displayAllColumns.Visible              = true;
+                        displayAllColumns.Checked              = false;
                         EntityFieldsCreatedGroupBox.Visible    = true;
                         ManagedUnmanagedFieldsgroupBox.Visible = true;
                         EntityFieldsTypesGroupBox.Visible      = true;
@@ -311,7 +351,7 @@ namespace EntityieldsAnalyser
             //Display the Column Target Just in case of Lookup Type
             if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString() || fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Owner.ToString())
             {
-                fieldPropretiesView.Columns[8].Visible = true;
+                fieldPropretiesView.Columns[3].Visible = true;
             }
             #endregion
         }
@@ -368,6 +408,7 @@ namespace EntityieldsAnalyser
             ManagedUnmanagedFieldsgroupBox.Visible   = false;
             EntityFieldsTypesGroupBox.Visible        = false;
             DisplayPercentageCheckbox.Visible        = false;
+            displayAllColumns.Visible                = false;
             searchEntity.Enabled                     = false;
             analyseButton.Enabled                    = false;
             fieldTypeCombobox.Enabled                = false;
@@ -411,7 +452,8 @@ namespace EntityieldsAnalyser
         #region Export
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            EntityFieldAnalyserManager.CallExportFunction(entityFields);
+            var analyseType = AnalyseType.SelectedItem.ToString() == "Metadata + Data" ? true : false;
+            EntityFieldAnalyserManager.CallExportFunction(entityFields, analyseType);
         }
         #endregion
         #region CloseTool
@@ -477,7 +519,21 @@ namespace EntityieldsAnalyser
                 }
             }
         }
+
         #endregion
 
+        private void displayAllColumns_CheckedChanged(object sender, EventArgs e)
+        {
+            var columnsCount = AnalyseType.SelectedItem.ToString() == "Metadata + Data" ? fieldPropretiesView.Columns.Count-1 : fieldPropretiesView.Columns.Count;
+                for (int i = 12; i < columnsCount; i++)
+            {
+                fieldPropretiesView.Columns[i].Visible = displayAllColumns.Checked;
+            }
+        }
+
+        private void buymeacoffeeiconClick(object sender, EventArgs e)
+        {
+            Process.Start("https://www.paypal.me/EntityFieldsAnalyser");
+        }
     }
 }

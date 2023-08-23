@@ -11,12 +11,14 @@ namespace EntityieldsAnalyser
     public class FileManaged
     {
 
-        public static void ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo)
+        public static void ExportFile(Dictionary<AttributeTypeCode, List<entityParam>> entityParam, EntityInfo entityInfo, bool analyseType)
         {
             SaveFileDialog sfd = null;
             DataColumns[] fromatedList = FormatDataForExport(entityParam);
             String[] columnsHeaderName = new string[] {
-                "Display Name","Schema Name","Type","Target", "Managed/Unmanaged","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","Percentage Of Use"
+                "Display Name","Schema Name","Description","Type","Target", "Managed/Unmanaged","IsCustom","IsAuditable","IsSearchable","Required Level","Introduced Version","CreatedOn","ModifiedOn","AttributeOf","AutoNumberFormat","CanBeSecuredForCreate","CanBeSecuredForRead",
+                "CanBeSecuredForRead","CanModifyAdditionalSettings","ColumnNumber","DeprecatedVersion","ExternalName","InheritsFrom","IsCustomizable","IsDataSourceSecret","IsFilterable","IsGlobalFilterEnabled","IsLogical","IsPrimaryId","IsPrimaryName","IsRenameable","IsRequiredForForm","IsRetrievable"
+                ,"IsSecured","IsSortableEnabled","IsValidForAdvancedFind","IsValidForCreate","IsValidForForm","IsValidForGrid","IsValidForRead","IsValidForUpdate","IsValidODataAttribute","LinkedAttributeId","EntityLogicalName","SourceType","Percentage Of Use"
             };
             int headerIndex = 9;
             int lineIndex = headerIndex + 1;
@@ -93,15 +95,50 @@ namespace EntityieldsAnalyser
                             {
                                 worksheet.Cells[i + lineIndex, 1]  = fromatedList[i].displayName;
                                 worksheet.Cells[i + lineIndex, 2] = fromatedList[i].fieldName;
-                                worksheet.Cells[i + lineIndex, 3]  = fromatedList[i].fieldType;
-                                worksheet.Cells[i + lineIndex, 4]  = fromatedList[i].target;
-                                worksheet.Cells[i + lineIndex, 5]  = fromatedList[i].isManaged;
-                                worksheet.Cells[i + lineIndex, 6]  = fromatedList[i].isAuditable;
-                                worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].isSearchable; ;
-                                worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].requiredLevel; ;
-                                worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].introducedVersion;
-                                worksheet.Cells[i + lineIndex, 10]  = fromatedList[i].dateOfCreation != DateTime.MinValue ? fromatedList[i].dateOfCreation.ToShortDateString() : String.Empty;
-                                worksheet.Cells[i + lineIndex, 11] = fromatedList[i].percentageOfUse.Replace(",",".");
+                                worksheet.Cells[i + lineIndex, 3] = fromatedList[i].Description;
+                                worksheet.Cells[i + lineIndex, 4]  = fromatedList[i].fieldType;
+                                worksheet.Cells[i + lineIndex, 5]  = fromatedList[i].target;
+                                worksheet.Cells[i + lineIndex, 6]  = fromatedList[i].isManaged;
+                                worksheet.Cells[i + lineIndex, 7]  = fromatedList[i].isCustom;
+                                worksheet.Cells[i + lineIndex, 8]  = fromatedList[i].isAuditable;
+                                worksheet.Cells[i + lineIndex, 9]  = fromatedList[i].isSearchable;
+                                worksheet.Cells[i + lineIndex, 10]  = fromatedList[i].requiredLevel;
+                                worksheet.Cells[i + lineIndex, 11]  = fromatedList[i].introducedVersion;
+                                worksheet.Cells[i + lineIndex, 12]  = fromatedList[i].dateOfCreation != DateTime.MinValue ? fromatedList[i].dateOfCreation.ToShortDateString() : String.Empty;
+                                worksheet.Cells[i + lineIndex, 13]  = fromatedList[i].ModifiedOn != DateTime.MinValue ? fromatedList[i].ModifiedOn.ToShortDateString() : String.Empty;
+                                worksheet.Cells[i + lineIndex, 14] = fromatedList[i].AttributeOf;
+                                worksheet.Cells[i + lineIndex, 15] = fromatedList[i].AutoNumberFormat;
+                                worksheet.Cells[i + lineIndex, 16] = fromatedList[i].CanBeSecuredForCreate;
+                                worksheet.Cells[i + lineIndex, 17] = fromatedList[i].CanBeSecuredForRead;
+                                worksheet.Cells[i + lineIndex, 18] = fromatedList[i].CanBeSecuredForUpdate;
+                                worksheet.Cells[i + lineIndex, 19] = fromatedList[i].CanModifyAdditionalSettings;
+                                worksheet.Cells[i + lineIndex, 20] = fromatedList[i].ColumnNumber;
+                                worksheet.Cells[i + lineIndex, 21] = fromatedList[i].DeprecatedVersion;
+                                worksheet.Cells[i + lineIndex, 22] = fromatedList[i].ExternalName;
+                                worksheet.Cells[i + lineIndex, 23] = fromatedList[i].InheritsFrom;
+                                worksheet.Cells[i + lineIndex, 24] = fromatedList[i].IsCustomizable;
+                                worksheet.Cells[i + lineIndex, 25] = fromatedList[i].IsDataSourceSecret;
+                                worksheet.Cells[i + lineIndex, 26] = fromatedList[i].IsFilterable;
+                                worksheet.Cells[i + lineIndex, 27] = fromatedList[i].IsGlobalFilterEnabled;
+                                worksheet.Cells[i + lineIndex, 28] = fromatedList[i].IsLogical;
+                                worksheet.Cells[i + lineIndex, 29] = fromatedList[i].IsPrimaryId;
+                                worksheet.Cells[i + lineIndex, 30] = fromatedList[i].IsPrimaryName;
+                                worksheet.Cells[i + lineIndex, 31] = fromatedList[i].IsRenameable;
+                                worksheet.Cells[i + lineIndex, 32] = fromatedList[i].IsRequiredForForm;
+                                worksheet.Cells[i + lineIndex, 33] = fromatedList[i].IsRetrievable;
+                                worksheet.Cells[i + lineIndex, 34] = fromatedList[i].IsSecured;
+                                worksheet.Cells[i + lineIndex, 35] = fromatedList[i].IsSortableEnabled;
+                                worksheet.Cells[i + lineIndex, 36] = fromatedList[i].IsValidForAdvancedFind;
+                                worksheet.Cells[i + lineIndex, 37] = fromatedList[i].IsValidForCreate;
+                                worksheet.Cells[i + lineIndex, 38] = fromatedList[i].IsValidForForm;
+                                worksheet.Cells[i + lineIndex, 39] = fromatedList[i].IsValidForGrid;
+                                worksheet.Cells[i + lineIndex, 40] = fromatedList[i].IsValidForRead;
+                                worksheet.Cells[i + lineIndex, 41] = fromatedList[i].IsValidForUpdate;
+                                worksheet.Cells[i + lineIndex, 42] = fromatedList[i].IsValidODataAttribute;
+                                worksheet.Cells[i + lineIndex, 43] = fromatedList[i].LinkedAttributeId;
+                                worksheet.Cells[i + lineIndex, 44] = fromatedList[i].EntityLogicalName;
+                                worksheet.Cells[i + lineIndex, 45] = fromatedList[i].SourceType;
+                                worksheet.Cells[i + lineIndex, 46] = fromatedList[i].percentageOfUse.Replace(",",".");
                                 if (fromatedList[i].target == String.Empty) {
                                     worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;
                                 }
@@ -251,7 +288,43 @@ namespace EntityieldsAnalyser
                         isSearchable        = element.isSearchable,
                         requiredLevel       = element.requiredLevel,
                         target              = element.target,
-                        percentageOfUse     = element.percentageOfUse
+                        percentageOfUse     = element.percentageOfUse,
+                        AttributeOf = element.AttributeOf,
+                        AutoNumberFormat = element.AutoNumberFormat,
+                        CanBeSecuredForCreate = element.CanBeSecuredForCreate,
+                        CanBeSecuredForRead = element.CanBeSecuredForRead,
+                        CanBeSecuredForUpdate = element.CanBeSecuredForUpdate,
+                        CanModifyAdditionalSettings = element.CanModifyAdditionalSettings,
+                        ColumnNumber = element.ColumnNumber,
+                        DeprecatedVersion = element.DeprecatedVersion,
+                        Description = element.Description,
+                        EntityLogicalName = element.EntityLogicalName,
+                        ExternalName = element.ExternalName,
+                        InheritsFrom = element.InheritsFrom,
+                        isCustom = element.isCustom,
+                        IsCustomizable = element.IsCustomizable,
+                        IsDataSourceSecret = element.IsDataSourceSecret,
+                        IsFilterable = element.IsFilterable,
+                        IsGlobalFilterEnabled = element.IsGlobalFilterEnabled,
+                        IsLogical = element.IsLogical,
+                        IsPrimaryId = element.IsPrimaryId,
+                        IsPrimaryName = element.IsPrimaryName,
+                        IsRenameable = element.IsRenameable,
+                        IsRequiredForForm = element.IsRequiredForForm,
+                        IsRetrievable = element.IsRetrievable,
+                        IsSecured = element.IsSecured,
+                        IsSortableEnabled = element.IsSortableEnabled,
+                        IsValidForAdvancedFind = element.IsValidForAdvancedFind,
+                        IsValidForCreate = element.IsValidForCreate,
+                        IsValidForForm = element.IsValidForForm,
+                        IsValidForGrid = element.IsValidForGrid,
+                        IsValidForRead = element.IsValidForRead,
+                        IsValidForUpdate = element.IsValidForUpdate,
+                        IsValidODataAttribute = element.IsValidODataAttribute,
+                        LinkedAttributeId = element.LinkedAttributeId,
+                        ModifiedOn = element.ModifiedOn,
+                        SourceType = element.SourceType,
+                        totalFiledRecords = element.totalFiledRecords
                     });
                 }
             }
