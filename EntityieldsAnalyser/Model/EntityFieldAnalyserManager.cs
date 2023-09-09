@@ -43,7 +43,7 @@ namespace EntityieldsAnalyser
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             formatList(retrieveEntityResponse, _data);
 
-            if(analyseType == "Metadata + Data")
+            if(analyseType == "Metadata + Data usage")
                 getEntityRecords(service, worker, _data, entityTechnicalName, entityInfo);
 
             CalculateDataForChartManagedUnmanaged(_data);
@@ -362,7 +362,8 @@ namespace EntityieldsAnalyser
             fieldPropretiesView.Columns[41].HeaderText             = "LinkedAttributeId";
             fieldPropretiesView.Columns[42].HeaderText             = "EntityLogicalName";
             fieldPropretiesView.Columns[43].HeaderText             = "SourceType";
-            if (analyseType == "Metadata + Data")
+
+            if (analyseType == "Metadata + Data usage")
             {
                 fieldPropretiesView.Columns[44].HeaderText = "Percentage Of Use";
                 fieldPropretiesView.Columns[44].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -379,14 +380,18 @@ namespace EntityieldsAnalyser
                 }
             }
 
+
             for (int i = 0; i <= 43; i++) {
                 fieldPropretiesView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 fieldPropretiesView.Columns[i].Frozen = false;
             }
 
+            fieldPropretiesView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            fieldPropretiesView.Columns[2].Width = 300;
+
             fieldPropretiesView.Columns[3].Visible                 = false;
 
-            var columnsCount = analyseType == "Metadata + Data" ? fieldPropretiesView.Columns.Count - 1 : fieldPropretiesView.Columns.Count;
+            var columnsCount = analyseType == "Metadata + Data usage" ? fieldPropretiesView.Columns.Count - 1 : fieldPropretiesView.Columns.Count;
             for (int i = 12; i < columnsCount; i++)
             {
                 fieldPropretiesView.Columns[i].Visible = false;
@@ -492,7 +497,7 @@ namespace EntityieldsAnalyser
                 row["CreatedOn"]            = item.dateOfCreation;
                 row["ModifiedOn"]           = item.ModifiedOn;
 
-                if (analyseType == "Metadata + Data")
+                if (analyseType == "Metadata + Data usage")
                     row["Percentage Of Use"]    = item.percentageOfUse;
 
                 row["AttributeOf"]          = item.AttributeOf;

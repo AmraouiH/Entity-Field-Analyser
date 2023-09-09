@@ -273,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ressources\coffee.png" />
+    <Content Include="Ressources\paypal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

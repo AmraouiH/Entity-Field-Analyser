@@ -266,7 +266,7 @@ namespace EntityieldsAnalyser
                         dtFields.Columns.Add("LinkedAttributeId", typeof(string));
                         dtFields.Columns.Add("EntityLogicalName", typeof(string));
                         dtFields.Columns.Add("SourceType", typeof(string));
-                        if (analyseType == "Metadata + Data")
+                        if (analyseType == "Metadata + Data usage")
                             dtFields.Columns.Add("Percentage Of Use", typeof(string));
 
                         #endregion
@@ -297,7 +297,7 @@ namespace EntityieldsAnalyser
                             fieldTypeCombobox.Items.Add(type);
                         }
                         #region Set Charts Data
-                        if (analyseType == "Metadata + Data")
+                        if (analyseType == "Metadata + Data usage")
                             EntityFieldAnalyserManager.setStatisticsFieldText(label7);
 
                         EntityFieldAnalyserManager.SetChartFieldsType(result, ChartFieldTypes);
@@ -452,7 +452,7 @@ namespace EntityieldsAnalyser
         #region Export
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            var analyseType = AnalyseType.SelectedItem.ToString() == "Metadata + Data" ? true : false;
+            var analyseType = AnalyseType.SelectedItem.ToString() == "Metadata + Data usage" ? true : false;
             EntityFieldAnalyserManager.CallExportFunction(entityFields, analyseType);
         }
         #endregion
@@ -472,21 +472,26 @@ namespace EntityieldsAnalyser
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             string message = "";
-
+            message += "We recommend to use the tool on big screen for best visibility, Below the steps to follow : ";
+            message += Environment.NewLine;
+            message += Environment.NewLine;
             message += "1. Select an Entity Filter and click Load Entities";
             message += Environment.NewLine;
             message += "2. Click the checkbox on any entity that you would like to Analyse";
             message += Environment.NewLine;
             message += "3. Search is wildcard already so you only need to type in the text you want to search for";
             message += Environment.NewLine;
-            message += "4. Click Analyse when Ready";
+            message += "4. Select the type of analyse, MetadataOnly : if you want to get only the details of entity attributes. Metadata + Data usage : is for getting metadata details + data usage of each records on all database(it takes much time depends on your entity data size)";
             message += Environment.NewLine;
-            message += "5. Click on Export to Save the Results in Excel File";
+            message += "5. Click Analyse when Ready";
+            message += Environment.NewLine;
+            message += "6. Lines with gray backgroud are with percentage of use = 0%, that mean that the field is not contain data on all database";
+            message += Environment.NewLine;
+            message += "7. Click on Export to Save the Results in Excel File";
             message += Environment.NewLine;
             message += Environment.NewLine;
             message += "If you have any issues please log them via GitHub and/or contact me at hamzamraoui11@gmail.com";
-
-            MessageBox.Show(message);
+            MessageBox.Show(message, "Help, Issue !!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
         #endregion
         #region DevelopedBy
@@ -524,7 +529,7 @@ namespace EntityieldsAnalyser
 
         private void displayAllColumns_CheckedChanged(object sender, EventArgs e)
         {
-            var columnsCount = AnalyseType.SelectedItem.ToString() == "Metadata + Data" ? fieldPropretiesView.Columns.Count-1 : fieldPropretiesView.Columns.Count;
+            var columnsCount = AnalyseType.SelectedItem.ToString() == "Metadata + Data usage" ? fieldPropretiesView.Columns.Count-1 : fieldPropretiesView.Columns.Count;
                 for (int i = 12; i < columnsCount; i++)
             {
                 fieldPropretiesView.Columns[i].Visible = displayAllColumns.Checked;
@@ -534,6 +539,15 @@ namespace EntityieldsAnalyser
         private void buymeacoffeeiconClick(object sender, EventArgs e)
         {
             Process.Start("https://www.paypal.me/EntityFieldsAnalyser");
+        }
+
+        private void AnalyseType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(AnalyseType.SelectedItem.ToString() == "Metadata + Data usage") { 
+            string message = "Metadata + Data usage option could take much time, depends on your entity volum";
+
+            MessageBox.Show(message, "Execution Time",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
