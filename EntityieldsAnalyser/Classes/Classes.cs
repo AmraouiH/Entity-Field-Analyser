@@ -22,7 +22,7 @@ namespace EntityieldsAnalyser
         public bool? isCustom;
         public string target;
         public int totalFiledRecords;
-        public string percentageOfUse;
+        public double percentageOfUse;
         public string AttributeOf;
         public string AutoNumberFormat;
         public bool? CanBeSecuredForCreate;
@@ -73,7 +73,7 @@ namespace EntityieldsAnalyser
         public bool? isCustom;
         public string target;
         public int totalFiledRecords;
-        public string percentageOfUse;
+        public double percentageOfUse;
         public string AttributeOf;
         public string AutoNumberFormat;
         public bool? CanBeSecuredForCreate;

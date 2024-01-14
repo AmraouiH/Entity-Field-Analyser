@@ -6,13 +6,13 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EntityFieldsAnalyser")]
-[assembly: AssemblyDescription("This tool gives you an overview about the fields in your entity, and also a fields calculator to check the available volume in your entity to create fields.")]
+[assembly: AssemblyDescription("Gain insight into the attributes of your entity with a comprehensive overview of its fields")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("AmraouiH")]
 [assembly: AssemblyProduct("EntityFieldsAnalyser")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyTrademark("AmraouiH")]
+[assembly: AssemblyCulture("AmraouiH")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.4")]
-[assembly: AssemblyFileVersion("2.0.0.4")]
+[assembly: AssemblyVersion("2.0.0.5")]
+[assembly: AssemblyFileVersion("2.0.0.5")]

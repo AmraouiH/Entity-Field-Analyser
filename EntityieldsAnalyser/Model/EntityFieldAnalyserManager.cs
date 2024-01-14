@@ -221,9 +221,9 @@ namespace EntityieldsAnalyser
                 foreach (var field in elem)
                 {
                     if (field.totalFiledRecords > 0)
-                        field.percentageOfUse = ((float)(field.totalFiledRecords * 100.0 / recordsCount)).ToString("0.##\\%");
+                        field.percentageOfUse = (field.totalFiledRecords * 100.0 / recordsCount);
                     else
-                        field.percentageOfUse = 0.ToString("0.##\\%");
+                        field.percentageOfUse = 0;
                 }
             }
             return _data;
@@ -365,12 +365,13 @@ namespace EntityieldsAnalyser
 
             if (analyseType == "Metadata + Data usage")
             {
-                fieldPropretiesView.Columns[44].HeaderText = "Percentage Of Use";
+                fieldPropretiesView.Columns[44].HeaderText = "Percentage Of Use %";
                 fieldPropretiesView.Columns[44].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                fieldPropretiesView.Columns[44].DefaultCellStyle.Format = "N2";
                 fieldPropretiesView.Columns[44].Frozen = false;
                 foreach (DataGridViewRow item in fieldPropretiesView.Rows)
                 {
-                    if (item.Cells[44].Value != null &&  item.Cells[44].Value.ToString() == "0%")
+                    if (item.Cells[44].Value != null &&  item.Cells[44].Value.ToString() == "0")
                     {
                         foreach (DataGridViewCell t in item.Cells)
                         {

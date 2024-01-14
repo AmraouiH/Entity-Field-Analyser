@@ -138,9 +138,9 @@ namespace EntityieldsAnalyser
                                 worksheet.Cells[i + lineIndex, 43] = fromatedList[i].LinkedAttributeId;
                                 worksheet.Cells[i + lineIndex, 44] = fromatedList[i].EntityLogicalName;
                                 worksheet.Cells[i + lineIndex, 45] = fromatedList[i].SourceType;
-                                worksheet.Cells[i + lineIndex, 46] = fromatedList[i].percentageOfUse.Replace(",",".");
+                                worksheet.Cells[i + lineIndex, 46] = fromatedList[i].percentageOfUse.ToString("0.00").Replace(",",".");
                                 if (fromatedList[i].target == String.Empty) {
-                                    worksheet.Cells[i + lineIndex, 4].Interior.Color = Color.Gainsboro;
+                                    worksheet.Cells[i + lineIndex, 5].Interior.Color = Color.Gainsboro;
                                 }
                             }
 

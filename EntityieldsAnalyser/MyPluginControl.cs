@@ -267,7 +267,7 @@ namespace EntityieldsAnalyser
                         dtFields.Columns.Add("EntityLogicalName", typeof(string));
                         dtFields.Columns.Add("SourceType", typeof(string));
                         if (analyseType == "Metadata + Data usage")
-                            dtFields.Columns.Add("Percentage Of Use", typeof(string));
+                            dtFields.Columns.Add("Percentage Of Use", typeof(double));
 
                         #endregion
 
