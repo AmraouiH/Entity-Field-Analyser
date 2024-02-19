@@ -81,6 +81,7 @@ namespace EntityieldsAnalyser
             entityParam e = new entityParam();
             e.displayName = field?.DisplayName?.UserLocalizedLabel != null ? field?.DisplayName?.UserLocalizedLabel?.Label : @"N/A";
             e.fieldName = field?.LogicalName;
+            e.attributeType = field.AttributeType.Value.ToString();
             e.isManaged = field?.IsManaged == true ? "Managed" : "Unmanaged";
             e.target = (field.AttributeType.Value == AttributeTypeCode.Lookup || field.AttributeType.Value == AttributeTypeCode.Owner) && ((LookupAttributeMetadata)field).Targets.Length > 0 ? ((LookupAttributeMetadata)field).Targets[0] : String.Empty;
             e.dateOfCreation = field.CreatedOn != null ? field.CreatedOn.Value.Date : DateTime.MinValue;
@@ -312,66 +313,67 @@ namespace EntityieldsAnalyser
         }
         #endregion
         #region SetFieldDataGridViewHeaders
-        public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView, String analyseType)
+        public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView, String analyseType, bool shouldDisplayAllColumns, string selectedType)
         {
             fieldPropretiesView.DataSource = dt;
             fieldPropretiesView.RowHeadersVisible = false;
-            fieldPropretiesView.Sort(fieldPropretiesView.Columns[3], ListSortDirection.Ascending);
+            fieldPropretiesView.Sort(fieldPropretiesView.Columns[4], ListSortDirection.Ascending);
             fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
             fieldPropretiesView.Columns[0].HeaderText              = "Display Name";
             fieldPropretiesView.Columns[1].HeaderText              = "Schema Name";
-            fieldPropretiesView.Columns[2].HeaderText              = "Description";
-            fieldPropretiesView.Columns[3].HeaderText              = "Target";
-            fieldPropretiesView.Columns[4].HeaderText              = "Managed/Unmanaged";
-            fieldPropretiesView.Columns[5].HeaderText              = "IsCustom";
-            fieldPropretiesView.Columns[6].HeaderText              = "IsAuditable";
-            fieldPropretiesView.Columns[7].HeaderText              = "IsSearchable";
-            fieldPropretiesView.Columns[8].HeaderText              = "Required Level";
-            fieldPropretiesView.Columns[9].HeaderText              = "Introduced Version";
-            fieldPropretiesView.Columns[10].HeaderText             = "CreatedOn";
-            fieldPropretiesView.Columns[11].HeaderText             = "ModifiedOn";
-            fieldPropretiesView.Columns[12].HeaderText             = "AttributeOf";
-            fieldPropretiesView.Columns[13].HeaderText             = "AutoNumberFormat";
-            fieldPropretiesView.Columns[14].HeaderText             = "CanBeSecuredForCreate";
-            fieldPropretiesView.Columns[15].HeaderText             = "CanBeSecuredForRead";
-            fieldPropretiesView.Columns[16].HeaderText             = "CanBeSecuredForUpdate";
-            fieldPropretiesView.Columns[17].HeaderText             = "CanModifyAdditionalSettings";
-            fieldPropretiesView.Columns[18].HeaderText             = "ColumnNumber";
-            fieldPropretiesView.Columns[19].HeaderText             = "DeprecatedVersion";
-            fieldPropretiesView.Columns[20].HeaderText             = "ExternalName";
-            fieldPropretiesView.Columns[21].HeaderText             = "InheritsFrom";
-            fieldPropretiesView.Columns[22].HeaderText             = "IsCustomizable";
-            fieldPropretiesView.Columns[23].HeaderText             = "IsDataSourceSecret";
-            fieldPropretiesView.Columns[24].HeaderText             = "IsFilterable";
-            fieldPropretiesView.Columns[25].HeaderText             = "IsGlobalFilterEnabled";
-            fieldPropretiesView.Columns[26].HeaderText             = "IsLogical";
-            fieldPropretiesView.Columns[27].HeaderText             = "IsPrimaryId";
-            fieldPropretiesView.Columns[28].HeaderText             = "IsPrimaryName";
-            fieldPropretiesView.Columns[29].HeaderText             = "IsRenameable";
-            fieldPropretiesView.Columns[30].HeaderText             = "IsRequiredForForm";
-            fieldPropretiesView.Columns[31].HeaderText             = "IsRetrievable";
-            fieldPropretiesView.Columns[32].HeaderText             = "IsSecured";
-            fieldPropretiesView.Columns[33].HeaderText             = "IsSortableEnabled";
-            fieldPropretiesView.Columns[34].HeaderText             = "IsValidForAdvancedFind";
-            fieldPropretiesView.Columns[35].HeaderText             = "IsValidForCreate";
-            fieldPropretiesView.Columns[36].HeaderText             = "IsValidForForm";
-            fieldPropretiesView.Columns[37].HeaderText             = "IsValidForGrid";      
-            fieldPropretiesView.Columns[38].HeaderText             = "IsValidForRead";
-            fieldPropretiesView.Columns[39].HeaderText             = "IsValidForUpdate";
-            fieldPropretiesView.Columns[40].HeaderText             = "IsValidODataAttribute";
-            fieldPropretiesView.Columns[41].HeaderText             = "LinkedAttributeId";
-            fieldPropretiesView.Columns[42].HeaderText             = "EntityLogicalName";
-            fieldPropretiesView.Columns[43].HeaderText             = "SourceType";
+            fieldPropretiesView.Columns[2].HeaderText              = "Type";
+            fieldPropretiesView.Columns[3].HeaderText              = "Description";
+            fieldPropretiesView.Columns[4].HeaderText              = "Target";
+            fieldPropretiesView.Columns[5].HeaderText              = "Managed/Unmanaged";
+            fieldPropretiesView.Columns[6].HeaderText              = "IsCustom";
+            fieldPropretiesView.Columns[7].HeaderText              = "IsAuditable";
+            fieldPropretiesView.Columns[8].HeaderText              = "IsSearchable";
+            fieldPropretiesView.Columns[9].HeaderText              = "Required Level";
+            fieldPropretiesView.Columns[10].HeaderText              = "Introduced Version";
+            fieldPropretiesView.Columns[11].HeaderText             = "CreatedOn";
+            fieldPropretiesView.Columns[12].HeaderText             = "ModifiedOn";
+            fieldPropretiesView.Columns[13].HeaderText             = "AttributeOf";
+            fieldPropretiesView.Columns[14].HeaderText             = "AutoNumberFormat";
+            fieldPropretiesView.Columns[15].HeaderText             = "CanBeSecuredForCreate";
+            fieldPropretiesView.Columns[16].HeaderText             = "CanBeSecuredForRead";
+            fieldPropretiesView.Columns[17].HeaderText             = "CanBeSecuredForUpdate";
+            fieldPropretiesView.Columns[18].HeaderText             = "CanModifyAdditionalSettings";
+            fieldPropretiesView.Columns[19].HeaderText             = "ColumnNumber";
+            fieldPropretiesView.Columns[20].HeaderText             = "DeprecatedVersion";
+            fieldPropretiesView.Columns[21].HeaderText             = "ExternalName";
+            fieldPropretiesView.Columns[22].HeaderText             = "InheritsFrom";
+            fieldPropretiesView.Columns[23].HeaderText             = "IsCustomizable";
+            fieldPropretiesView.Columns[24].HeaderText             = "IsDataSourceSecret";
+            fieldPropretiesView.Columns[25].HeaderText             = "IsFilterable";
+            fieldPropretiesView.Columns[26].HeaderText             = "IsGlobalFilterEnabled";
+            fieldPropretiesView.Columns[27].HeaderText             = "IsLogical";
+            fieldPropretiesView.Columns[28].HeaderText             = "IsPrimaryId";
+            fieldPropretiesView.Columns[29].HeaderText             = "IsPrimaryName";
+            fieldPropretiesView.Columns[30].HeaderText             = "IsRenameable";
+            fieldPropretiesView.Columns[31].HeaderText             = "IsRequiredForForm";
+            fieldPropretiesView.Columns[32].HeaderText             = "IsRetrievable";
+            fieldPropretiesView.Columns[33].HeaderText             = "IsSecured";
+            fieldPropretiesView.Columns[34].HeaderText             = "IsSortableEnabled";
+            fieldPropretiesView.Columns[35].HeaderText             = "IsValidForAdvancedFind";
+            fieldPropretiesView.Columns[36].HeaderText             = "IsValidForCreate";
+            fieldPropretiesView.Columns[37].HeaderText             = "IsValidForForm";
+            fieldPropretiesView.Columns[38].HeaderText             = "IsValidForGrid";      
+            fieldPropretiesView.Columns[39].HeaderText             = "IsValidForRead";
+            fieldPropretiesView.Columns[40].HeaderText             = "IsValidForUpdate";
+            fieldPropretiesView.Columns[41].HeaderText             = "IsValidODataAttribute";
+            fieldPropretiesView.Columns[42].HeaderText             = "LinkedAttributeId";
+            fieldPropretiesView.Columns[43].HeaderText             = "EntityLogicalName";
+            fieldPropretiesView.Columns[44].HeaderText             = "SourceType";
 
             if (analyseType == "Metadata + Data usage")
             {
-                fieldPropretiesView.Columns[44].HeaderText = "Percentage Of Use %";
-                fieldPropretiesView.Columns[44].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                fieldPropretiesView.Columns[44].DefaultCellStyle.Format = "N2";
-                fieldPropretiesView.Columns[44].Frozen = false;
+                fieldPropretiesView.Columns[45].HeaderText = "Percentage Of Use %";
+                fieldPropretiesView.Columns[45].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                fieldPropretiesView.Columns[45].DefaultCellStyle.Format = "N2";
+                fieldPropretiesView.Columns[45].Frozen = false;
                 foreach (DataGridViewRow item in fieldPropretiesView.Rows)
                 {
-                    if (item.Cells[44].Value != null &&  item.Cells[44].Value.ToString() == "0")
+                    if (item.Cells[45].Value != null &&  item.Cells[45].Value.ToString() == "0")
                     {
                         foreach (DataGridViewCell t in item.Cells)
                         {
@@ -381,22 +383,33 @@ namespace EntityieldsAnalyser
                 }
             }
 
-
-            for (int i = 0; i <= 43; i++) {
+            for (int i = 0; i <= 44; i++)
+            {
                 fieldPropretiesView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 fieldPropretiesView.Columns[i].Frozen = false;
             }
+            
 
-            fieldPropretiesView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            fieldPropretiesView.Columns[2].Width = 300;
+            fieldPropretiesView.Columns[2].Visible = false;
+            fieldPropretiesView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            fieldPropretiesView.Columns[3].Width = 300;
 
-            fieldPropretiesView.Columns[3].Visible                 = false;
+            fieldPropretiesView.Columns[4].Visible                 = false;
 
-            var columnsCount = analyseType == "Metadata + Data usage" ? fieldPropretiesView.Columns.Count - 1 : fieldPropretiesView.Columns.Count;
-            for (int i = 12; i < columnsCount; i++)
+            if (!shouldDisplayAllColumns)
             {
-                fieldPropretiesView.Columns[i].Visible = false;
+                var columnsCount = analyseType == "Metadata + Data usage" ? fieldPropretiesView.Columns.Count - 1 : fieldPropretiesView.Columns.Count;
+
+                for (int i = 13; i < columnsCount; i++)
+                {
+                    fieldPropretiesView.Columns[i].Visible = false;
+                }
             }
+
+            if (selectedType == AttributeTypeCode.Lookup.ToString() || selectedType == AttributeTypeCode.Owner.ToString() || selectedType == "ALL")
+                fieldPropretiesView.Columns[4].Visible = true;
+            if (selectedType == "ALL")
+                fieldPropretiesView.Columns[2].Visible = true;
         }
 
         #endregion
@@ -485,8 +498,9 @@ namespace EntityieldsAnalyser
             {
                 DataRow row = dtFields.NewRow();
 
-                row["Display Name"]         = item.displayName;
-                row["Schema Name"]          = item.fieldName;
+                row["DisplayName"]         = item.displayName;
+                row["SchemaName"]          = item.fieldName;
+                row["Type"]                 = item.attributeType;
                 row["Description"]          = item.Description;
                 row["Target"]               = item.target;
                 row["Managed/Unmanaged"]    = item.isManaged;

@@ -21,8 +21,12 @@ namespace EntityieldsAnalyser
         ExportMetadata("BackgroundColor", "orange"),
         ExportMetadata("PrimaryFontColor", "white"),
         ExportMetadata("SecondaryFontColor", "Black")]
-    public class MyPlugin : PluginBase
+    public class MyPlugin : PluginBase, IPayPalPlugin
     {
+        public string DonationDescription => "Entity Fields Analyzer";
+
+        public string EmailAccount => "amraouihamza11@gmail.com";
+
         public override IXrmToolBoxPluginControl GetControl()
         {
             return new MyPluginControl();

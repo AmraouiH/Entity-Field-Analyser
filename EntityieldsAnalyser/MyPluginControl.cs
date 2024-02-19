@@ -205,6 +205,7 @@ namespace EntityieldsAnalyser
         private void AnalyseEntity()
         {
             fieldTypeCombobox.Enabled = false;
+            searchField.Enabled = false;
             buttonExport.Enabled = false;
             analyseButton.Enabled = false;
             DisplayPercentageCheckbox.Enabled = false;
@@ -222,8 +223,9 @@ namespace EntityieldsAnalyser
                         entityFields  = EntityFieldAnalyserManager.getEntityFields(Service, entitySelectedSchemaName, entitySelectedName, worker, analyseType);
 
                         #region Entity Fiels Metadata  Set
-                        dtFields.Columns.Add("Display Name", typeof(string));
-                        dtFields.Columns.Add("Schema Name", typeof(string));
+                        dtFields.Columns.Add("DisplayName", typeof(string));
+                        dtFields.Columns.Add("SchemaName", typeof(string));
+                        dtFields.Columns.Add("Type", typeof(string));
                         dtFields.Columns.Add("Description", typeof(string));
                         dtFields.Columns.Add("Target", typeof(string));
                         dtFields.Columns.Add("Managed/Unmanaged", typeof(string));
@@ -292,6 +294,7 @@ namespace EntityieldsAnalyser
                     var result = (Dictionary<AttributeTypeCode, List<entityParam>>)args.Result;
                     if (result != null)
                     {
+                        fieldTypeCombobox.Items.Add("ALL");
                         foreach (var type in result.Keys)
                         {
                             fieldTypeCombobox.Items.Add(type);
@@ -309,6 +312,7 @@ namespace EntityieldsAnalyser
                         DisplayPercentageCheckbox.Enabled      = true;
                         DisplayPercentageCheckbox.Visible      = true;
                         fieldTypeCombobox.Enabled              = true;
+                        searchField.Enabled                    = true;
                         DisplayPercentageCheckbox.Checked      = false;
                         displayAllColumns.Enabled              = true;
                         displayAllColumns.Visible              = true;
@@ -324,7 +328,7 @@ namespace EntityieldsAnalyser
                         entityTypeComboBox.Enabled             = true;
                         toolStripButton.Enabled                = true;
                         #endregion
-                        fieldTypeCombobox.SelectedIndex        = 0;//Select the second type in the fields type combobox
+                        fieldTypeCombobox.SelectedIndex        = 1;//Select the second type in the fields type combobox
                         #region Chart ToolTip
                         ToolTip toolTip = new ToolTip();
                         toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of Use of the Entity Total Fields Volume");
@@ -346,13 +350,10 @@ namespace EntityieldsAnalyser
                 DT.Clear();
             #endregion
             #region Set Fields DataGridView Data After Change The Type
-            EntityFieldAnalyserManager.SetFieldDataGridViewContent(entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem], dtFields, analyseType);
-            EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, analyseType);
-            //Display the Column Target Just in case of Lookup Type
-            if (fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Lookup.ToString() || fieldTypeCombobox.SelectedItem.ToString() == AttributeTypeCode.Owner.ToString())
-            {
-                fieldPropretiesView.Columns[3].Visible = true;
-            }
+            var listOfFields = fieldTypeCombobox.SelectedItem.ToString() == "ALL" ? entityFields.Values.SelectMany(list => list).ToList() : entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem];
+            EntityFieldAnalyserManager.SetFieldDataGridViewContent(listOfFields, dtFields, analyseType);
+            EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, analyseType, displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
+            searchField.Text = "Search";
             #endregion
         }
         #endregion
@@ -411,7 +412,7 @@ namespace EntityieldsAnalyser
             displayAllColumns.Visible                = false;
             searchEntity.Enabled                     = false;
             analyseButton.Enabled                    = false;
-            fieldTypeCombobox.Enabled                = false;
+            searchField.Enabled                      = false;
             fieldCalculatorGroupBox.Visible          = false;
             buttonExport.Enabled                     = false;
             AnalyseType.Enabled                      = false;
@@ -525,6 +526,32 @@ namespace EntityieldsAnalyser
             }
         }
 
+        private void searchField_TextChaneged(object sender, EventArgs e)
+        {
+            if (searchField.Text == "" && dtEntities.Rows.Count > 0 && fieldPropretiesView.Rows.Count != dtFields.Rows.Count)
+            {
+                EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, AnalyseType.SelectedItem.ToString(), displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
+            }
+            else if (searchField.Text != "Search" && searchField.Text != "" && dtEntities.Rows.Count > 0)
+            {
+                string searchValue = searchField.Text.ToLower();
+                try
+                {
+                    
+                    DataRow[] filtered = fieldTypeCombobox.SelectedItem.ToString() == "ALL" ? dtFields.Select("DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%'") :
+                        dtFields.Select("Type = '"+ fieldTypeCombobox.SelectedItem.ToString() + "' AND (DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%')");
+                    if (filtered.Count() > 0)
+                    {
+                        EntityFieldAnalyserManager.SetFieldDataGridViewHeaders(filtered.CopyToDataTable(), fieldPropretiesView, AnalyseType.SelectedItem.ToString(), displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
+                }
+            }
+        }
+
         #endregion
 
         private void displayAllColumns_CheckedChanged(object sender, EventArgs e)
@@ -547,6 +574,14 @@ namespace EntityieldsAnalyser
             string message = "Metadata + Data usage option could take much time, depends on your entity volum";
 
             MessageBox.Show(message, "Execution Time",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void searchField_Click(object sender, EventArgs e)
+        {
+            if (searchField.Text == "Search")
+            {
+                searchField.Clear();
             }
         }
     }

@@ -62,6 +62,7 @@ namespace EntityieldsAnalyser
     {
         public string displayName;
         public string fieldName;
+        public string attributeType;
         public string Description;
         public DateTime dateOfCreation;
         public string introducedVersion;
