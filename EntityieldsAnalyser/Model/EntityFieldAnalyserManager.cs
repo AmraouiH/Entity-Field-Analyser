@@ -1,4 +1,4 @@
-﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Metadata.Query;
@@ -10,7 +10,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 using XrmToolBox.Extensibility;
 using Label = System.Windows.Forms.Label;
 
@@ -230,95 +229,13 @@ namespace EntityieldsAnalyser
             return _data;
         }
         #endregion
-        #region Calculate The Total of Columns used in the ENtity(Database Table)
-        private static int DbUsedColumns(IDictionary<AttributeTypeCode, List<entityParam>> dict)
-        {
-            var currentSize = 0;
-            foreach (var element in dict)
-            {
-                if (element.Key == AttributeTypeCode.Owner || element.Key == AttributeTypeCode.Lookup)
-                {
-                    currentSize += dict[element.Key].Count * 3;
-                }
-                else if (element.Key == AttributeTypeCode.Status || element.Key == AttributeTypeCode.Boolean || element.Key == AttributeTypeCode.Picklist || element.Key == AttributeTypeCode.Money)
-                {
-                    currentSize += dict[element.Key].Count * 2;
-                }
-                else
-                {
-                    currentSize += dict[element.Key].Count;
-                }
-            }
-
-            return currentSize;
-        }
-        #endregion
-        #region ChartFieldsType
-        public static void SetChartFieldsType(Dictionary<AttributeTypeCode, List<entityParam>> dict, Chart ChartFieldTypes, bool displayValues = true)
-        {
-            var fieldsCount = 0;
-            foreach (var e in dict.Values)
-            {
-                fieldsCount += e.Count;
-            }
-
-            //Disable formating when display the count
-            if (displayValues)
-                ChartFieldTypes.Series["fieldsReport"].LabelFormat = String.Empty;
-            else//enable formating to percentage when check the checkbox
-                ChartFieldTypes.Series["fieldsReport"].LabelFormat = "0.#%";
-
-            //refrech chart data
-            if (ChartFieldTypes.Series["fieldsReport"].Points.Count > 0) {
-                ChartFieldTypes.Series["fieldsReport"].Points.Clear();
-            }
-            //Add Data to chart
-            foreach (var element in dict)
-            {
-                ChartFieldTypes.Series["fieldsReport"].Points.AddXY(element.Key.ToString(), displayValues ? element.Value.Count : (element.Value.Count * 1.0 / fieldsCount));
-            }
-            //Add Sorting to Chart
-            ChartFieldTypes.Series["fieldsReport"].IsValueShownAsLabel = true;
-            ChartFieldTypes.DataManipulator.Sort(PointSortOrder.Descending, ChartFieldTypes.Series["fieldsReport"]);
-            ChartFieldTypes.Dock = DockStyle.Fill;
-        }
-        #endregion
-        #region ChartFieldAvailable
-        public static void SetChartFieldAvailable( Dictionary<AttributeTypeCode, List<entityParam>> dict, Chart ChartFieldAvailabe, bool displayPercentage = false)
-        {
-            entityInfo.entityTotalUseOfColumns = DbUsedColumns(dict);
-            var availableFieldToCreate = entityInfo.entityDefaultColumnSize - entityInfo.entityTotalUseOfColumns;
-
-            if (!displayPercentage)
-            {
-                ChartFieldAvailabe.Series["AvailableField"].LabelFormat         = String.Empty;
-                ChartFieldAvailabe.Series["AvailableField"].IsValueShownAsLabel = false;
-            }
-            else//enable formating to percentage when check the checkbox
-            {
-                ChartFieldAvailabe.Series["AvailableField"].LabelFormat         = "0.#%";
-                ChartFieldAvailabe.Series["AvailableField"].IsValueShownAsLabel = true;
-            }
-
-            #region Clear Chart Data
-            if (ChartFieldAvailabe.Series["AvailableField"].Points.Count > 0) {
-                ChartFieldAvailabe.Series["AvailableField"].Points.Clear();
-            }
-            #endregion
-            #region set chart Data
-            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Available Fields To Create ", displayPercentage ? availableFieldToCreate * 1.0 / entityInfo.entityDefaultColumnSize : availableFieldToCreate);
-            ChartFieldAvailabe.Series["AvailableField"].Points.AddXY("Created Fields", displayPercentage ? entityInfo.entityTotalUseOfColumns * 1.0 / entityInfo.entityDefaultColumnSize : entityInfo.entityTotalUseOfColumns);
-            ChartFieldAvailabe.Dock = DockStyle.Fill;
-            #endregion
-        }
-        #endregion
         #region SetFieldDataGridViewHeaders
         public static void SetFieldDataGridViewHeaders(DataTable dt, DataGridView fieldPropretiesView, String analyseType, bool shouldDisplayAllColumns, string selectedType)
         {
             fieldPropretiesView.DataSource = dt;
             fieldPropretiesView.RowHeadersVisible = false;
             fieldPropretiesView.Sort(fieldPropretiesView.Columns[4], ListSortDirection.Ascending);
-            fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
+            fieldPropretiesView.ColumnHeadersDefaultCellStyle.Font = UI.Theme.BodyStrong;
             fieldPropretiesView.Columns[0].HeaderText              = "Display Name";
             fieldPropretiesView.Columns[1].HeaderText              = "Schema Name";
             fieldPropretiesView.Columns[2].HeaderText              = "Type";
@@ -371,14 +288,14 @@ namespace EntityieldsAnalyser
                 fieldPropretiesView.Columns[45].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 fieldPropretiesView.Columns[45].DefaultCellStyle.Format = "N2";
                 fieldPropretiesView.Columns[45].Frozen = false;
+                fieldPropretiesView.Columns[45].MinimumWidth = UI.Theme.Scale(170);
+                fieldPropretiesView.Columns[45].DisplayIndex = 2;
                 foreach (DataGridViewRow item in fieldPropretiesView.Rows)
                 {
                     if (item.Cells[45].Value != null &&  item.Cells[45].Value.ToString() == "0")
                     {
-                        foreach (DataGridViewCell t in item.Cells)
-                        {
-                            t.Style.BackColor = Color.LightGray;
-                        }
+                        item.DefaultCellStyle.BackColor = UI.Theme.UnusedRow;
+                        item.DefaultCellStyle.ForeColor = UI.Theme.TextSecondary;
                     }
                 }
             }
@@ -419,13 +336,17 @@ namespace EntityieldsAnalyser
             entityGridView.DataSource = dt;
             entityGridView.RowHeadersVisible = false;
             entityGridView.Sort(entityGridView.Columns[1], ListSortDirection.Ascending);
-            entityGridView.ColumnHeadersDefaultCellStyle.Font    = new Font("Segoe UI Semibold", 9.75F, FontStyle.Regular);
+            entityGridView.ColumnHeadersDefaultCellStyle.Font    = UI.Theme.BodyStrong;
             entityGridView.Columns[0].AutoSizeMode               = DataGridViewAutoSizeColumnMode.Fill;
-            entityGridView.Columns[0].HeaderText                 = "Display Name";
-            entityGridView.Columns[1].AutoSizeMode               = DataGridViewAutoSizeColumnMode.Fill;
+            entityGridView.Columns[0].HeaderText                 = "Entity";
+            entityGridView.Columns[1].Visible                    = false;
             entityGridView.Columns[1].HeaderText                 = "Schema Name";
+            entityGridView.Columns[2].DisplayIndex               = 0;
+            entityGridView.Columns[2].AutoSizeMode               = DataGridViewAutoSizeColumnMode.None;
+            entityGridView.Columns[2].Width                      = UI.Theme.Scale(40);
+            entityGridView.Columns[2].HeaderText                 = String.Empty;
             entityGridView.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            entityGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter;
+            entityGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
         #endregion
         #region GetEntities
@@ -465,23 +386,6 @@ namespace EntityieldsAnalyser
             return (RetrieveMetadataChangesResponse)service.Execute(retrieveMetadataChangesRequest);
         }
         #endregion
-        public static void SetChartManagedUnmanagedFields(Chart managedUnmanagedFieldsChart, bool displayValues=true) {
-            if (managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.Count > 0)
-                managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.Clear();
-
-
-            //Disable formating when display the count
-            if (displayValues)
-                managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = String.Empty;
-            else//enable formating to percentage when check the checkbox
-                managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].LabelFormat = "0.#%";
-
-            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Managed Fields", displayValues ? entityInfo.managedFieldsCount : (entityInfo.managedFieldsCount * 1.0 / (entityInfo.managedFieldsCount + entityInfo.unmanagedFieldsCount)));
-            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].Points.AddXY("Unmanaged Fields", displayValues ? entityInfo.unmanagedFieldsCount : (entityInfo.unmanagedFieldsCount * 1.0 / (entityInfo.managedFieldsCount + entityInfo.unmanagedFieldsCount)));
-            managedUnmanagedFieldsChart.Series["managedUnmanagedFields"].IsValueShownAsLabel = true;
-            managedUnmanagedFieldsChart.Dock = DockStyle.Fill;
-        }
-
         public static bool CanICreateThisNumberOfFields(String lookupsType, String pickListTypes, String othersTypes)
         {
             int askedCreatedFieldsColumnsSize = (int.Parse(lookupsType) * 3) + (int.Parse(pickListTypes) * 2) + (int.Parse(othersTypes) * 1);
@@ -552,12 +456,6 @@ namespace EntityieldsAnalyser
             }
         }
 
-        public static void setStatisticsFieldText(Label statisticsText) {
-            if (entityInfo.entityRecordsCount > 0)
-                statisticsText.Text = "Statistics Based On " + entityInfo.entityRecordsCount + " Records";
-            else
-                statisticsText.Text = String.Empty;
-        }
 
         public static void  CallExportFunction(Dictionary<AttributeTypeCode, List<entityParam>> entityParams, bool analyseType) {
             FileManaged.ExportFile(entityParams, entityInfo, analyseType);

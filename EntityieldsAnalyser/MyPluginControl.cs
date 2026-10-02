@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
@@ -9,6 +11,7 @@ using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Messages;
 using System.Diagnostics;
+using EntityieldsAnalyser.UI;
 
 namespace EntityieldsAnalyser
 {
@@ -26,15 +29,17 @@ namespace EntityieldsAnalyser
         public MyPluginControl()
         {
             InitializeComponent();
+            BuildInsightsUi();
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
             #region ManageComponenetVisibility
+            ApplyInterfaceTheme();
             InitComponents();
             entityTypeComboBox.SelectedIndex = 0;
             AnalyseType.SelectedIndex = 0;
-
+            UpdateGuide();
             #endregion
             //Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -48,6 +53,113 @@ namespace EntityieldsAnalyser
                 LogInfo("Settings found and loaded");
             }
         }
+
+        #region Interface Theme
+        private void ApplyInterfaceTheme()
+        {
+            BackColor = Theme.Canvas;
+            ForeColor = Theme.TextPrimary;
+
+            #region Command bar
+            toolStripMenu.Renderer = new FluentToolStripRenderer();
+            toolStripMenu.BackColor = Theme.Surface;
+            foreach (ToolStripItem item in toolStripMenu.Items)
+            {
+                item.Font = Theme.Body;
+                item.ForeColor = Theme.TextPrimary;
+            }
+            analyseButton.Font = Theme.BodyStrong;
+
+            tsbClose.Image = Theme.Icon(Theme.Glyph.Close, Theme.TextSecondary);
+            toolStripButton.Image = Theme.Icon(Theme.Glyph.List, Theme.Brand);
+            analyseButton.Image = Theme.Icon(Theme.Glyph.Play, Theme.TextOnBrand);
+            buttonExport.Image = Theme.Icon(Theme.Glyph.Export, Color.FromArgb(16, 124, 65));
+            byButton.Image = Theme.Icon(Theme.Glyph.Contact, Theme.TextSecondary);
+            helpButton.Image = Theme.Icon(Theme.Glyph.Help, Theme.TextSecondary);
+            buymeacoffeeicon.Image = Theme.Icon(Theme.Glyph.Heart, Color.FromArgb(196, 49, 75));
+            #endregion
+
+            #region Labels
+            foreach (var label in new[] { label2, label3, label4 })
+            {
+                label.ForeColor = Theme.TextSecondary;
+                label.Font = Theme.BodyStrong;
+            }
+            foreach (var label in new[] { label5, fieldsResultLabel, guideHint, featureOverviewText, featureFieldsText, featureUsageText, featureCapacityText, usageEmptyText })
+                label.ForeColor = Theme.TextSecondary;
+            welcomeTitle.Font = featuresTitle.Font = Theme.Subtitle;
+            welcomeTitle.ForeColor = featuresTitle.ForeColor = Theme.TextPrimary;
+            budgetHeadline.Font = new Font("Segoe UI Semibold", 13F);
+            MoreDetailsLink.ForeColor = Theme.Brand;
+            MoreDetailsLink.MouseEnter += (s, e) => MoreDetailsLink.Font = new Font(Theme.Body, FontStyle.Underline);
+            MoreDetailsLink.MouseLeave += (s, e) => MoreDetailsLink.Font = Theme.Body;
+            calculatorResult.Font = Theme.BodyStrong;
+            #endregion
+
+            #region Grids
+            GridStyler.Apply(EntityGridView,
+                () => String.IsNullOrEmpty(searchEntity.Text) ? "Choose a filter and click “Get Entities” to list your entities." : "No entity matches your search.",
+                PaintEntityCell);
+            EntityGridView.RowTemplate.Height = Theme.Scale(46);
+            EntityGridView.DataBindingComplete += (s, e) => EntityGridView.ClearSelection();
+
+            GridStyler.Apply(fieldPropretiesView,
+                () => _insights == null ? "Select an entity, then click “Analyse” to inspect its fields." : "No field matches these filters. Remove a filter above to see more fields.");
+            #endregion
+        }
+
+        /// <summary>Entities grid: radio style selector and two line "display name / schema name" cell.</summary>
+        private bool PaintEntityCell(DataGridViewCellPaintingEventArgs e)
+        {
+            var column = EntityGridView.Columns[e.ColumnIndex];
+            var selected = (e.State & DataGridViewElementStates.Selected) != 0;
+            var bounds = e.CellBounds;
+
+            if (column.DataPropertyName == "Analyse")
+            {
+                e.PaintBackground(bounds, selected);
+                var isChecked = e.Value is bool && (bool)e.Value;
+                var size = Theme.Scale(16);
+                var r = new RectangleF(bounds.X + (bounds.Width - size) / 2f, bounds.Y + (bounds.Height - size) / 2f, size, size);
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                if (isChecked)
+                {
+                    using (var brush = new SolidBrush(Theme.Brand))
+                        e.Graphics.FillEllipse(brush, r);
+                    var dot = Theme.Scale(6);
+                    using (var brush = new SolidBrush(Theme.Surface))
+                        e.Graphics.FillEllipse(brush, r.X + (size - dot) / 2f, r.Y + (size - dot) / 2f, dot, dot);
+                }
+                else
+                {
+                    using (var pen = new Pen(Theme.TextSecondary))
+                        e.Graphics.DrawEllipse(pen, r);
+                }
+                e.Handled = true;
+                return true;
+            }
+
+            if (column.DataPropertyName == "DisplayName" && EntityGridView.Columns.Contains("SchemaName"))
+            {
+                e.PaintBackground(bounds, selected);
+                var schema = Convert.ToString(EntityGridView.Rows[e.RowIndex].Cells["SchemaName"].Value);
+                var textBounds = new Rectangle(bounds.X + Theme.Scale(4), bounds.Y, bounds.Width - Theme.Scale(8), bounds.Height);
+                var half = bounds.Height / 2;
+                TextRenderer.DrawText(e.Graphics, Convert.ToString(e.Value), Theme.BodyStrong,
+                    new Rectangle(textBounds.X, textBounds.Y + Theme.Scale(4), textBounds.Width, half - Theme.Scale(3)), Theme.TextPrimary,
+                    Draw.LeftMiddle);
+                TextRenderer.DrawText(e.Graphics, schema, Theme.Caption,
+                    new Rectangle(textBounds.X, textBounds.Y + half - Theme.Scale(1), textBounds.Width, half - Theme.Scale(4)), Theme.TextTertiary,
+                    Draw.LeftMiddle);
+                e.Handled = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static string Percent(int part, int whole) => whole <= 0 ? "0%" : ((double)part / whole).ToString("0%");
+        #endregion
 
         /// <summary>
         /// This event occurs when the plugin is closed
@@ -72,6 +184,7 @@ namespace EntityieldsAnalyser
                 mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
             }
+            UpdateHeader();
         }
         #region Load Entities Button
         private void getEntitiesButton_Click(object sender, EventArgs e)
@@ -91,31 +204,30 @@ namespace EntityieldsAnalyser
                 Work = (worker, args) =>
                 {
                     #region Variables
-                    dtEntities = new DataTable();
+                    var entities = new DataTable();
                     #endregion
                     #region getEntitiesMetadata
                     RetrieveMetadataChangesResponse _allEntitiesResp = EntityFieldAnalyserManager.GetEntitiesMetadat(Service, selectedTypeOfEntities);
-                    groupBox1.Text = "Entities : " + selectedTypeOfEntities + " " + _allEntitiesResp.EntityMetadata.Count();
                     #endregion
 
                     worker.ReportProgress(0, string.Format("Metadata has been retrieved!"));
 
                     #region Entities Data Table Set
-                    dtEntities.Columns.Add("DisplayName", typeof(string));
-                    dtEntities.Columns.Add("SchemaName", typeof(string));
-                    dtEntities.Columns.Add("Analyse", typeof(bool));
+                    entities.Columns.Add("DisplayName", typeof(string));
+                    entities.Columns.Add("SchemaName", typeof(string));
+                    entities.Columns.Add("Analyse", typeof(bool));
 
                     foreach (var item in _allEntitiesResp.EntityMetadata)
                     {
-                        DataRow row        = dtEntities.NewRow();
+                        DataRow row        = entities.NewRow();
                         row["DisplayName"] = item.DisplayName.LocalizedLabels.Count > 0 ? item.DisplayName.UserLocalizedLabel.Label.ToString() : "N/A";
                         row["SchemaName"]  = item.LogicalName;
                         row["Analyse"]     = false;
 
-                        dtEntities.Rows.Add(row);
+                        entities.Rows.Add(row);
                     }
                     #endregion
-                    args.Result = dtEntities;
+                    args.Result = entities;
                 },
                 ProgressChanged = e =>
                 {
@@ -128,11 +240,13 @@ namespace EntityieldsAnalyser
                     {
                         MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    var result = args.Result;
+                    var result = args.Result as DataTable;
                     if (result != null)
                     {
+                        dtEntities = result;
                         #region Set Retrieved Data in the Data Grid View
-                        EntityFieldAnalyserManager.SetEntitiesGridViewHeaders((DataTable)args.Result, EntityGridView);
+                        EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(dtEntities, EntityGridView);
+                        groupBox1.Subtitle = $"{dtEntities.Rows.Count:N0} · {selectedTypeOfEntities} · double-click to analyse";
                         #endregion
                         #region ManageComponenetVisibility
                         searchEntity.Enabled  = true;
@@ -140,36 +254,11 @@ namespace EntityieldsAnalyser
                         AnalyseType.Enabled   = true;
                         #endregion
                     }
+                    UpdateGuide();
                 }
             });
         }
         #endregion
-        #region Search For Entity
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            if (searchEntity.Text == "" && dtEntities.Rows.Count > 0 && EntityGridView.Rows.Count != dtEntities.Rows.Count)
-            {
-                EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(dtEntities, EntityGridView);
-            }
-            else if (searchEntity.Text != "Search" && searchEntity.Text != "" && dtEntities.Rows.Count > 0)
-            {
-                string searchValue = searchEntity.Text.ToLower();
-                try
-                {
-                    DataRow[] filtered = dtEntities.Select("DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%'");
-                    if (filtered.Count() > 0)
-                    {
-                        EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(filtered.CopyToDataTable(), EntityGridView);
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
-                }
-            }
-        }
-        #endregion
-
         #region Delete Text When First Click
         private void textBox1_Click(object sender, EventArgs e)
         {
@@ -208,9 +297,7 @@ namespace EntityieldsAnalyser
             searchField.Enabled = false;
             buttonExport.Enabled = false;
             analyseButton.Enabled = false;
-            DisplayPercentageCheckbox.Enabled = false;
             displayAllColumns.Enabled = false;
-            label7.Text = String.Empty;
             var analyseType = AnalyseType.SelectedItem.ToString();
             WorkAsync(new WorkAsyncInfo
             {
@@ -268,7 +355,7 @@ namespace EntityieldsAnalyser
                         dtFields.Columns.Add("LinkedAttributeId", typeof(string));
                         dtFields.Columns.Add("EntityLogicalName", typeof(string));
                         dtFields.Columns.Add("SourceType", typeof(string));
-                        if (analyseType == "Metadata + Data usage")
+                        if (analyseType == DataUsageMode)
                             dtFields.Columns.Add("Percentage Of Use", typeof(double));
 
                         #endregion
@@ -286,56 +373,56 @@ namespace EntityieldsAnalyser
                 },
                 PostWorkCallBack = (args) =>
                 {
-                    fieldTypeCombobox.Items.Clear();
                     if (args.Error != null)
                     {
                         MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    var result = (Dictionary<AttributeTypeCode, List<entityParam>>)args.Result;
+                    var result = args.Result as Dictionary<AttributeTypeCode, List<entityParam>>;
                     if (result != null)
                     {
-                        fieldTypeCombobox.Items.Add("ALL");
-                        foreach (var type in result.Keys)
-                        {
-                            fieldTypeCombobox.Items.Add(type);
-                        }
-                        #region Set Charts Data
-                        if (analyseType == "Metadata + Data usage")
-                            EntityFieldAnalyserManager.setStatisticsFieldText(label7);
+                        _analysedType = analyseType;
+                        _insights = new FieldInsights(result, analyseType == DataUsageMode);
+                        EntityFieldAnalyserManager.entityInfo.entityTotalUseOfColumns = _insights.ColumnsUsed;
 
-                        EntityFieldAnalyserManager.SetChartFieldsType(result, ChartFieldTypes);
-                        EntityFieldAnalyserManager.SetChartFieldAvailable(result, ChartFieldAvailable);
-                        EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields);
+                        #region Fields page filters
+                        _suppressFieldFilter = true;
+                        fieldTypeCombobox.Items.Clear();
+                        fieldTypeCombobox.Items.Add("ALL");
+                        foreach (var type in result.Keys.OrderBy(k => k.ToString()))
+                            fieldTypeCombobox.Items.Add(type);
+                        fieldTypeCombobox.SelectedIndex = 0;
+                        searchField.Text = String.Empty;
+                        if (_insights.HasDataUsage)
+                            fieldsChips.SetChips("All", "Custom", "Unmanaged", "Required", "Never used");
+                        else
+                            fieldsChips.SetChips("All", "Custom", "Unmanaged", "Required");
+                        fieldsChips.DismissibleText = null;
+                        _drillFilter = null;
+                        _suppressFieldFilter = false;
+                        displayAllColumns.Checked = false;
+                        ApplyFieldFilters();
                         #endregion
-                        #region Manage Componenet Visibilty
-                        searchEntity.Enabled                   = true;
-                        DisplayPercentageCheckbox.Enabled      = true;
-                        DisplayPercentageCheckbox.Visible      = true;
-                        fieldTypeCombobox.Enabled              = true;
-                        searchField.Enabled                    = true;
-                        DisplayPercentageCheckbox.Checked      = false;
-                        displayAllColumns.Enabled              = true;
-                        displayAllColumns.Visible              = true;
-                        displayAllColumns.Checked              = false;
-                        EntityFieldsCreatedGroupBox.Visible    = true;
-                        ManagedUnmanagedFieldsgroupBox.Visible = true;
-                        EntityFieldsTypesGroupBox.Visible      = true;
-                        fieldCalculatorGroupBox.Visible        = true;
-                        buttonExport.Enabled                   = true;
-                        analyseButton.Enabled                  = true;
-                        AnalyseType.Enabled                    = true;
-                        buttonExport.Enabled                   = true;
-                        entityTypeComboBox.Enabled             = true;
-                        toolStripButton.Enabled                = true;
-                        #endregion
-                        fieldTypeCombobox.SelectedIndex        = 1;//Select the second type in the fields type combobox
-                        #region Chart ToolTip
-                        ToolTip toolTip = new ToolTip();
-                        toolTip.SetToolTip(this.EntityFieldsCreatedGroupBox, "This Chart Display The Percentage of Use of the Entity Total Fields Volume");
-                        toolTip.SetToolTip(this.ManagedUnmanagedFieldsgroupBox, "This Chart Display The Count Managed/Unmanaged Fields in Your Entity");
-                        toolTip.SetToolTip(this.EntityFieldsTypesGroupBox, "This Chart Display The Count of Fields Per Type");
-                        #endregion
+
+                        RenderInsights();
+                        for (var p = 0; p < pivotTabs.Items.Count; p++)
+                            pivotTabs.SetEnabled(p, true);
+                        UpdateHeader();
+                        ShowPage(Page.Overview);
+
+                        fieldTypeCombobox.Enabled = true;
+                        searchField.Enabled       = true;
+                        displayAllColumns.Enabled = true;
+                        buttonExport.Enabled      = true;
                     }
+
+                    #region Manage Componenet Visibilty
+                    searchEntity.Enabled       = true;
+                    analyseButton.Enabled      = true;
+                    AnalyseType.Enabled        = true;
+                    entityTypeComboBox.Enabled = true;
+                    toolStripButton.Enabled    = true;
+                    #endregion
+                    UpdateGuide();
                 }
             });
         }
@@ -343,18 +430,7 @@ namespace EntityieldsAnalyser
         #region Display Field based On Selected Type
         private void fieldTypeCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var analyseType = AnalyseType.SelectedItem.ToString();
-            #region clear grid view
-            DataTable DT = (DataTable)fieldPropretiesView.DataSource;
-            if (DT != null)
-                DT.Clear();
-            #endregion
-            #region Set Fields DataGridView Data After Change The Type
-            var listOfFields = fieldTypeCombobox.SelectedItem.ToString() == "ALL" ? entityFields.Values.SelectMany(list => list).ToList() : entityFields[(AttributeTypeCode)fieldTypeCombobox.SelectedItem];
-            EntityFieldAnalyserManager.SetFieldDataGridViewContent(listOfFields, dtFields, analyseType);
-            EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, analyseType, displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
-            searchField.Text = "Search";
-            #endregion
+            ApplyFieldFilters();
         }
         #endregion
 
@@ -369,26 +445,25 @@ namespace EntityieldsAnalyser
                         continue;
                     row.Cells["Analyse"].Value = false;
                 }
-                
+
                 this.EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value = !(bool)EntityGridView.Rows[e.RowIndex].Cells["Analyse"].Value;
+                UpdateGuide();
             }
         }
-        #endregion
-        #region Change Chart Content (Percentage => Record Count)
-        private void DisplayPercentageCheckbox_CheckedChanged(object sender, EventArgs e)
+
+        /// <summary>Double-click: select this entity and analyse it right away.</summary>
+        private void EntityGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(DisplayPercentageCheckbox.Checked == true)
-            {
-                EntityFieldAnalyserManager.SetChartFieldsType(entityFields, ChartFieldTypes, false);
-                EntityFieldAnalyserManager.SetChartFieldAvailable(entityFields, ChartFieldAvailable, true);
-                EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields, false);
-            }
-            else
-            {
-                EntityFieldAnalyserManager.SetChartFieldsType(entityFields, ChartFieldTypes, true);
-                EntityFieldAnalyserManager.SetChartFieldAvailable(entityFields, ChartFieldAvailable, false);
-                EntityFieldAnalyserManager.SetChartManagedUnmanagedFields(chartManagedUnmanagedFields, true);
-            }
+            if (e.RowIndex < 0)
+                return;
+
+            foreach (DataGridViewRow row in EntityGridView.Rows)
+                row.Cells["Analyse"].Value = row.Index == e.RowIndex;
+            EntityGridView.InvalidateColumn(EntityGridView.Columns["Analyse"].Index);
+            UpdateGuide();
+
+            if (analyseButton.Enabled)
+                analyseButton_Click(sender, e);
         }
         #endregion
         #region InitComponents
@@ -397,64 +472,31 @@ namespace EntityieldsAnalyser
                 fieldPropretiesView.DataSource = null;
             if (fieldTypeCombobox.Items.Count > 0)
                 fieldTypeCombobox.Items.Clear();
-            if(chartManagedUnmanagedFields.Series["managedUnmanagedFields"].Points.Count > 0)
-                chartManagedUnmanagedFields.Series["managedUnmanagedFields"].Points.Clear();
-            if (ChartFieldAvailable.Series["AvailableField"].Points.Count > 0)
-                ChartFieldAvailable.Series["AvailableField"].Points.Clear();
-            if (ChartFieldTypes.Series["fieldsReport"].Points.Count > 0)
-                ChartFieldTypes.Series["fieldsReport"].Points.Clear();
 
+            _insights                                = null;
+            _drillFilter                             = null;
+            fieldsChips.DismissibleText              = null;
             fieldTypeCombobox.Enabled                = false;
-            EntityFieldsCreatedGroupBox.Visible      = false;
-            ManagedUnmanagedFieldsgroupBox.Visible   = false;
-            EntityFieldsTypesGroupBox.Visible        = false;
-            DisplayPercentageCheckbox.Visible        = false;
-            displayAllColumns.Visible                = false;
             searchEntity.Enabled                     = false;
             analyseButton.Enabled                    = false;
             searchField.Enabled                      = false;
-            fieldCalculatorGroupBox.Visible          = false;
             buttonExport.Enabled                     = false;
             AnalyseType.Enabled                      = false;
-        }
-        #endregion
-        #region allow of Number For Calculator
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-        #endregion
-        #region CheckButton
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(textBox1.Text) || String.IsNullOrEmpty(textBox2.Text) || String.IsNullOrEmpty(textBox3.Text))
-            {
-                MessageBox.Show("Please Fill All The Types", "Warning");
-                return;
-            }
+            fieldsResultLabel.Text                   = String.Empty;
+            calculatorResult.Text                    = String.Empty;
 
-            volumedescription1.Visible = true;
-            volumedescription2.Visible = true;
-            bool isItPossibleToCreateThisFields = EntityFieldAnalyserManager.CanICreateThisNumberOfFields(textBox1.Text, textBox2.Text, textBox3.Text);
-            if (isItPossibleToCreateThisFields)
-                MessageBox.Show("You Can Create This Number of Fields!!", "Success");
-            else
-                MessageBox.Show("You Can't Create This Number of Fields!!", "Warning");
+            foreach (var tile in new[] { kpiFields, kpiCustom, kpiUnmanaged, kpiCapacity, kpiRecords, kpiUnused, kpiLowUsage, kpiAverage })
+                tile.Reset();
+
+            UpdateHeader();
+            ShowWelcome();
+            UpdateGuide();
         }
         #endregion
         #region Export
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            var analyseType = AnalyseType.SelectedItem.ToString() == "Metadata + Data usage" ? true : false;
-            EntityFieldAnalyserManager.CallExportFunction(entityFields, analyseType);
+            EntityFieldAnalyserManager.CallExportFunction(entityFields, _analysedType == DataUsageMode);
         }
         #endregion
         #region CloseTool
@@ -476,19 +518,21 @@ namespace EntityieldsAnalyser
             message += "We recommend to use the tool on big screen for best visibility, Below the steps to follow : ";
             message += Environment.NewLine;
             message += Environment.NewLine;
-            message += "1. Select an Entity Filter and click Load Entities";
+            message += "1. Select an Entity Filter and click Get Entities";
             message += Environment.NewLine;
-            message += "2. Click the checkbox on any entity that you would like to Analyse";
+            message += "2. Click the entity that you would like to Analyse (double-click analyses it right away)";
             message += Environment.NewLine;
             message += "3. Search is wildcard already so you only need to type in the text you want to search for";
             message += Environment.NewLine;
             message += "4. Select the type of analyse, MetadataOnly : if you want to get only the details of entity attributes. Metadata + Data usage : is for getting metadata details + data usage of each records on all database(it takes much time depends on your entity data size)";
             message += Environment.NewLine;
-            message += "5. Click Analyse when Ready";
+            message += "5. Click Analyse when Ready, then use the tabs: Overview, Fields, Data usage and Capacity";
             message += Environment.NewLine;
-            message += "6. Lines with gray backgroud are with percentage of use = 0%, that mean that the field is not contain data on all database";
+            message += "6. Click any bar, slice or tile to open the matching fields in the Fields tab. The blue chip shows the active filter, click its × to remove it";
             message += Environment.NewLine;
-            message += "7. Click on Export to Save the Results in Excel File";
+            message += "7. Rows highlighted in light orange have a percentage of use = 0%, that mean that the field is not contain data on all database";
+            message += Environment.NewLine;
+            message += "8. Click on Export to Save the Results in Excel File";
             message += Environment.NewLine;
             message += Environment.NewLine;
             message += "If you have any issues please log them via GitHub and/or contact me at hamzamraoui11@gmail.com";
@@ -504,6 +548,9 @@ namespace EntityieldsAnalyser
         #region SearchForEntity
         private void searchEntity_TextChaneged(object sender, EventArgs e)
         {
+            if (dtEntities == null)
+                return;
+
             if (searchEntity.Text == "" && dtEntities.Rows.Count > 0 && EntityGridView.Rows.Count != dtEntities.Rows.Count)
             {
                 EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(dtEntities, EntityGridView);
@@ -518,31 +565,9 @@ namespace EntityieldsAnalyser
                     {
                         EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(filtered.CopyToDataTable(), EntityGridView);
                     }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
-                }
-            }
-        }
-
-        private void searchField_TextChaneged(object sender, EventArgs e)
-        {
-            if (searchField.Text == "" && dtEntities.Rows.Count > 0 && fieldPropretiesView.Rows.Count != dtFields.Rows.Count)
-            {
-                EntityFieldAnalyserManager.SetFieldDataGridViewHeaders((DataTable)dtFields, fieldPropretiesView, AnalyseType.SelectedItem.ToString(), displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
-            }
-            else if (searchField.Text != "Search" && searchField.Text != "" && dtEntities.Rows.Count > 0)
-            {
-                string searchValue = searchField.Text.ToLower();
-                try
-                {
-                    
-                    DataRow[] filtered = fieldTypeCombobox.SelectedItem.ToString() == "ALL" ? dtFields.Select("DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%'") :
-                        dtFields.Select("Type = '"+ fieldTypeCombobox.SelectedItem.ToString() + "' AND (DisplayName LIKE '%" + searchValue + "%' OR SchemaName LIKE '%" + searchValue + "%')");
-                    if (filtered.Count() > 0)
+                    else
                     {
-                        EntityFieldAnalyserManager.SetFieldDataGridViewHeaders(filtered.CopyToDataTable(), fieldPropretiesView, AnalyseType.SelectedItem.ToString(), displayAllColumns.Checked, fieldTypeCombobox.SelectedItem.ToString());
+                        EntityFieldAnalyserManager.SetEntitiesGridViewHeaders(dtEntities.Clone(), EntityGridView);
                     }
                 }
                 catch (Exception)
@@ -550,14 +575,22 @@ namespace EntityieldsAnalyser
                     MessageBox.Show("Invalid Search Character. Please do not use ' [ ] within searches.");
                 }
             }
+            UpdateGuide();
+        }
+
+        private void searchField_TextChaneged(object sender, EventArgs e)
+        {
+            ApplyFieldFilters();
         }
 
         #endregion
 
         private void displayAllColumns_CheckedChanged(object sender, EventArgs e)
         {
-            var columnsCount = AnalyseType.SelectedItem.ToString() == "Metadata + Data usage" ? fieldPropretiesView.Columns.Count-1 : fieldPropretiesView.Columns.Count;
-                for (int i = 12; i < columnsCount; i++)
+            if (fieldPropretiesView.DataSource == null)
+                return;
+            var columnsCount = _analysedType == DataUsageMode ? fieldPropretiesView.Columns.Count-1 : fieldPropretiesView.Columns.Count;
+            for (int i = 13; i < columnsCount; i++)
             {
                 fieldPropretiesView.Columns[i].Visible = displayAllColumns.Checked;
             }
@@ -570,19 +603,12 @@ namespace EntityieldsAnalyser
 
         private void AnalyseType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(AnalyseType.SelectedItem.ToString() == "Metadata + Data usage") { 
+            if(AnalyseType.SelectedItem.ToString() == DataUsageMode) {
             string message = "Metadata + Data usage option could take much time, depends on your entity volum";
 
             MessageBox.Show(message, "Execution Time",MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void searchField_Click(object sender, EventArgs e)
-        {
-            if (searchField.Text == "Search")
-            {
-                searchField.Clear();
-            }
+            UpdateGuide();
         }
     }
 }

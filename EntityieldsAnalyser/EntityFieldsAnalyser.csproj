@@ -227,6 +227,14 @@
     <Compile Include="Classes\Classes.cs" />
     <Compile Include="Model\EntityFieldAnalyserManager.cs" />
     <Compile Include="Model\ExportManager.cs" />
+    <Compile Include="Model\FieldInsights.cs" />
+    <Compile Include="MyPluginControl.Insights.cs">
+      <DependentUpon>MyPluginControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Navigation.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MyPlugin.cs" />
     <Compile Include="MyPluginControl.cs">
       <SubType>UserControl</SubType>
@@ -241,6 +249,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="UI\Controls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Styling.cs" />
+    <Compile Include="UI\Theme.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -280,6 +293,11 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <!-- Debug: deploy the plugin to the installed XrmToolBox (debug with C:\XrmToolBox\XrmToolBox.exe, see .csproj.user).
+       Only the plugin assembly is copied: XrmToolBox already provides its dependencies (Xrm SDK, NPOI, System.Memory...). -->
+  <Target Name="DeployToXrmToolBox" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug' And Exists('$(AppData)\MscrmTools\XrmToolBox\Plugins')">
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(AppData)\MscrmTools\XrmToolBox\Plugins" ContinueOnError="true" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.  
   <Target Name="BeforeBuild">
